@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
     <title>Porto Shop</title>
-    <link rel="icon" href="assets/img/porto-shop-logo.png" type="image/x-icon">
+    <link rel="icon" href="resources/views/home/assets/img/porto-shop-logo.png" type="image/x-icon">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Bootstrap CSS -->
