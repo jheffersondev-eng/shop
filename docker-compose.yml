@@ -1,3 +1,6 @@
+# Para rodar e atualizar o ambiente, use:
+# docker compose up --build
+
 version: '3.8'
 services:
   web:

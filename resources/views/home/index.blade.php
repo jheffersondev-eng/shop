@@ -2,13 +2,13 @@
 <html lang="pt-br">
 <head>
     <title>Porto Shop</title>
-    <link rel="icon" href="resources/views/home/assets/img/porto-shop-logo.png" type="image/x-icon">
+    <link rel="icon" href="{{ asset('assets/img/brandig/porto-shop-branding.png') }}" type="image/x-icon">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@500&family=Roboto:wght@400;700&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/assets/css/index.css">
+    <link rel="stylesheet" href="{{ asset('assets/css/home/index.css') }}">
     <!-- Bootstrap Icons CDN -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 </head>
@@ -16,7 +16,7 @@
     <nav class="navbar navbar-expand-lg navbar-light" aria-label="Menu principal">
         <div class="container">
             <a class="navbar-brand" href="#">
-                <img src="assets/img/porto-shop-logo.png" alt="Logo Porto Shop" width="38" height="38">
+                <img src="{{ asset('assets/img/branding/porto-shop-branding.png') }}" alt="Logo Porto Shop" width="38" height="38">
                 Porto Shop
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -47,7 +47,7 @@
             </div>
             <div class="hero-image">
                 <div class="mockup-bg"></div>
-                <img class="mockup-img" src="assets/img/porto-shop-logo.png" alt="Porto Shop Mockup" tabindex="0">
+                <img class="mockup-img" src="{{ asset('assets/img/branding/porto-shop-branding.png') }}" alt="Porto Shop Mockup" tabindex="0">
             </div>
         </div>
     </section>

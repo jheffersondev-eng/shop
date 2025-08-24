@@ -8,13 +8,10 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('categorys', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->unsignedBigInteger('parent_id')->nullable();
             $table->timestamps();
-
-            $table->foreign('parent_id')->references('id')->on('categories');
         });
     }
 

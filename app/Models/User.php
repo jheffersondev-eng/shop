@@ -2,47 +2,51 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Enums\EIsActive;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, SoftDeletes;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
     protected $fillable = [
         'name',
         'email',
         'password',
+        'profile_id',
+        'is_active',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
     protected $hidden = [
         'password',
-        'remember_token',
+    ];
+
+    protected $casts = [
+        'password' => 'hashed',
+        'is_active' => EIsActive::class,
+        'profile_id' => 'integer',
+        'updated_at' => 'datetime',
+        'deleted_at' => 'datetime',
+        'created_at' => 'datetime',
     ];
 
     /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
+     * $fillable: Define quais campos podem ser preenchidos em massa (mass assignment),
+     * por exemplo, ao criar ou atualizar um registro usando Model::create($dados).
+     * Isso protege contra atribuição de campos não autorizados.
      */
-    protected function casts(): array
-    {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
-    }
+
+    /**
+     * $hidden: Esconde os campos listados ao transformar o model em array ou JSON,
+     * útil para não expor informações sensíveis como senha ou tokens em APIs.
+     */
+
+    /**
+     * $casts: Converte automaticamente os valores dos campos para o tipo especificado
+     * ao acessar ou salvar no banco. Exemplo: 'is_active' => 'boolean' faz o campo
+     * ser tratado como booleano, 'deleted_at' => 'datetime' como data/hora.
+     */
 }
