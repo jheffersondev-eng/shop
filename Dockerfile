@@ -1,17 +1,19 @@
-# Dockerfile para PHP (versão mais recente estável)
-FROM php:8.3-apache
+FROM php:8.2-apache
 
-# Instala extensões comuns do PHP
-RUN docker-php-ext-install pdo pdo_mysql mysqli
+# Instalar extensões necessárias
+RUN docker-php-ext-install pdo pdo_mysql
 
-# Habilita o mod_rewrite do Apache
+# Habilitar mod_rewrite do Apache
 RUN a2enmod rewrite
 
-# Copia os arquivos do projeto para o container
-COPY . /var/www/html/
+# Copiar configuração customizada do Apache
+COPY docker/apache.conf /etc/apache2/sites-available/000-default.conf
 
-# Permissões
-RUN chown -R www-data:www-data /var/www/html
+# Instalar Composer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-EXPOSE 80
-EXPOSE 80
+# Definir diretório de trabalho
+WORKDIR /var/www/html
+
+# Permissões para storage e bootstrap/cache (ignorar erro se não existir)
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache || true

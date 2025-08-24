@@ -21,11 +21,15 @@ class LoginModule extends Module
     public function getRoutesWeb()
     {
         return new RouteModule("login", function () {
-            Route::resource('/login', LoginController::class)->only('index');
+            Route::get('/login', [LoginController::class, 'index']);
+            Route::get('/register', [LoginController::class, 'register']);
+            Route::post('/login', [LoginController::class, 'login']);
+            Route::post('/register', [LoginController::class, 'register']);
+            Route::post('/logout', [LoginController::class, 'logout']);
         });
     }
 
-    public function boot()
+    public function boot()  
     {
     }
 

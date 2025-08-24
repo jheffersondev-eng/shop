@@ -1,27 +1,37 @@
-# Para rodar e atualizar o ambiente, use:
-# docker compose up --build
-
 version: '3.8'
+
 services:
-  web:
-    build: .
-    ports:
-      - "8080:80"
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: laravel_app
     volumes:
       - .:/var/www/html
+    ports:
+      - "80:80"
     depends_on:
       - db
+    environment:
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_DATABASE=db_shop
+      - DB_USERNAME=root
+      - DB_PASSWORD=shoppassword
+    entrypoint: >
+      bash -c "chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache || true && apache2-foreground"
+
   db:
-    image: mysql:8.3
+    image: mysql:8.0
+    container_name: mysql_db
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: shop
-      MYSQL_USER: shopuser
-      MYSQL_PASSWORD: shoppass
+      MYSQL_DATABASE: db_shop
+      MYSQL_ROOT_PASSWORD: shoppassword
     ports:
       - "3306:3306"
     volumes:
       - db_data:/var/lib/mysql
+
 volumes:
   db_data:

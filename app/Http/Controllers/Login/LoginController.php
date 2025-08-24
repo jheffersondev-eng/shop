@@ -12,4 +12,20 @@ class LoginController extends Controller
     {
         return view('login.login');
     }
+    
+
+    public function login(Request $request)
+    {
+        // Lógica de autenticação
+    }
+
+    public function register(Request $request)
+    {
+        return view('login.register');
+    }
+
+    public function logout(Request $request)
+    {
+        // Lógica de logout
+    }
 }
