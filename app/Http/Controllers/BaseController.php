@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\BaseRepository;
+use App\Services\MediatorService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -28,131 +29,87 @@ abstract class BaseController extends Controller
     protected string $name;
     protected array $orderList = ['created_at', 'desc'];
     protected BaseRepository $repository;
+    protected MediatorService $mediator;
 
-    /**
-     * UserController constructor.
-     * @param $repository
-     */
-    public function __construct($repository = null)
+    public function __construct($repository = null, MediatorService $mediator = null)
     {
         $this->repository = $repository;
+        $this->mediator = $mediator ?? new MediatorService();
     }
 
-    /**
-     * @return string
-     */
     public function getPages(): string
     {
         return $this->pages;
     }
 
-    /**
-     * @param string $pages
-     */
     public function setPages(string $pages): void
     {
         $this->pages = $pages;
     }
 
-    /**
-     * @return string
-     */
     public function getUrl(): string
     {
         return $this->url;
     }
 
-    /**
-     * @param string $url
-     */
     public function setUrl(string $url): void
     {
         $this->url = $url;
     }
 
-    /**
-     * @return string
-     */
     public function getFolderView(): string
     {
         return $this->folder_view;
     }
 
-    /**
-     * @param string $folder_view
-     */
     public function setFolderView(string $folder_view): void
     {
         $this->folder_view = $folder_view;
     }
 
-    /**
-     * @param string $models
-     */
     public function setModels(string $models): void
     {
         $this->models = $models;
     }
 
-    /**
-     * @return BaseRepository
-     */
     public function getRepository(): BaseRepository
     {
         return $this->repository;
     }
 
-    /**
-     * @param BaseRepository $repository
-     */
     public function setRepository(BaseRepository $repository): void
     {
         $this->repository = $repository;
     }
 
-    /**
-     * @return array
-     */
+    // Removido: getService e setService
+
     public function getOrderList(): array
     {
         return $this->orderList;
     }
 
-    /**
-     * @param array $orderList
-     */
     public function setOrderList(array $orderList): void
     {
         $this->orderList = $orderList;
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
     public function getModelName(): string
     {
         return $this->models ?? 'models';
     }
 
-    /**
-     * @param string $name
-     */
     public function setName(string $name): void
     {
         $this->name = $name;
     }
 
     /**
-     * ]
-     * @param Request $request
      * @return Application|Factory|View
      * @throws \Exception
      */
@@ -183,7 +140,6 @@ abstract class BaseController extends Controller
     }
 
     /**
-     * @param $request
      * @return RedirectResponse
      * @throws \Throwable
      */
@@ -192,22 +148,36 @@ abstract class BaseController extends Controller
         try {
             DB::beginTransaction();
 
-            $request->request->add([
-                'user_id_update' => Auth::user()->id,
-                'user_id_create' => Auth::user()->id,
-            ]);
+            if(Auth::user()) {
+                $request->request->add([
+                    'user_id_update' => Auth::user()->id,
+                    'user_id_create' => Auth::user()->id,
+                ]);
+            }
 
-            //$this->getRepository()->store($request);
+            // Chama o Mediator para resolver o service correto, se existir
+            if($this->mediator) {
+                try {
+                    $this->mediator->handle($request);
+                } catch (\Exception $e) {
+                    // Se não houver service mapeado, segue sem executar handler
+                }
+            }
 
-            if (isset($request->observacao) and isset($request->status)){
-                $request->session()->flash('message', " Status do {$this->getName()} alterado");
+            $this->getRepository()->store($request);
+
+            dd('oi');
+
+            if (isset($request->descriptionMessage) and isset($request->status)){
+                $request->session()->flash('message', "{$this->getName()}");
             }else{
-                $request->session()->flash('message', "{$this->getName()} cadastrado");
+                $request->session()->flash('message', "{$this->getName()} cadastrado com sucesso");
             }
 
             DB::commit();
         } catch (\Exception $e) {
             $request->session()->flash('error', "Erro ao cadastrar o {$this->getName()}:  {$e->getMessage()}");
+
             DB::rollBack();
 
             Log::critical($e->getMessage(), [
@@ -216,14 +186,13 @@ abstract class BaseController extends Controller
                 'params' => \request()->all(),
             ]);
 
-            return Redirect::back()->withInput($request->all());
+            return redirect()->back()->withInput($request->all());
         }
-
+        
         return Redirect::to($this->getUrl());
     }
 
     /**
-     * @param $model
      * @return Factory|View
      */
     public function editBase($model)
@@ -235,8 +204,6 @@ abstract class BaseController extends Controller
     }
 
     /**
-     * @param $request
-     * @param $model
      * @return RedirectResponse
      * @throws \Throwable
      */
@@ -270,8 +237,6 @@ abstract class BaseController extends Controller
     }
 
     /**
-     * @param $request
-     * @param $model
      * @return RedirectResponse
      * @throws \Throwable
      */

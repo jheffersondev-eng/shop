@@ -12,12 +12,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link rel="stylesheet" href="{{ asset('assets/css/home/index.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/home/login.css') }}">
-    <style>
-        .form-control::placeholder {
-            color: #888 !important;
-            opacity: 0.55 !important;
-        }
-    </style>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light" aria-label="Menu principal">
@@ -32,7 +26,9 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <!-- Adicione outros itens de menu aqui se necessário -->
+                    <li class="nav-item"><a class="nav-link" href="#">Contato</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Produtos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Ofertas</a></li>
                 </ul>
                 <a class="btn-feedback ms-lg-3 mt-2 mt-lg-0" href="/">Início</a>
             </div>
@@ -55,7 +51,7 @@
                 </div>
                 <button type="submit" class="btn btn-login">Entrar</button>
             </form>
-            <a href="/register" class="login-link">Não tem conta? Cadastre-se</a>
+            <a href="{{ route('register.post') }}" class="login-link">Não tem conta? Cadastre-se</a>
         </div>
     </main>
     <div class="footer">

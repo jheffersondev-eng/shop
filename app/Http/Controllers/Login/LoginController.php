@@ -2,30 +2,56 @@
 
 namespace App\Http\Controllers\Login;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\BaseController;
+use App\Http\Requests\Login\UserRegisterRequest;
+use App\Repositories\Login\ILoginRepository;
 use Illuminate\Http\Request;
-use Illuminate\View\View;
 
-class LoginController extends Controller
+class LoginController extends BaseController
 {
-    public function index(Request $request)
+    public function __construct(ILoginRepository $loginRepository)
     {
-        return view('login.login');
-    }
-    
+        parent::__construct($loginRepository);
 
-    public function login(Request $request)
+        $this->setPages(10);
+        $this->setName('Login');
+        $this->setOrderList(['id', 'asc']);
+        $this->setUrl(url("login"));
+        $this->setFolderView("login");
+    }
+
+    public function Index(Request $request)
     {
-        // Lógica de autenticação
+        return parent::indexBase($request);
     }
 
-    public function register(Request $request)
+    public function SignUp(Request $request)
     {
         return view('login.register');
     }
 
-    public function logout(Request $request)
+    public function Login(Request $request)
+    {
+        
+    }
+
+    public function Register(UserRegisterRequest $userRegisterRequest)
+    {
+        return parent::storeBase($userRegisterRequest);
+    }
+
+    public function Logout(Request $request)
     {
         // Lógica de logout
+    }
+
+    public function ForgotPassword(Request $request)
+    {
+        //return view('login.forgot_password');
+    }
+
+    public function ForgotEmail(Request $request)
+    {
+        //return view('login.forgot_email');
     }
 }

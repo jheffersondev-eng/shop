@@ -33,6 +33,11 @@ class User extends Authenticatable
         'created_at' => 'datetime',
     ];
 
+    public function profile()
+    {
+        return $this->belongsTo(Profile::class, 'profile_id');
+    }
+
     /**
      * $fillable: Define quais campos podem ser preenchidos em massa (mass assignment),
      * por exemplo, ao criar ou atualizar um registro usando Model::create($dados).

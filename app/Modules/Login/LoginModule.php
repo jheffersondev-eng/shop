@@ -21,11 +21,13 @@ class LoginModule extends Module
     public function getRoutesWeb()
     {
         return new RouteModule("login", function () {
-            Route::get('/login', [LoginController::class, 'index']);
-            Route::get('/register', [LoginController::class, 'register']);
-            Route::post('/login', [LoginController::class, 'login']);
-            Route::post('/register', [LoginController::class, 'register']);
-            Route::post('/logout', [LoginController::class, 'logout']);
+            Route::get('/login', [LoginController::class, 'Index'])->name('login');
+            Route::post('/login', [LoginController::class, 'Login'])->name('login.post');
+            Route::get('/register', [LoginController::class, 'SignUp'])->name('register');
+            Route::post('/register', [LoginController::class, 'Register'])->name('register.post');
+            Route::post('/logout', [LoginController::class, 'Logout'])->name('logout');
+            Route::post('/forgot-password', [LoginController::class, 'ForgotPassword'])->name('forgot.password');
+            Route::post('/forgot-email', [LoginController::class, 'ForgotEmail'])->name('forgot.email');
         });
     }
 

@@ -23,7 +23,6 @@
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Abrir menu">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <!-- Remova ms-auto d-lg-flex do collapse -->
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item"><a class="nav-link" href="#">Contato</a></li>

@@ -12,15 +12,8 @@ class BaseRepository implements IBaseRepository
 {
     const WHERE_TAGS = 'In,Like';
 
-    /**
-     * @var Model|Builder
-     */
     protected Model|Builder $model;
 
-    /**
-     * BaseRepository constructor.
-     * @param Model $model
-     */
     public function __construct(Model $model)
     {
         $this->model = $model->newQuery();
@@ -28,7 +21,6 @@ class BaseRepository implements IBaseRepository
 
     /**
      * Cria um novo registro.
-     * @param array $columns
      * @return Model
      */
     protected function create(array $columns)
@@ -37,9 +29,6 @@ class BaseRepository implements IBaseRepository
     }
 
     /**
-     * Atualiza um registro.
-     * @param int $id
-     * @param array $columns
      * @return bool
      */
     protected function update(int $id, array $columns)
@@ -50,7 +39,6 @@ class BaseRepository implements IBaseRepository
 
     /**
      * Busca um registro pelo ID.
-     * @param int $id
      * @return Model|null
      */
     public function find(int $id)
@@ -72,7 +60,6 @@ class BaseRepository implements IBaseRepository
 
     /**
      * Aplica filtros à query.
-     * @param array $filter
      * @return $this
      * @throws Exception
      */
@@ -154,8 +141,6 @@ class BaseRepository implements IBaseRepository
 
     /**
      * Ordena a query.
-     * @param string $column
-     * @param string|null $direction
      * @return $this
      */
     public function order(string $column, string $direction = 'asc')
@@ -166,7 +151,6 @@ class BaseRepository implements IBaseRepository
 
     /**
      * Pagina os resultados.
-     * @param int $perPage
      * @return LengthAwarePaginator
      */
     public function paginate(int $perPage)
