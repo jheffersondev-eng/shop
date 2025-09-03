@@ -31,7 +31,7 @@ abstract class BaseController extends Controller
     protected BaseRepository $repository;
     protected MediatorService $mediator;
 
-    public function __construct($repository = null, MediatorService $mediator = null)
+    public function __construct($repository = null, ?MediatorService $mediator = null)
     {
         $this->repository = $repository;
         $this->mediator = $mediator ?? new MediatorService();
@@ -113,7 +113,7 @@ abstract class BaseController extends Controller
      * @return Application|Factory|View
      * @throws \Exception
      */
-    public function indexBase(Request $request)
+    public function IndexBase(Request $request)
     {
         $this->getRepository()->findBy($request->all())->order($this->getOrderList()[0], $this->getOrderList()[1]);
         /**
@@ -132,7 +132,7 @@ abstract class BaseController extends Controller
     /**
      * @return Factory|View
      */
-    public function createBase()
+    public function CreateBase()
     {
         return view($this->getFolderView() . ".create", [
             'url' => $this->getUrl()
@@ -143,7 +143,7 @@ abstract class BaseController extends Controller
      * @return RedirectResponse
      * @throws \Throwable
      */
-    public function storeBase($request): RedirectResponse
+    public function StoreBase($request): RedirectResponse
     {
         try {
             DB::beginTransaction();
@@ -157,16 +157,10 @@ abstract class BaseController extends Controller
 
             // Chama o Mediator para resolver o service correto, se existir
             if($this->mediator) {
-                try {
-                    $this->mediator->handle($request);
-                } catch (\Exception $e) {
-                    // Se não houver service mapeado, segue sem executar handler
-                }
+                $this->mediator->handle($request);
             }
 
             $this->getRepository()->store($request);
-
-            dd('oi');
 
             if (isset($request->descriptionMessage) and isset($request->status)){
                 $request->session()->flash('message', "{$this->getName()}");
@@ -195,7 +189,7 @@ abstract class BaseController extends Controller
     /**
      * @return Factory|View
      */
-    public function editBase($model)
+    public function EditBase($model)
     {
         return view($this->getFolderView() . ".edit", [
             'model' => $model,
@@ -207,7 +201,7 @@ abstract class BaseController extends Controller
      * @return RedirectResponse
      * @throws \Throwable
      */
-    public function updateBase($model, $request): RedirectResponse
+    public function UpdateBase($model, $request): RedirectResponse
     {
         try {
             DB::beginTransaction();
@@ -240,7 +234,7 @@ abstract class BaseController extends Controller
      * @return RedirectResponse
      * @throws \Throwable
      */
-    public function destroyBase($model, $request): RedirectResponse
+    public function DestroyBase($model, $request): RedirectResponse
     {
         try {
             DB::beginTransaction();
@@ -262,5 +256,24 @@ abstract class BaseController extends Controller
         }
 
         return Redirect::back();
+    }
+
+    public function RedirectBase(
+        Request $request, 
+        string $message, 
+        ?string $url = null
+    ): RedirectResponse
+    {
+        if($this->mediator) {
+            try {
+                $this->mediator->handle($request);
+                $request->session()->flash('success', $message);
+            } catch (\Exception $e) {
+                dd($e->getMessage());
+                $request->session()->flash('error', $e->getMessage());
+                return Redirect::to($url ?? $this->getUrl());
+            }
+        }
+        return Redirect::to($url ?? $this->getUrl());
     }
 }

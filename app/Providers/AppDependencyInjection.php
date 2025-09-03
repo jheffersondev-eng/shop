@@ -4,8 +4,10 @@ namespace App\Providers;
 
 use App\Repositories\Login\ILoginRepository;
 use App\Repositories\Login\LoginRepository;
-use App\Services\Login\IUserRegisterService;
-use App\Services\Login\UserRegisterService;
+use App\Services\Login\IUserLoginRequestService;
+use App\Services\Login\IUserRegisterRequestService;
+use App\Services\Login\UserLoginRequestService;
+use App\Services\Login\UserRegisterRequestService;
 use Illuminate\Contracts\Foundation\Application;
 
 class AppDependencyInjection
@@ -13,6 +15,7 @@ class AppDependencyInjection
     public static function register(Application $app)
     {
         $app->bind(ILoginRepository::class, LoginRepository::class);
-        $app->bind(IUserRegisterService::class, UserRegisterService::class);
+        $app->bind(IUserRegisterRequestService::class, UserRegisterRequestService::class);
+        $app->bind(IUserLoginRequestService::class, UserLoginRequestService::class);
     }
 }

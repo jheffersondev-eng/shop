@@ -2,15 +2,17 @@
 
 namespace App\Services;
 
+use App\Http\Requests\Login\UserLoginRequest;
 use App\Http\Requests\Login\UserRegisterRequest;
-use App\Services\Login\UserRegisterService;
+use App\Services\Login\UserLoginRequestService;
+use App\Services\Login\UserRegisterRequestService;
 use Illuminate\Support\Facades\App;
 
 class MediatorService
 {
     /**
      * Mapeamento de Request => Service
-     * Exemplo: [UserRegisterRequest::class => UserRegisterService::class]
+     * Exemplo: [UserRegisterRequest::class => UserRegisterRequestService::class]
      */
     protected array $map = [];
 
@@ -18,7 +20,8 @@ class MediatorService
     {
         // Registre os mapeamentos aqui
         $this->map = [
-            UserRegisterRequest::class => UserRegisterService::class,
+            UserRegisterRequest::class => UserRegisterRequestService::class,
+            UserLoginRequest::class => UserLoginRequestService::class,
         ];
     }
 

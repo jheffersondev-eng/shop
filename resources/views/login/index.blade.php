@@ -40,14 +40,16 @@
                 <img src="{{ asset('assets/img/branding/porto-shop-branding.png') }}" alt="Logo Porto Shop">
             </div>
             <div class="login-title">Faça Login</div>
-            <form>
+            @include('components.message')
+            <form method="POST" action="/login">
+                @csrf
                 <div class="mb-3">
                     <label for="email" class="form-label">E-mail</label>
-                    <input type="email" class="form-control" id="email" placeholder="Seu e-mail" required>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Seu e-mail" required>
                 </div>
                 <div class="mb-3">
                     <label for="senha" class="form-label">Senha</label>
-                    <input type="password" class="form-control" id="senha" placeholder="Sua senha" required>
+                    <input type="password" class="form-control" id="senha" name="password" placeholder="Sua senha" required>
                 </div>
                 <button type="submit" class="btn btn-login">Entrar</button>
             </form>

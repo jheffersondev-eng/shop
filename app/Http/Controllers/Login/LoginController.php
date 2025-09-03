@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Login;
 
 use App\Http\Controllers\BaseController;
+use App\Http\Requests\Login\UserLoginRequest;
 use App\Http\Requests\Login\UserRegisterRequest;
 use App\Repositories\Login\ILoginRepository;
 use Illuminate\Http\Request;
@@ -22,22 +23,22 @@ class LoginController extends BaseController
 
     public function Index(Request $request)
     {
-        return parent::indexBase($request);
+        return parent::IndexBase($request);
     }
 
-    public function SignUp(Request $request)
+    public function SignUp()
     {
-        return view('login.register');
+        return parent::CreateBase();
     }
 
-    public function Login(Request $request)
+    public function Login(UserLoginRequest $userLoginRequest)
     {
-        
+        return parent::RedirectBase($userLoginRequest, 'Login realizado com sucesso');
     }
 
     public function Register(UserRegisterRequest $userRegisterRequest)
     {
-        return parent::storeBase($userRegisterRequest);
+        return parent::StoreBase($userRegisterRequest);
     }
 
     public function Logout(Request $request)

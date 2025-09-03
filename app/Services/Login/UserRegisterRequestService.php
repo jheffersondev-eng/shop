@@ -5,7 +5,7 @@ namespace App\Services\Login;
 use App\Http\Requests\Login\UserRegisterRequest;
 use Illuminate\Support\Facades\Hash;
 
-class UserRegisterService implements IUserRegisterService
+class UserRegisterRequestService implements IUserRegisterRequestService
 {
     public function handler(UserRegisterRequest $userRegisterRequest)
     {
