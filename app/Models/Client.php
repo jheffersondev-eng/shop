@@ -32,5 +32,18 @@ class Client extends Model
         'updated_at' => 'datetime',
         'deleted_at' => 'datetime',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function getNameAndSurnameAttribute()
+    {
+        $names = explode(' ', trim($this->name));
+        $first = isset($names[0]) ? ucfirst(strtolower($names[0])) : '';
+        $second = isset($names[1]) ? ucfirst(strtolower($names[1])) : '';
+        return trim($first . ' ' . $second);
+    }
 }
 

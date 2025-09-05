@@ -1,0 +1,44 @@
+.bold {
+    font-weight: 700 !important;
+}
+.app-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #5b5b5b;
+    letter-spacing: 1px;
+}
+.text-main {
+    color: #222 !important;
+}
+.text-primary-main {
+    color: #6c63ff !important;
+}
+.bg-main {
+    background-color: #6c63ff !important;
+}
+.border-main {
+    border-color: #6c63ff !important;
+}
+.rounded-avatar {
+    border-radius: 50%;
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #6c63ff;
+    background: #f8f9fa;
+}
+.fw-semibold {
+    font-weight: 500 !important;
+}
+.fw-bold {
+    font-weight: 700 !important;
+}
+.btn-logout {
+    color: #222 !important;
+    text-decoration: none !important;
+    font-weight: 500 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}

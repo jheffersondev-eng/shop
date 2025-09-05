@@ -11,6 +11,7 @@
 	<link rel="stylesheet" href="{{ asset('assets/css/home/index.css') }}">
 	<link rel="stylesheet" href="{{ asset('assets/css/home/login.css') }}">
 	<link rel="stylesheet" href="{{ asset('assets/css/app/sidebar.css') }}">
+	<link rel="stylesheet" href="{{ asset('assets/css/app/main.css') }}">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 	@yield('styles')
 </head>
@@ -18,12 +19,16 @@
 	@include('components.app.sidebar')
 	<div class="main-content">
 		<div class="dashboard-header">
-			<div class="dashboard-title">@yield('title')</div>
-			<div>
-				   <form action="{{ route('logout') }}" method="POST" style="display:inline;">
-					   @csrf
-					   <button type="submit" class="btn btn-primary" style="background:#6c63ff;border:none;">Logout</button>
-				   </form>
+			   <div class="app-title">@yield('title')</div>
+			<div class="d-flex align-items-center gap-2">
+				   <div class="d-flex align-items-center gap-2">
+					   <span class="fw-semibold text-main bold">
+						   {{Auth::user()->client->name_and_surname}}
+					   </span>
+					   <span class="rounded-avatar border-main">
+						   <i class="bi bi-person-fill text-primary-main" style="font-size:1.5rem;"></i>
+					   </span>
+				   </div>
 			</div>
 		</div>
 		@yield('content')
