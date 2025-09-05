@@ -28,12 +28,12 @@ abstract class BaseController extends Controller
     protected string $models;
     protected string $name;
     protected array $orderList = ['created_at', 'desc'];
-    protected BaseRepository $repository;
+    protected ?BaseRepository $repository = null;
     protected MediatorService $mediator;
 
     public function __construct($repository = null, ?MediatorService $mediator = null)
     {
-        $this->repository = $repository;
+        $this->repository = $repository ?? $repository;
         $this->mediator = $mediator ?? new MediatorService();
     }
 
@@ -74,6 +74,9 @@ abstract class BaseController extends Controller
 
     public function getRepository(): BaseRepository
     {
+        if ($this->repository === null) {
+            throw new \RuntimeException('Repository não inicializado para este controller.');
+        }
         return $this->repository;
     }
 
@@ -81,8 +84,6 @@ abstract class BaseController extends Controller
     {
         $this->repository = $repository;
     }
-
-    // Removido: getService e setService
 
     public function getOrderList(): array
     {
@@ -157,7 +158,10 @@ abstract class BaseController extends Controller
 
             // Chama o Mediator para resolver o service correto, se existir
             if($this->mediator) {
-                $this->mediator->handle($request);
+                $result = $this->mediator->handle($request);
+                if ($result instanceof RedirectResponse) {
+                    return $result;
+                }
             }
 
             $this->getRepository()->store($request);
@@ -206,6 +210,14 @@ abstract class BaseController extends Controller
         try {
             DB::beginTransaction();
 
+            // Chama o Mediator para resolver o service correto, se existir
+            if($this->mediator) {
+                $result = $this->mediator->handle($request);
+                if ($result instanceof RedirectResponse) {
+                    return $result;
+                }
+            }
+
             $request->request->add([
                 'user_id_update' => Auth::user()->id
             ]);
@@ -239,6 +251,13 @@ abstract class BaseController extends Controller
         try {
             DB::beginTransaction();
 
+            if($this->mediator) {
+                $result = $this->mediator->handle($request);
+                if ($result instanceof RedirectResponse) {
+                    return $result;
+                }
+            }
+
             $this->getRepository()->delete($model);
 
             $request->session()->flash('message', "{$this->getName()} removido");
@@ -261,19 +280,21 @@ abstract class BaseController extends Controller
     public function RedirectBase(
         Request $request, 
         string $message, 
-        ?string $url = null
-    ): RedirectResponse
+        ?string $route = null
+    )
     {
         if($this->mediator) {
             try {
-                $this->mediator->handle($request);
+                $result = $this->mediator->handle($request);
+                if ($result instanceof RedirectResponse) {
+                    return $result;
+                }
                 $request->session()->flash('success', $message);
+                return Redirect::to($route ?? $this->getUrl());
             } catch (\Exception $e) {
-                dd($e->getMessage());
                 $request->session()->flash('error', $e->getMessage());
-                return Redirect::to($url ?? $this->getUrl());
+                return redirect()->back()->withInput($request->all());
             }
         }
-        return Redirect::to($url ?? $this->getUrl());
     }
 }

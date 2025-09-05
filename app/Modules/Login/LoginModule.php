@@ -15,24 +15,31 @@ class LoginModule extends Module
 
     public function register(Application $app)
     {
+    }
 
+    public function boot()  
+    {
+    }
+
+    public function getName(): string
+    {
+        return self::NAME;
+    }
+
+    public function getIcon(): string
+    {
+        return self::ICON;
     }
 
     public function getRoutesWeb()
     {
         return new RouteModule("login", function () {
-            Route::get('/login', [LoginController::class, 'Index'])->name('login');
-            Route::post('/login', [LoginController::class, 'Login'])->name('login.post');
+            Route::get('/', [LoginController::class, 'Index'])->name('login');
+            Route::post('/', [LoginController::class, 'Login'])->name('login.post');
             Route::get('/register', [LoginController::class, 'SignUp'])->name('register');
             Route::post('/register', [LoginController::class, 'Register'])->name('register.post');
             Route::post('/logout', [LoginController::class, 'Logout'])->name('logout');
-            Route::post('/forgot-password', [LoginController::class, 'ForgotPassword'])->name('forgot.password');
-            Route::post('/forgot-email', [LoginController::class, 'ForgotEmail'])->name('forgot.email');
         });
-    }
-
-    public function boot()  
-    {
     }
 
     public function getRoutesApi()
@@ -47,15 +54,5 @@ class LoginModule extends Module
     {
         //$permissoes[] = (new PermissionBlockResource("Login", LoginController::class))->toArray();
         //return new ActionModule(self::NAME, $permissoes);
-    }
-
-    public function getName(): string
-    {
-        return self::NAME;
-    }
-
-    public function getIcon(): string
-    {
-        return self::ICON;
     }
 }

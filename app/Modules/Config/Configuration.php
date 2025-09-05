@@ -3,6 +3,7 @@
 namespace App\Modules\Config;
 
 use App\Helpers\ClassHelper;
+use App\Modules\Dashboard\DashboardModule;
 use App\Modules\Login\LoginModule;
 use Illuminate\Support\Collection;
 use Exception;
@@ -13,7 +14,7 @@ class Configuration
     public static function getModules(): array
     {
         return [
-            new LoginModule()
+            new DashboardModule(),
         ];
     }
 

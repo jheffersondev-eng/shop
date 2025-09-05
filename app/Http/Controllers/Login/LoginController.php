@@ -7,6 +7,7 @@ use App\Http\Requests\Login\UserLoginRequest;
 use App\Http\Requests\Login\UserRegisterRequest;
 use App\Repositories\Login\ILoginRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends BaseController
 {
@@ -33,7 +34,7 @@ class LoginController extends BaseController
 
     public function Login(UserLoginRequest $userLoginRequest)
     {
-        return parent::RedirectBase($userLoginRequest, 'Login realizado com sucesso');
+        return parent::RedirectBase($userLoginRequest, 'Login realizado com sucesso', route('dashboard'));
     }
 
     public function Register(UserRegisterRequest $userRegisterRequest)
@@ -43,16 +44,9 @@ class LoginController extends BaseController
 
     public function Logout(Request $request)
     {
-        // Lógica de logout
-    }
-
-    public function ForgotPassword(Request $request)
-    {
-        //return view('login.forgot_password');
-    }
-
-    public function ForgotEmail(Request $request)
-    {
-        //return view('login.forgot_email');
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return parent::RedirectBase($request, 'Logout realizado com sucesso', route('login'));
     }
 }
