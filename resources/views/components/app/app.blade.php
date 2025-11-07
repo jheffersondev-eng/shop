@@ -4,6 +4,7 @@
 	<title>Dashboard - Porto Shop</title>
 	<link rel="icon" href="{{ asset('assets/img/branding/porto-shop-branding.png') }}" type="image/x-icon">
 	<meta charset="utf-8">
+	<meta name="csrf-token" content="{{ csrf_token() }}">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- Bootstrap CSS -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -12,6 +13,7 @@
 	<link rel="stylesheet" href="{{ asset('assets/css/home/login.css') }}">
 	<link rel="stylesheet" href="{{ asset('assets/css/app/sidebar.css') }}">
 	<link rel="stylesheet" href="{{ asset('assets/css/app/main.css') }}">
+	<script src="{{ asset('assets/js/app.js') }}"></script>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 	@yield('styles')
 </head>
@@ -34,6 +36,7 @@
 		@yield('content')
 	</div>
 	@include('components.app.footer')
+	@include('components.confirm-modal')
 	@yield('scripts')
 </body>
 </html>

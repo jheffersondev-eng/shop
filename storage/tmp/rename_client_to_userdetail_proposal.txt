@@ -1,0 +1,51 @@
+Proposal: rename/migrate Client -> UserDetail (review before applying)
+
+Summary:
+- Current state: project contains both legacy Client repository/DTO/model under App\Repositories\Client and new UserDetail equivalents under App\Repositories\UserDetail. Model `App\Models\Client` currently extends `UserDetail` as compatibility.
+- Goal: fully migrate all uses of "Client" (repositories, interfaces, DTOs, views, relations) to "UserDetail" and remove legacy Client files.
+
+Planned automated steps (to be reviewed and applied in one PR):
+1) Update namespaces/usages:
+   - Replace occurrences of App\Repositories\Client\IClientRepository -> App\Repositories\UserDetail\IUserDetailRepository
+   - Replace occurrences of App\Repositories\Client\ClientRepository -> App\Repositories\UserDetail\UserDetailRepository
+   - Replace small DTO namespace App\Http\Dto\Client -> App\Http\Dto\UserDetail (or keep compat DTO that extends new one)
+2) Update DI bindings in app/Providers/AppDependencyInjection.php (remove legacy bindings after confirm):
+   - Remove binding of IClientRepository -> ClientRepository
+   - Bind IClientRepository -> UserDetailRepository (optional transitional) then later remove
+3) Update Models/relations/views:
+   - Keep `App\Models\Client` as compat class (or remove after full migration)
+   - Update `Auth::user()->client` usages to either keep (if Client model exists) or rename to `userDetail` + new accessor (requires view edits)
+4) Update code references across `resources/views/`, `app/Services/`, `app/Repositories/`, tests, factories/seeders.
+5) Run full test suite and fix issues.
+6) Remove legacy files (app/Repositories/Client/*, app/Http/Dto/Client/*) once tests pass and code reviewed.
+
+Suggested commands to apply changes (example Powershell script):
+# run from repository root
+# 1) create a branch for the refactor
+git checkout -b refactor/rename-client-to-userdetail
+# 2) perform replacements (review diffs before committing)
+# Example using PowerShell -Simple replacements — run carefully and review
+Get-ChildItem -Path . -Include *.php -Recurse | Select-String -Pattern "App\\Repositories\\Client" | ForEach-Object { $file=$_; (Get-Content $file.Path) -replace 'App\\Repositories\\Client', 'App\\Repositories\\UserDetail' | Set-Content $file.Path }
+# 3) run tests
+php artisan test
+# 4) review, commit, push
+
+Files likely to change (non-exhaustive):
+- app/Repositories/Client/*
+- app/Repositories/UserDetail/*
+- app/Http/Dto/Client/* -> app/Http/Dto/UserDetail/*
+- app/Models/Client.php (either delete after migration or keep as compat)
+- resources/views/user/*.blade.php (uses $user->client)
+- app/Providers/AppDependencyInjection.php
+- storage/framework/views/* (clear and reoptimize)
+
+Notes:
+- I will NOT modify vendor files or generated files.
+- Recommended workflow: I can prepare an automated patch and show the diff for your review (I will not apply destructive changes until you approve).
+
+If you want, I can now:
+A) Generate the automated patch (diff) for the rename and show it here for review.
+B) Apply the rename automatically (risky) and run tests.
+C) Do nothing further until you review the proposal.
+
+Choose A, B or C.

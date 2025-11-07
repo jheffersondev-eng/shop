@@ -4,7 +4,8 @@ namespace App\Modules\Config;
 
 use App\Helpers\ClassHelper;
 use App\Modules\Dashboard\DashboardModule;
-use App\Modules\Login\LoginModule;
+use App\Modules\User\UserModule;
+use App\Modules\Profile\ProfileModule;
 use Illuminate\Support\Collection;
 use Exception;
 use RuntimeException;
@@ -15,6 +16,8 @@ class Configuration
     {
         return [
             new DashboardModule(),
+            new UserModule(),
+            new ProfileModule(),
         ];
     }
 

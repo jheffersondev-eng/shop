@@ -1,24 +1,29 @@
 document.addEventListener('DOMContentLoaded', function() {
+    var sidebar = document.querySelector('.sidebar');
     document.querySelectorAll('.sidebar-group-toggle').forEach(function(toggle) {
         toggle.addEventListener('click', function(e) {
-            e.preventDefault();
-            var group = toggle.closest('.sidebar-group');
-            group.classList.toggle('open');
-            // Exibe ou oculta a setinha para baixo
-            var chevron = toggle.querySelector('.bi-chevron-down');
-            if (group.classList.contains('open')) {
-                chevron.style.display = 'inline';
-            } else {
-                chevron.style.display = 'none';
+            // Permitir expandir ao clicar no ícone, nome ou seta
+            if (
+                e.target.classList.contains('sidebar-group-toggle') ||
+                e.target.classList.contains('sidebar-label') ||
+                e.target.classList.contains('sidebar-chevron') ||
+                e.target.classList.contains('bi-chevron-down') ||
+                e.target.classList.contains('sidebar-icon')
+            ) {
+                e.preventDefault();
+                var group = toggle.closest('.sidebar-group');
+                var submenu = group.querySelector('.sidebar-submenu');
+                if (group.classList.contains('open')) {
+                    group.classList.remove('open');
+                } else {
+                    closeAllGroups();
+                    group.classList.add('open');
+                }
             }
         });
-        // Inicialmente oculta a setinha
-        var chevron = toggle.querySelector('.bi-chevron-down');
-        if (chevron) chevron.style.display = 'none';
     });
 
     // Sidebar label dynamic display
-    var sidebar = document.querySelector('.sidebar');
     var labels = document.querySelectorAll('.sidebar-label');
     function updateLabels() {
         if (sidebar.matches(':hover')) {
@@ -32,6 +37,26 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     sidebar.addEventListener('mouseenter', updateLabels);
-    sidebar.addEventListener('mouseleave', updateLabels);
+    sidebar.addEventListener('mouseleave', function() { updateLabels(); closeAllGroups(); });
     updateLabels();
+
+    // Fecha submenus ao clicar fora do sidebar ou ao pressionar ESC
+    function closeAllGroups() {
+        document.querySelectorAll('.sidebar-group.open').forEach(function(g) {
+            g.classList.remove('open');
+        });
+    }
+
+    document.addEventListener('click', function(e) {
+        var insideSidebar = !!e.target.closest('.sidebar');
+        if (!insideSidebar) {
+            closeAllGroups();
+        }
+    });
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' || e.key === 'Esc') {
+            closeAllGroups();
+        }
+    });
 });

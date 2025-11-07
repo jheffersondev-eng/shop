@@ -210,19 +210,18 @@ abstract class BaseController extends Controller
         try {
             DB::beginTransaction();
 
-            // Chama o Mediator para resolver o service correto, se existir
+            $request->request->add([
+                'user_id_update' => Auth::user()->id
+            ]);
+
             if($this->mediator) {
                 $result = $this->mediator->handle($request);
                 if ($result instanceof RedirectResponse) {
                     return $result;
                 }
+            } else {
+                $this->getRepository()->replace($model, $request);
             }
-
-            $request->request->add([
-                'user_id_update' => Auth::user()->id
-            ]);
-
-            //$this->getRepository()->replace($model, $request);
 
             $request->session()->flash('message', "{$this->getName()} atualizado");
             DB::commit();
@@ -250,6 +249,10 @@ abstract class BaseController extends Controller
     {
         try {
             DB::beginTransaction();
+
+            $request->request->add([
+                'user_id_delete' => Auth::user()->id
+            ]);
 
             if($this->mediator) {
                 $result = $this->mediator->handle($request);

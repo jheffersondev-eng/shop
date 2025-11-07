@@ -47,18 +47,6 @@ class BaseRepository implements IBaseRepository
     }
 
     /**
-     * Remove um registro pelo ID.
-     * @param int $id
-     * @return bool|null
-     * @throws Exception
-     */
-    public function delete(int $id)
-    {
-        $instance = $this->find($id);
-        return $instance ? $instance->delete() : null;
-    }
-
-    /**
      * Aplica filtros à query.
      * @return $this
      * @throws Exception

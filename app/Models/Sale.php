@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\UserDetail;
 
 class Sale extends Model
 {
@@ -29,7 +30,7 @@ class Sale extends Model
 
     public function client()
     {
-        return $this->belongsTo(Client::class);
+        return $this->belongsTo(UserDetail::class, 'client_id');
     }
 
     public function user()

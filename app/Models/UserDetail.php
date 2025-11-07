@@ -6,9 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Client extends Model
+class UserDetail extends Model
 {
     use HasFactory, SoftDeletes;
+
+    protected $table = 'user_details';
 
     protected $fillable = [
         'name',
@@ -18,7 +20,7 @@ class Client extends Model
         'email',
         'address',
         'credit_limit',
-        'status',
+        // 'status' moved to users table
     ];
 
     protected $hidden = [
@@ -46,4 +48,3 @@ class Client extends Model
         return trim($first . ' ' . $second);
     }
 }
-

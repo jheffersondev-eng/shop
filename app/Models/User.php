@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\EIsActive;
+use App\Models\UserDetail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -40,7 +41,7 @@ class User extends Authenticatable
 
     public function client()
     {
-        return $this->hasOne(Client::class, 'user_id');
+        return $this->hasOne(UserDetail::class, 'user_id');
     }
     
     /**

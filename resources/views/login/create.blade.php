@@ -43,7 +43,7 @@
                 Cadastre-se
             </div>
             @include('components.message')
-            <form method="POST" action="/register">
+            <form method="POST" action="register">
                 @csrf
                 <div class="row g-3">
                     <div class="col-md-6">

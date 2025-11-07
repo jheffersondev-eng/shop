@@ -22,11 +22,11 @@
         </a>
         <!-- Grupo de rotas com submenu -->
         <div class="sidebar-group">
-            <a href="#" class="nav-link sidebar-item sidebar-group-toggle" title="Configurações">
+            <button type="button" class="nav-link sidebar-item sidebar-group-toggle" title="Configurações">
                 <span class="sidebar-icon"><i class="bi bi-gear"></i></span>
                 <span class="sidebar-label">Configurações</span>
                 <span class="sidebar-chevron"><i class="bi bi-chevron-down ms-auto"></i></span>
-            </a>
+            </button>
             <div class="sidebar-submenu">
                 <a href="#" class="nav-link sidebar-subitem" title="Perfil">
                     <span class="sidebar-icon"><i class="bi bi-person"></i></span>
