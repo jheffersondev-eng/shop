@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Repositories\Login;
+namespace App\Repositories\Register;
 
 use App\Http\Requests\Login\UserReplaceRequest;
 use App\Http\Requests\Login\UserRegisterRequest;
 use App\Models\User;
 
-interface ILoginRepository
+interface IRegisterRepository
 {
     public function store(UserRegisterRequest $userRegisterRequest);
 

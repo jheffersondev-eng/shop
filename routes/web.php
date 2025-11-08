@@ -2,6 +2,7 @@
 
 use App\Modules\Config\Configuration;
 use App\Modules\Login\LoginModule;
+use App\Modules\Register\RegisterModule;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -12,6 +13,7 @@ Route::get('/', function () {
 Route::middleware([])->group(function () {
     $modules = [
         new LoginModule(),
+        new RegisterModule(),
     ];
 
     foreach ($modules as $module) {

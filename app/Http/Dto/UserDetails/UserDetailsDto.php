@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Dto\UserDetail;
+namespace App\Http\Dto\UserDetails;
 
 use App\Http\Dto\BaseDto;
 
-class CreateClientDto extends BaseDto
+class UserDetailsDto extends BaseDto
 {
     private string $name;
     private string $document;
     private string $phone;
     private string $birth_date;
     private string $address;
-    private int $user_id;
+    private ?int $user_id = null;
 
     public function __construct(
         string $name,
@@ -19,14 +19,12 @@ class CreateClientDto extends BaseDto
         string $phone,
         string $birth_date,
         string $address,
-        int $user_id
     ) {
         $this->name = $name;
         $this->document = $document;
         $this->phone = $phone;
         $this->birth_date = $birth_date;
         $this->address = $address;
-        $this->user_id = $user_id;
     }
 
     public function getName(): string
@@ -79,12 +77,12 @@ class CreateClientDto extends BaseDto
         $this->address = $address;
     }
 
-    public function getUserId(): int
+    public function getUserId(): ?int
     {
         return $this->user_id;
     }
 
-    public function setUserId(int $user_id): void
+    public function setUserId(?int $user_id = null): void
     {
         $this->user_id = $user_id;
     }

@@ -1,24 +1,23 @@
 <?php
 
-namespace App\Modules\Login;
+namespace App\Modules\Register;
 
-use App\Http\Controllers\Login\LoginController;
-use App\Modules\Config\ActionModule;
+use App\Http\Controllers\Register\RegisterController;
 use App\Modules\Config\Module;
 use App\Modules\Config\RouteModule;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 
-class LoginModule extends Module
+class RegisterModule extends Module
 {
-    public const NAME = "Login";
-    public const ICON = "fa fa-user";
+    public const NAME = "Register";
+    public const ICON = "fa fa-user-plus";
 
     public function register(Application $app): void
     {
     }
 
-    public function boot(): void 
+    public function boot(): void
     {
     }
 
@@ -34,10 +33,9 @@ class LoginModule extends Module
 
     public function getRoutesWeb(): RouteModule
     {
-        return new RouteModule("login", function () {
-            Route::get('/', [LoginController::class, 'Index'])->name('login');
-            Route::post('/', [LoginController::class, 'Login'])->name('login.post');
-            Route::post('/logout', [LoginController::class, 'Logout'])->name('logout');
+        return new RouteModule("register", function () {
+            Route::get('/', [RegisterController::class, 'SignUp'])->name('register');
+            Route::post('/', [RegisterController::class, 'Register'])->name('register.post');
         });
     }
 

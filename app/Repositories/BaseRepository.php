@@ -19,39 +19,23 @@ class BaseRepository implements IBaseRepository
         $this->model = $model->newQuery();
     }
 
-    /**
-     * Cria um novo registro.
-     * @return Model
-     */
-    protected function create(array $columns)
+    protected function createBase(array $columns): Model
     {
         return $this->model->getModel()->create($columns);
     }
 
-    /**
-     * @return bool
-     */
-    protected function update(int $id, array $columns)
+    protected function updateBase(int $id, array $columns): bool
     {
         $instance = $this->find($id);
         return $instance ? $instance->update($columns) : false;
     }
 
-    /**
-     * Busca um registro pelo ID.
-     * @return Model|null
-     */
-    public function find(int $id)
+    public function find(int $id): ?Model
     {
         return $this->model->getModel()->find($id);
     }
 
-    /**
-     * Aplica filtros à query.
-     * @return $this
-     * @throws Exception
-     */
-    public function findBy(array $filter)
+    public function findBy(array $filter): self
     {
         $tagsArray = explode(',', self::WHERE_TAGS);
 
@@ -98,50 +82,30 @@ class BaseRepository implements IBaseRepository
         return $this;
     }
 
-    /**
-     * Inclui registros removidos (soft delete).
-     * @return $this
-     */
-    public function includeTrashed()
+    public function includeTrashed(): self
     {
         $this->model = $this->model->withTrashed();
         return $this;
     }
 
-    /**
-     * Remove registros removidos (soft delete) da query.
-     * @return $this
-     */
-    public function removeTrashed()
+    public function removeTrashed(): self
     {
         $this->model = $this->model->withoutTrashed();
         return $this;
     }
 
-    /**
-     * Retorna todos os registros filtrados.
-     * @return Collection
-     */
-    public function get()
+    public function get(): Collection
     {
         return $this->model->get();
     }
 
-    /**
-     * Ordena a query.
-     * @return $this
-     */
-    public function order(string $column, string $direction = 'asc')
+    public function order(string $column, string $direction = 'asc'): self
     {
         $this->model = $this->model->orderBy($column, $direction);
         return $this;
     }
 
-    /**
-     * Pagina os resultados.
-     * @return LengthAwarePaginator
-     */
-    public function paginate(int $perPage)
+    public function paginate(int $perPage): LengthAwarePaginator
     {
         return $this->model->paginate($perPage);
     }

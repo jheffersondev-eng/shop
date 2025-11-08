@@ -2,8 +2,8 @@
 
 namespace App\Services\User;
 
-use App\Http\Dto\UserDetail\CreateClientDto;
 use App\Http\Dto\User\UpdateUserDto;
+use App\Http\Dto\UserDetails\UserDetailsDto;
 use App\Http\Requests\User\UserUpdateRequest;
 use App\Repositories\UserDetail\IUserDetailRepository;
 use App\Repositories\User\IUserRepository;
@@ -13,18 +13,17 @@ use Illuminate\Support\Facades\Hash;
 class UserUpdateRequestService implements IUserUpdateRequestService
 {
     protected IUserRepository $userRepository;
-    protected IUserDetailRepository $clientRepository;
+    protected IUserDetailRepository $userDetailRepository;
 
-    public function __construct(IUserRepository $userRepository, IUserDetailRepository $clientRepository)
+    public function __construct(IUserRepository $userRepository, IUserDetailRepository $userDetailRepository)
     {
         $this->userRepository = $userRepository;
-        $this->clientRepository = $clientRepository;
+        $this->userDetailRepository = $userDetailRepository;
     }
 
     public function handler(UserUpdateRequest $userUpdateRequest)
     {
         try {
-            // validate and hash password if provided
             $this->validatePassword($userUpdateRequest);
 
             $userDto = new UpdateUserDto(
@@ -33,28 +32,24 @@ class UserUpdateRequestService implements IUserUpdateRequestService
                 $userUpdateRequest->input('password')
             );
 
-            $this->userRepository->updateUserWithDto($userDto);
-
-            // build client/user-detail dto and upsert
-            $clientDto = new CreateClientDto(
+            $userDetailDto = new UserDetailsDto(
                 $userUpdateRequest->input('name'),
                 $userUpdateRequest->input('document'),
                 $userUpdateRequest->input('phone'),
                 $userUpdateRequest->input('birth_date'),
                 $userUpdateRequest->input('address'),
-                (int)$userUpdateRequest->input('id')
+                $userUpdateRequest->input('id')
             );
 
-            $updated = $this->clientRepository->updateClientWithDto($clientDto);
-            if (! $updated) {
-                $this->clientRepository->store($clientDto);
-            }
+            $this->userRepository->update($userDto);
+            $this->userDetailRepository->update($userDetailDto);
 
             return true;
         } catch (\Exception $e) {
             return Redirect::back()->withErrors(['' => $e->getMessage()]);
         }
     }
+
     public function validatePassword(UserUpdateRequest $userUpdateRequest): void
     {
         $password = $userUpdateRequest->input('password');

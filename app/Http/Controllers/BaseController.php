@@ -16,7 +16,6 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 
 /**
- * Class BaseController
  * @package App\Http\Controllers
  */
 abstract class BaseController extends Controller
@@ -29,12 +28,20 @@ abstract class BaseController extends Controller
     protected string $name;
     protected array $orderList = ['created_at', 'desc'];
     protected ?BaseRepository $repository = null;
-    protected MediatorService $mediator;
+    protected ?MediatorService $mediator = null;
 
     public function __construct($repository = null, ?MediatorService $mediator = null)
     {
         $this->repository = $repository ?? $repository;
-        $this->mediator = $mediator ?? new MediatorService();
+        $this->mediator = $mediator ?? null;
+    }
+
+    public function getMediator(): MediatorService
+    {
+        if ($this->mediator === null) {
+            $this->mediator = new MediatorService();
+        }
+        return $this->mediator;
     }
 
     public function getPages(): string
@@ -111,10 +118,9 @@ abstract class BaseController extends Controller
     }
 
     /**
-     * @return Application|Factory|View
      * @throws \Exception
      */
-    public function IndexBase(Request $request)
+    public function IndexBase(Request $request): Application|Factory|View
     {
         $this->getRepository()->findBy($request->all())->order($this->getOrderList()[0], $this->getOrderList()[1]);
         /**
@@ -130,10 +136,7 @@ abstract class BaseController extends Controller
         ]);
     }
 
-    /**
-     * @return Factory|View
-     */
-    public function CreateBase()
+    public function CreateBase(): Factory|View
     {
         return view($this->getFolderView() . ".create", [
             'url' => $this->getUrl()
@@ -141,7 +144,6 @@ abstract class BaseController extends Controller
     }
 
     /**
-     * @return RedirectResponse
      * @throws \Throwable
      */
     public function StoreBase($request): RedirectResponse
@@ -156,15 +158,14 @@ abstract class BaseController extends Controller
                 ]);
             }
 
-            // Chama o Mediator para resolver o service correto, se existir
-            if($this->mediator) {
-                $result = $this->mediator->handle($request);
-                if ($result instanceof RedirectResponse) {
-                    return $result;
-                }
+            // Chama o Mediator para resolver o service correto; se não houver handler, fallback para repository
+            $result = $this->getMediator()->handle($request);
+            if ($result instanceof RedirectResponse) {
+                return $result;
             }
-
-            $this->getRepository()->store($request);
+            if ($result === null) {
+                $this->getRepository()->store($request);
+            }
 
             if (isset($request->descriptionMessage) and isset($request->status)){
                 $request->session()->flash('message', "{$this->getName()}");
@@ -190,10 +191,7 @@ abstract class BaseController extends Controller
         return Redirect::to($this->getUrl());
     }
 
-    /**
-     * @return Factory|View
-     */
-    public function EditBase($model)
+    public function EditBase($model): Factory|View
     {
         return view($this->getFolderView() . ".edit", [
             'model' => $model,
@@ -202,7 +200,6 @@ abstract class BaseController extends Controller
     }
 
     /**
-     * @return RedirectResponse
      * @throws \Throwable
      */
     public function UpdateBase($model, $request): RedirectResponse
@@ -214,12 +211,11 @@ abstract class BaseController extends Controller
                 'user_id_update' => Auth::user()->id
             ]);
 
-            if($this->mediator) {
-                $result = $this->mediator->handle($request);
-                if ($result instanceof RedirectResponse) {
-                    return $result;
-                }
-            } else {
+            $result = $this->getMediator()->handle($request);
+            if ($result instanceof RedirectResponse) {
+                return $result;
+            }
+            if ($result === null) {
                 $this->getRepository()->replace($model, $request);
             }
 
@@ -242,7 +238,6 @@ abstract class BaseController extends Controller
     }
 
     /**
-     * @return RedirectResponse
      * @throws \Throwable
      */
     public function DestroyBase($model, $request): RedirectResponse
@@ -254,11 +249,9 @@ abstract class BaseController extends Controller
                 'user_id_delete' => Auth::user()->id
             ]);
 
-            if($this->mediator) {
-                $result = $this->mediator->handle($request);
-                if ($result instanceof RedirectResponse) {
-                    return $result;
-                }
+            $result = $this->getMediator()->handle($request);
+            if ($result instanceof RedirectResponse) {
+                return $result;
             }
 
             $this->getRepository()->delete($model);
@@ -284,20 +277,19 @@ abstract class BaseController extends Controller
         Request $request, 
         string $message, 
         ?string $route = null
-    )
+    ): RedirectResponse
     {
-        if($this->mediator) {
-            try {
-                $result = $this->mediator->handle($request);
-                if ($result instanceof RedirectResponse) {
-                    return $result;
-                }
-                $request->session()->flash('success', $message);
-                return Redirect::to($route ?? $this->getUrl());
-            } catch (\Exception $e) {
-                $request->session()->flash('error', $e->getMessage());
-                return redirect()->back()->withInput($request->all());
+        try {
+            $result = $this->getMediator()->handle($request);
+            if ($result instanceof RedirectResponse) {
+                return $result;
             }
+
+            $request->session()->flash('success', $message);
+            return Redirect::to($route ?? $this->getUrl());
+        } catch (\Exception $e) {
+            $request->session()->flash('error', $e->getMessage());
+            return redirect()->back()->withInput($request->all());
         }
     }
 }

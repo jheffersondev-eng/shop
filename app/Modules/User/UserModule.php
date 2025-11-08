@@ -13,11 +13,11 @@ class UserModule extends Module
     public const NAME = "User";
     public const ICON = "fa fa-user";
 
-    public function register(Application $app)
+    public function register(Application $app): void
     {
     }
 
-    public function boot()  
+    public function boot(): void
     {
     }
 
@@ -31,7 +31,7 @@ class UserModule extends Module
         return self::ICON;
     }
 
-    public function getRoutesWeb()
+    public function getRoutesWeb(): RouteModule
     {
         return new RouteModule("user", function () {
             Route::get('/', [UserController::class, 'Index'])->name('user.index');
@@ -41,7 +41,7 @@ class UserModule extends Module
         });
     }
 
-    public function getRoutesApi()
+    public function getRoutesApi()//: RouteModule
     {
     }
 
@@ -49,7 +49,7 @@ class UserModule extends Module
     {
     }
 
-    public function getActionsWeb()
+    public function getActionsWeb()//: ActionModule
     {
         //$permissoes[] = (new PermissionBlockResource("User", UserController::class))->toArray();
         //return new ActionModule(self::NAME, $permissoes);

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories\Login;
+namespace App\Repositories\Register;
 
 use App\Http\Requests\Login\UserReplaceRequest;
 use App\Http\Requests\Login\UserRegisterRequest;
@@ -8,13 +8,11 @@ use App\Models\User;
 use App\Repositories\BaseRepository;
 use App\Repositories\UserDetail\IUserDetailRepository;
 
-class LoginRepository extends BaseRepository implements ILoginRepository
+class RegisterRepository extends BaseRepository implements IRegisterRepository
 {
     public function __construct(IUserDetailRepository $clientRepository)
-
     {
         parent::__construct(new User());
-        //$this->clientRepository = $clientRepository;
     }
 
     public function store(UserRegisterRequest $userRegisterRequest)

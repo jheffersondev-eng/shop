@@ -2,17 +2,26 @@
 
 namespace App\Http\Requests\Login;
 
+use App\Enums\EProfile;
+use App\Helpers\DocumentHelper;
+use App\Helpers\PhoneHelper;
 use App\Http\Requests\BaseRequest;
 
 class UserRegisterRequest extends BaseRequest
 {
-    public const USER_CLIENT = 2;
-
     public function rules(): array
     {
         if (!$this->input('profile_id')) {
-            $this->merge(['profile_id' => self::USER_CLIENT]);
+            $this->merge(['profile_id' => EProfile::ADMIN->value]);
         }
+
+        $this->merge([
+            'email' => strtolower($this->input('email')),
+            'document' => DocumentHelper::stripSpecialChars($this->input('document')),
+            'phone' => PhoneHelper::normalize($this->input('phone')),
+            'address' => strtolower($this->input('address')),
+            'name' => strtoupper($this->input('name')),
+        ]);
 
         return [
             'name' => ['required', 'string', 'max:200'],
