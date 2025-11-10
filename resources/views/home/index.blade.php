@@ -23,7 +23,6 @@
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Abrir menu">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <!-- Remova ms-auto d-lg-flex do collapse -->
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item"><a class="nav-link" href="#">Contato</a></li>
@@ -41,8 +40,8 @@
                     Produtos de qualidade, entrega rápida e ofertas exclusivas.<br>
                 </div>
                 <div class="hero-actions">
-                    <a class="btn btn-info" href="/login" tabindex="0">Entrar</a>
-                    <a class="btn btn-outline-info" href="/register" tabindex="0">Cadastre-se</a>
+                    <a class="btn btn-info" href="{{ route('login') }}" tabindex="0">Entrar</a>
+                    <a class="btn btn-outline-info" href="{{ route('register') }}" tabindex="0">Cadastre-se</a>
                 </div>
             </div>
             <div class="hero-image">

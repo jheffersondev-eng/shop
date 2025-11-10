@@ -19,5 +19,10 @@ class Profile extends Model
         'updated_at' => 'datetime',
         'deleted_at' => 'datetime',
     ];
+
+    public function users()
+    {
+        return $this->hasMany(User::class, 'profile_id');
+    }
 }
 

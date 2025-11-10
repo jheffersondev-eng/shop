@@ -2,35 +2,27 @@
 
 namespace App\Modules\Config;
 
-//use App\Business\User\Models\User;
+use Illuminate\Support\Collection;
 
 abstract class HeaderMenu implements ItemMenu
 {
-    public function hasSubMenu(): Bool
+    public function hasSubMenu(): bool
     {
-        return true;
+        return false;
     }
 
-    public function getPermission(): String
+    public function getSubMenu(): Collection
     {
-        return "";
+        return new Collection();
     }
 
-    public function getLink(): String
+    public function getPermission(): ?string
     {
-        return "";
+        return null;
     }
 
-//    public function userHasPermission(User $user): bool
-//    {
-//        /**
-//         * ItemMenu $submenu
-//         */
-//         foreach ($this->getSubMenu() as $submenu) {
-//             if ($submenu->userHasPermission($user)) {
-//                 return true;
-//             }
-//        }
-//        return false;
-//    }
+    public function getLink(): ?string
+    {
+        return null;
+    }
 }

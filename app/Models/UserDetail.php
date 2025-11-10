@@ -6,9 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Client extends Model
+class UserDetail extends Model
 {
     use HasFactory, SoftDeletes;
+
+    protected $table = 'user_details';
 
     protected $fillable = [
         'name',
@@ -18,7 +20,7 @@ class Client extends Model
         'email',
         'address',
         'credit_limit',
-        'status',
+        'user_id',
     ];
 
     protected $hidden = [
@@ -32,5 +34,17 @@ class Client extends Model
         'updated_at' => 'datetime',
         'deleted_at' => 'datetime',
     ];
-}
 
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function getNameAndSurnameAttribute()
+    {
+        $names = explode(' ', trim($this->name));
+        $first = isset($names[0]) ? ucfirst(strtolower($names[0])) : '';
+        $second = isset($names[1]) ? ucfirst(strtolower($names[1])) : '';
+        return trim($first . ' ' . $second);
+    }
+}

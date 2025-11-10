@@ -1,0 +1,71 @@
+        .register-card {
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(44,62,80,0.10);
+            max-width: 800px;
+            margin: 60px auto;
+            padding: 38px 48px 32px 48px;
+        }
+        .register-title {
+            font-size: 2rem;
+            font-family: 'Montserrat', Arial, sans-serif;
+            color: var(--primary);
+            font-weight: 700;
+            margin-bottom: 28px;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .register-title .bi-person-plus {
+            font-size: 2.2rem;
+            color: var(--primary);
+        }
+        .form-label {
+            font-weight: 500;
+            color: #222;
+        }
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px #6c63ff33;
+        }
+        .btn-register {
+            background: var(--primary);
+            color: #fff;
+            border-radius: 22px;
+            padding: 12px 0;
+            font-size: 1.15rem;
+            font-weight: 600;
+            border: none;
+            width: 100%;
+            margin-top: 18px;
+        }
+        .btn-register:hover, .btn-register:focus {
+            background: #4834d4;
+        }
+        .register-link {
+            display: block;
+            text-align: center;
+            margin-top: 22px;
+            color: var(--primary);
+            font-size: 1rem;
+            text-decoration: underline;
+        }
+        .input-group {
+            margin-bottom: 18px;
+        }
+        .input-group-text {
+            background: #f7f7f7;
+            border: none;
+            color: #888;
+        }
+        .form-control::placeholder {
+            color: #888 !important;
+            opacity: 0.55 !important;
+        }
+        @media (max-width: 900px) {
+            .register-card {
+                max-width: 98vw;
+                padding: 24px 8px 16px 8px;
+            }
+        }

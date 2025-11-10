@@ -2,26 +2,30 @@
 
 namespace App\Modules\Config;
 
-//use App\Business\User\Models\User;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection;
 
+/**
+ * Simple link menu item (leaf node, no submenus).
+ */
 abstract class LinkMenu implements ItemMenu
 {
-    public function hasSubMenu(): Bool
+    public function hasSubMenu(): bool
     {
         return false;
     }
 
-    /**
-     * @return Collection
-     */
     public function getSubMenu(): Collection
     {
         return new Collection();
     }
 
-    //public function userHasPermission(User $user): bool
-    //{
-     //   return $user->hasPermission($this->getPermission());
-    //}
+    public function getPermission(): ?string
+    {
+        return null;
+    }
+
+    public function getLink(): ?string
+    {
+        return null;
+    }
 }

@@ -11,8 +11,8 @@ use RuntimeException;
 
 abstract class Module
 {
-    abstract public function getName(): String;
-    abstract public function getIcon(): String;
+    //abstract public function getName(): String;
+    //abstract public function getIcon(): String;
 
     /**
      * Vai ser chamado no boot do app service provider

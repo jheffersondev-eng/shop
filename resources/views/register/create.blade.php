@@ -11,84 +11,29 @@
     <link rel="stylesheet" href="{{ asset('assets/css/home/index.css') }}">
     <!-- Bootstrap Icons CDN -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <style>
-        .register-card {
-            background: #fff;
-            border-radius: 20px;
-            box-shadow: 0 8px 32px rgba(44,62,80,0.10);
-            max-width: 800px;
-            margin: 60px auto;
-            padding: 38px 48px 32px 48px;
-        }
-        .register-title {
-            font-size: 2rem;
-            font-family: 'Montserrat', Arial, sans-serif;
-            color: var(--primary);
-            font-weight: 700;
-            margin-bottom: 28px;
-            text-align: left;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .register-title .bi-person-plus {
-            font-size: 2.2rem;
-            color: var(--primary);
-        }
-        .form-label {
-            font-weight: 500;
-            color: #222;
-        }
-        .form-control:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 2px #6c63ff33;
-        }
-        .btn-register {
-            background: var(--primary);
-            color: #fff;
-            border-radius: 22px;
-            padding: 12px 0;
-            font-size: 1.15rem;
-            font-weight: 600;
-            border: none;
-            width: 100%;
-            margin-top: 18px;
-        }
-        .btn-register:hover, .btn-register:focus {
-            background: #4834d4;
-        }
-        .register-link {
-            display: block;
-            text-align: center;
-            margin-top: 22px;
-            color: var(--primary);
-            font-size: 1rem;
-            text-decoration: underline;
-        }
-        .input-group {
-            margin-bottom: 18px;
-        }
-        .input-group-text {
-            background: #f7f7f7;
-            border: none;
-            color: #888;
-        }
-        .form-control::placeholder {
-            color: #888 !important;
-            opacity: 0.55 !important;
-        }
-        @media (max-width: 900px) {
-            .register-card {
-                max-width: 98vw;
-                padding: 24px 8px 16px 8px;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('assets/css/home/login.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/home/register.css') }}">
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light" aria-label="Menu principal">
         <div class="container">
-            <a class="navbar-brand" href="/"><img src="{{ asset('assets/img/branding/porto-shop-branding.png') }}" alt="Logo Porto Shop" width="38" height="38">Porto Shop</a>
+            <a class="navbar-brand" href="/">
+                <img src="{{ asset('assets/img/branding/porto-shop-branding.png') }}" alt="Logo Porto Shop" width="38" height="38">
+                Porto Shop
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Abrir menu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="#">Contato</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Produtos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Ofertas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/">Início</a></li>
+                </ul>
+                <a class="btn-feedback ms-lg-3 mt-2 mt-lg-0" href="{{ route('login') }}">Entrar</a>
+            </div>
         </div>
     </nav>
     <main>
@@ -97,49 +42,50 @@
                 <i class="bi bi-person-plus"></i>
                 Cadastre-se
             </div>
-            <form method="POST" action="/register">
+            @include('components.message')
+            <form method="POST" action="register">
                 @csrf
                 <div class="row g-3">
                     <div class="col-md-6">
                         <label for="name" class="form-label">Nome</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="bi bi-person"></i></span>
-                            <input type="text" class="form-control" id="name" name="name" placeholder="Ex.: Maria/Shop Ltda" required>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Ex.: Maria/Shop Ltda" value="{{ old('name') }}" required>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <label for="email" class="form-label">E-mail</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="bi bi-envelope"></i></span>
-                            <input type="email" class="form-control" id="email" name="email" placeholder="exemplo@dominio.com" required>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="exemplo@dominio.com" value="{{ old('email') }}" required>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <label for="document" class="form-label">Documento</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="bi bi-person-badge"></i></span>
-                            <input type="text" class="form-control" id="document" name="document" placeholder="CPF/CNPJ" required>
+                            <input type="text" class="form-control" id="document" name="document" placeholder="CPF/CNPJ" value="{{ old('document') }}" required>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <label for="phone" class="form-label">Telefone</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="bi bi-phone"></i></span>
-                            <input type="text" class="form-control" id="phone" name="phone" placeholder="(00) 00000-0000">
+                            <input type="text" class="form-control" id="phone" name="phone" placeholder="(00) 00000-0000" value="{{ old('phone') }}">
                         </div>
                     </div>
                     <div class="col-md-4">
                         <label for="birth_date" class="form-label">Data de Nascimento</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="bi bi-calendar"></i></span>
-                            <input type="date" class="form-control" id="birth_date" name="birth_date" required>
+                            <input type="date" class="form-control" id="birth_date" name="birth_date" value="{{ old('birth_date') }}" required>
                         </div>
                     </div>
                     <div class="col-md-12">
                         <label for="address" class="form-label">Endereço</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="bi bi-geo-alt"></i></span>
-                            <input type="text" class="form-control" id="address" name="address" placeholder="Rua/Bairro/Apto.">
+                            <input type="text" class="form-control" id="address" name="address" placeholder="Rua/Bairro/Apto." value="{{ old('address') }}">
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -159,7 +105,7 @@
                 </div>
                 <button type="submit" class="btn btn-register">Cadastrar</button>
             </form>
-            <a href="/login" class="register-link">Já tenho cadastro</a>
+            <a href="{{ route('login') }}" class="register-link">Já tenho cadastro</a>
         </div>
     </main>
     <div class="footer">

@@ -3,6 +3,7 @@
 namespace App\Modules\Login;
 
 use App\Http\Controllers\Login\LoginController;
+use App\Modules\Config\ActionModule;
 use App\Modules\Config\Module;
 use App\Modules\Config\RouteModule;
 use Illuminate\Contracts\Foundation\Application;
@@ -10,30 +11,24 @@ use Illuminate\Support\Facades\Route;
 
 class LoginModule extends Module
 {
-    public const NAME = "Login";
-    public const ICON = "fa fa-user";
-
-    public function register(Application $app)
+    public function register(Application $app): void
     {
-
     }
 
-    public function getRoutesWeb()
+    public function boot(): void 
+    {
+    }
+
+    public function getRoutesWeb(): RouteModule
     {
         return new RouteModule("login", function () {
-            Route::get('/login', [LoginController::class, 'index']);
-            Route::get('/register', [LoginController::class, 'register']);
-            Route::post('/login', [LoginController::class, 'login']);
-            Route::post('/register', [LoginController::class, 'register']);
-            Route::post('/logout', [LoginController::class, 'logout']);
+            Route::get('/', [LoginController::class, 'Index'])->name('login');
+            Route::post('/', [LoginController::class, 'Login'])->name('login.post');
+            Route::post('/logout', [LoginController::class, 'Logout'])->name('logout');
         });
     }
 
-    public function boot()  
-    {
-    }
-
-    public function getRoutesApi()
+    public function getRoutesApi()//: RouteApiModule
     {
     }
 
@@ -41,19 +36,9 @@ class LoginModule extends Module
     {
     }
 
-    public function getActionsWeb()
+    public function getActionsWeb()//: ActionModule
     {
         //$permissoes[] = (new PermissionBlockResource("Login", LoginController::class))->toArray();
         //return new ActionModule(self::NAME, $permissoes);
-    }
-
-    public function getName(): string
-    {
-        return self::NAME;
-    }
-
-    public function getIcon(): string
-    {
-        return self::ICON;
     }
 }

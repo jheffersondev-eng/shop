@@ -5,6 +5,10 @@ body {
     display: flex;
     flex-direction: column;
 }
+.form-control::placeholder {
+    color: #888 !important;
+    opacity: 0.55 !important;
+}
 .login-card {
     background: #fff;
     border-radius: var(--card-radius);

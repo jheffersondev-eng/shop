@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\BaseRepository;
+use App\Services\MediatorService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -15,7 +16,6 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 
 /**
- * Class BaseController
  * @package App\Http\Controllers
  */
 abstract class BaseController extends Controller
@@ -27,136 +27,100 @@ abstract class BaseController extends Controller
     protected string $models;
     protected string $name;
     protected array $orderList = ['created_at', 'desc'];
-    protected BaseRepository $repository;
+    protected ?BaseRepository $repository = null;
+    protected ?MediatorService $mediator = null;
 
-    /**
-     * UserController constructor.
-     * @param $repository
-     */
-    public function __construct($repository = null)
+    public function __construct($repository = null, ?MediatorService $mediator = null)
     {
-        $this->repository = $repository;
+        $this->repository = $repository ?? $repository;
+        $this->mediator = $mediator ?? null;
     }
 
-    /**
-     * @return string
-     */
+    public function getMediator(): MediatorService
+    {
+        if ($this->mediator === null) {
+            $this->mediator = new MediatorService();
+        }
+        return $this->mediator;
+    }
+
     public function getPages(): string
     {
         return $this->pages;
     }
 
-    /**
-     * @param string $pages
-     */
     public function setPages(string $pages): void
     {
         $this->pages = $pages;
     }
 
-    /**
-     * @return string
-     */
     public function getUrl(): string
     {
         return $this->url;
     }
 
-    /**
-     * @param string $url
-     */
     public function setUrl(string $url): void
     {
         $this->url = $url;
     }
 
-    /**
-     * @return string
-     */
     public function getFolderView(): string
     {
         return $this->folder_view;
     }
 
-    /**
-     * @param string $folder_view
-     */
     public function setFolderView(string $folder_view): void
     {
         $this->folder_view = $folder_view;
     }
 
-    /**
-     * @param string $models
-     */
     public function setModels(string $models): void
     {
         $this->models = $models;
     }
 
-    /**
-     * @return BaseRepository
-     */
     public function getRepository(): BaseRepository
     {
+        if ($this->repository === null) {
+            throw new \RuntimeException('Repository não inicializado para este controller.');
+        }
         return $this->repository;
     }
 
-    /**
-     * @param BaseRepository $repository
-     */
     public function setRepository(BaseRepository $repository): void
     {
         $this->repository = $repository;
     }
 
-    /**
-     * @return array
-     */
     public function getOrderList(): array
     {
         return $this->orderList;
     }
 
-    /**
-     * @param array $orderList
-     */
     public function setOrderList(array $orderList): void
     {
         $this->orderList = $orderList;
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return string
-     */
     public function getModelName(): string
     {
         return $this->models ?? 'models';
     }
 
-    /**
-     * @param string $name
-     */
     public function setName(string $name): void
     {
         $this->name = $name;
     }
 
     /**
-     * ]
-     * @param Request $request
-     * @return Application|Factory|View
      * @throws \Exception
      */
-    public function indexBase(Request $request)
+    public function IndexBase(Request $request): Application|Factory|View
     {
         $this->getRepository()->findBy($request->all())->order($this->getOrderList()[0], $this->getOrderList()[1]);
         /**
@@ -172,10 +136,7 @@ abstract class BaseController extends Controller
         ]);
     }
 
-    /**
-     * @return Factory|View
-     */
-    public function createBase()
+    public function CreateBase(): Factory|View
     {
         return view($this->getFolderView() . ".create", [
             'url' => $this->getUrl()
@@ -183,31 +144,38 @@ abstract class BaseController extends Controller
     }
 
     /**
-     * @param $request
-     * @return RedirectResponse
      * @throws \Throwable
      */
-    public function storeBase($request): RedirectResponse
+    public function StoreBase($request): RedirectResponse
     {
         try {
             DB::beginTransaction();
 
-            $request->request->add([
-                'user_id_update' => Auth::user()->id,
-                'user_id_create' => Auth::user()->id,
-            ]);
+            if(Auth::user()) {
+                $request->request->add([
+                    'user_id_create' => Auth::user()->id,
+                ]);
+            }
 
-            //$this->getRepository()->store($request);
+            // Chama o Mediator para resolver o service correto; se não houver handler, fallback para repository
+            $result = $this->getMediator()->handle($request);
+            if ($result instanceof RedirectResponse) {
+                return $result;
+            }
+            if ($result === null) {
+                $this->getRepository()->store($request);
+            }
 
-            if (isset($request->observacao) and isset($request->status)){
-                $request->session()->flash('message', " Status do {$this->getName()} alterado");
+            if (isset($request->descriptionMessage) and isset($request->status)){
+                $request->session()->flash('message', "{$this->getName()}");
             }else{
-                $request->session()->flash('message', "{$this->getName()} cadastrado");
+                $request->session()->flash('message', "{$this->getName()} cadastrado com sucesso");
             }
 
             DB::commit();
         } catch (\Exception $e) {
             $request->session()->flash('error', "Erro ao cadastrar o {$this->getName()}:  {$e->getMessage()}");
+
             DB::rollBack();
 
             Log::critical($e->getMessage(), [
@@ -216,17 +184,13 @@ abstract class BaseController extends Controller
                 'params' => \request()->all(),
             ]);
 
-            return Redirect::back()->withInput($request->all());
+            return redirect()->back()->withInput($request->all());
         }
-
+        
         return Redirect::to($this->getUrl());
     }
 
-    /**
-     * @param $model
-     * @return Factory|View
-     */
-    public function editBase($model)
+    public function EditBase($model): Factory|View
     {
         return view($this->getFolderView() . ".edit", [
             'model' => $model,
@@ -235,12 +199,9 @@ abstract class BaseController extends Controller
     }
 
     /**
-     * @param $request
-     * @param $model
-     * @return RedirectResponse
      * @throws \Throwable
      */
-    public function updateBase($model, $request): RedirectResponse
+    public function UpdateBase($model, $request): RedirectResponse
     {
         try {
             DB::beginTransaction();
@@ -249,7 +210,13 @@ abstract class BaseController extends Controller
                 'user_id_update' => Auth::user()->id
             ]);
 
-            //$this->getRepository()->replace($model, $request);
+            $result = $this->getMediator()->handle($request);
+            if ($result instanceof RedirectResponse) {
+                return $result;
+            }
+            if ($result === null) {
+                $this->getRepository()->replace($model, $request);
+            }
 
             $request->session()->flash('message', "{$this->getName()} atualizado");
             DB::commit();
@@ -270,15 +237,21 @@ abstract class BaseController extends Controller
     }
 
     /**
-     * @param $request
-     * @param $model
-     * @return RedirectResponse
      * @throws \Throwable
      */
-    public function destroyBase($model, $request): RedirectResponse
+    public function DestroyBase($model, $request): RedirectResponse
     {
         try {
             DB::beginTransaction();
+
+            $request->request->add([
+                'user_id_delete' => Auth::user()->id
+            ]);
+
+            $result = $this->getMediator()->handle($request);
+            if ($result instanceof RedirectResponse) {
+                return $result;
+            }
 
             $this->getRepository()->delete($model);
 
@@ -297,5 +270,25 @@ abstract class BaseController extends Controller
         }
 
         return Redirect::back();
+    }
+
+    public function RedirectBase(
+        Request $request, 
+        string $message, 
+        ?string $route = null
+    ): RedirectResponse
+    {
+        try {
+            $result = $this->getMediator()->handle($request);
+            if ($result instanceof RedirectResponse) {
+                return $result;
+            }
+
+            $request->session()->flash('success', $message);
+            return Redirect::to($route ?? $this->getUrl());
+        } catch (\Exception $e) {
+            $request->session()->flash('error', $e->getMessage());
+            return redirect()->back()->withInput($request->all());
+        }
     }
 }

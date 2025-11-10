@@ -21,12 +21,6 @@ interface IBaseRepository
     public function findBy(array $filter);
 
     /**
-     * @param int $id
-     * @return bool|null
-     */
-    public function delete(int $id);
-
-    /**
      * @return Collection
      */
     public function get();

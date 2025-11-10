@@ -12,71 +12,30 @@ class BaseRepository implements IBaseRepository
 {
     const WHERE_TAGS = 'In,Like';
 
-    /**
-     * @var Model|Builder
-     */
     protected Model|Builder $model;
 
-    /**
-     * BaseRepository constructor.
-     * @param Model $model
-     */
     public function __construct(Model $model)
     {
         $this->model = $model->newQuery();
     }
 
-    /**
-     * Cria um novo registro.
-     * @param array $columns
-     * @return Model
-     */
-    protected function create(array $columns)
+    protected function createBase(array $columns): Model
     {
         return $this->model->getModel()->create($columns);
     }
 
-    /**
-     * Atualiza um registro.
-     * @param int $id
-     * @param array $columns
-     * @return bool
-     */
-    protected function update(int $id, array $columns)
+    protected function updateBase(int $id, array $columns): bool
     {
         $instance = $this->find($id);
         return $instance ? $instance->update($columns) : false;
     }
 
-    /**
-     * Busca um registro pelo ID.
-     * @param int $id
-     * @return Model|null
-     */
-    public function find(int $id)
+    public function find(int $id): ?Model
     {
         return $this->model->getModel()->find($id);
     }
 
-    /**
-     * Remove um registro pelo ID.
-     * @param int $id
-     * @return bool|null
-     * @throws Exception
-     */
-    public function delete(int $id)
-    {
-        $instance = $this->find($id);
-        return $instance ? $instance->delete() : null;
-    }
-
-    /**
-     * Aplica filtros à query.
-     * @param array $filter
-     * @return $this
-     * @throws Exception
-     */
-    public function findBy(array $filter)
+    public function findBy(array $filter): self
     {
         $tagsArray = explode(',', self::WHERE_TAGS);
 
@@ -123,53 +82,30 @@ class BaseRepository implements IBaseRepository
         return $this;
     }
 
-    /**
-     * Inclui registros removidos (soft delete).
-     * @return $this
-     */
-    public function includeTrashed()
+    public function includeTrashed(): self
     {
         $this->model = $this->model->withTrashed();
         return $this;
     }
 
-    /**
-     * Remove registros removidos (soft delete) da query.
-     * @return $this
-     */
-    public function removeTrashed()
+    public function removeTrashed(): self
     {
         $this->model = $this->model->withoutTrashed();
         return $this;
     }
 
-    /**
-     * Retorna todos os registros filtrados.
-     * @return Collection
-     */
-    public function get()
+    public function get(): Collection
     {
         return $this->model->get();
     }
 
-    /**
-     * Ordena a query.
-     * @param string $column
-     * @param string|null $direction
-     * @return $this
-     */
-    public function order(string $column, string $direction = 'asc')
+    public function order(string $column, string $direction = 'asc'): self
     {
         $this->model = $this->model->orderBy($column, $direction);
         return $this;
     }
 
-    /**
-     * Pagina os resultados.
-     * @param int $perPage
-     * @return LengthAwarePaginator
-     */
-    public function paginate(int $perPage)
+    public function paginate(int $perPage): LengthAwarePaginator
     {
         return $this->model->paginate($perPage);
     }

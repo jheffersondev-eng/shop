@@ -12,12 +12,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link rel="stylesheet" href="{{ asset('assets/css/home/index.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/home/login.css') }}">
-    <style>
-        .form-control::placeholder {
-            color: #888 !important;
-            opacity: 0.55 !important;
-        }
-    </style>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light" aria-label="Menu principal">
@@ -32,7 +26,9 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <!-- Adicione outros itens de menu aqui se necessário -->
+                    <li class="nav-item"><a class="nav-link" href="#">Contato</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Produtos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Ofertas</a></li>
                 </ul>
                 <a class="btn-feedback ms-lg-3 mt-2 mt-lg-0" href="/">Início</a>
             </div>
@@ -44,18 +40,20 @@
                 <img src="{{ asset('assets/img/branding/porto-shop-branding.png') }}" alt="Logo Porto Shop">
             </div>
             <div class="login-title">Faça Login</div>
-            <form>
+            @include('components.message')
+            <form method="POST" action="/login">
+                @csrf
                 <div class="mb-3">
                     <label for="email" class="form-label">E-mail</label>
-                    <input type="email" class="form-control" id="email" placeholder="Seu e-mail" required>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Seu e-mail" required>
                 </div>
                 <div class="mb-3">
                     <label for="senha" class="form-label">Senha</label>
-                    <input type="password" class="form-control" id="senha" placeholder="Sua senha" required>
+                    <input type="password" class="form-control" id="senha" name="password" placeholder="Sua senha" required>
                 </div>
                 <button type="submit" class="btn btn-login">Entrar</button>
             </form>
-            <a href="/register" class="login-link">Não tem conta? Cadastre-se</a>
+            <a href="{{ route('register.post') }}" class="login-link">Não tem conta? Cadastre-se</a>
         </div>
     </main>
     <div class="footer">

@@ -2,17 +2,15 @@
 
 namespace App\Modules\Config;
 
-//use App\Business\User\Models\User;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection;
 
 interface ItemMenu
 {
-    public function getName(): String;
-    public function getIcon(): String;
-    public function hasSubMenu(): Bool;
+    public function getName(): string;
+    public function getIcon(): string;
+    public function hasSubMenu(): bool;
 
     public function getSubMenu(): Collection;
-    public function getPermission(): String;
-    public function getLink(): String;
-    //public function userHasPermission(User $user): bool;
+    public function getPermission(): ?string;
+    public function getLink(): ?string;
 }

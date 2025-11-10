@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\EIsActive;
+use App\Models\UserDetail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -18,6 +19,8 @@ class User extends Authenticatable
         'password',
         'profile_id',
         'is_active',
+        'user_id_update',
+        'user_id_create',
     ];
 
     protected $hidden = [
@@ -32,6 +35,32 @@ class User extends Authenticatable
         'deleted_at' => 'datetime',
         'created_at' => 'datetime',
     ];
+
+    public function profile()
+    {
+        return $this->belongsTo(Profile::class, 'profile_id');
+    }
+
+    public function userDetail()
+    {
+        return $this->hasOne(UserDetail::class, 'user_id');
+    }
+
+    // Alias for user details to match view expectations (userDetail)
+    public function userDetailAlias()
+    {
+        return $this->hasOne(UserDetail::class, 'user_id');
+    }
+
+    public function userIdUpdate()
+    {
+        return $this->hasOne(UserDetail::class, 'user_id_update');
+    }
+
+    public function userIdCreate()
+    {
+        return $this->hasOne(UserDetail::class, 'user_id_create');
+    }
 
     /**
      * $fillable: Define quais campos podem ser preenchidos em massa (mass assignment),

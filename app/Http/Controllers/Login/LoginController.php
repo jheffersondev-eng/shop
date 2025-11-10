@@ -2,30 +2,42 @@
 
 namespace App\Http\Controllers\Login;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\BaseController;
+use App\Http\Requests\Login\UserLoginRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 
-class LoginController extends Controller
+class LoginController extends BaseController
 {
-    public function index(Request $request)
+    public function __construct()
     {
-        return view('login.login');
-    }
-    
-
-    public function login(Request $request)
-    {
-        // Lógica de autenticação
+        $this->setPages(10);
+        $this->setName('Login');
+        $this->setOrderList(['id', 'asc']);
+        $this->setUrl(url("login"));
+        $this->setFolderView("login");
     }
 
-    public function register(Request $request)
+    public function Index(): View
     {
-        return view('login.register');
+        return view( $this->getFolderView(). ".index", [
+            'url' => $this->getUrl(),
+            'title' => $this->getName()
+        ]);
     }
 
-    public function logout(Request $request)
+    public function Login(UserLoginRequest $userLoginRequest): RedirectResponse
     {
-        // Lógica de logout
+        return parent::RedirectBase($userLoginRequest, 'Login realizado com sucesso', route('dashboard'));
+    }
+
+    public function Logout(Request $request): RedirectResponse
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return parent::RedirectBase($request, 'Logout realizado com sucesso', route('login'));
     }
 }
