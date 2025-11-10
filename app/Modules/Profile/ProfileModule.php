@@ -10,25 +10,12 @@ use Illuminate\Support\Facades\Route;
 
 class ProfileModule extends Module
 {
-    public const NAME = 'Profile';
-    public const ICON = 'fa fa-id-badge';
-
     public function register(Application $app)
     {
     }
 
     public function boot()
     {
-    }
-
-    public function getName(): string
-    {
-        return self::NAME;
-    }
-
-    public function getIcon(): string
-    {
-        return self::ICON;
     }
 
     public function getRoutesWeb()

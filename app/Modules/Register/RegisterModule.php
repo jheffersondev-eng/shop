@@ -10,25 +10,12 @@ use Illuminate\Support\Facades\Route;
 
 class RegisterModule extends Module
 {
-    public const NAME = "Register";
-    public const ICON = "fa fa-user-plus";
-
     public function register(Application $app): void
     {
     }
 
     public function boot(): void
     {
-    }
-
-    public function getName(): string
-    {
-        return self::NAME;
-    }
-
-    public function getIcon(): string
-    {
-        return self::ICON;
     }
 
     public function getRoutesWeb(): RouteModule

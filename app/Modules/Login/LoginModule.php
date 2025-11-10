@@ -11,25 +11,12 @@ use Illuminate\Support\Facades\Route;
 
 class LoginModule extends Module
 {
-    public const NAME = "Login";
-    public const ICON = "fa fa-user";
-
     public function register(Application $app): void
     {
     }
 
     public function boot(): void 
     {
-    }
-
-    public function getName(): string
-    {
-        return self::NAME;
-    }
-
-    public function getIcon(): string
-    {
-        return self::ICON;
     }
 
     public function getRoutesWeb(): RouteModule

@@ -21,4 +21,14 @@ class UpdateUserDto extends UserDto
 	{
 		$this->id = $id;
 	}
+
+	public function getUpdatedBy(): int
+	{
+		return $this->id;
+	}
+
+	public function setUpdatedBy(int $id): void
+	{
+		$this->id = $id;
+	}
 }

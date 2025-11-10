@@ -19,6 +19,8 @@ class User extends Authenticatable
         'password',
         'profile_id',
         'is_active',
+        'user_id_update',
+        'user_id_create',
     ];
 
     protected $hidden = [
@@ -39,11 +41,27 @@ class User extends Authenticatable
         return $this->belongsTo(Profile::class, 'profile_id');
     }
 
-    public function client()
+    public function userDetail()
     {
         return $this->hasOne(UserDetail::class, 'user_id');
     }
-    
+
+    // Alias for user details to match view expectations (userDetail)
+    public function userDetailAlias()
+    {
+        return $this->hasOne(UserDetail::class, 'user_id');
+    }
+
+    public function userIdUpdate()
+    {
+        return $this->hasOne(UserDetail::class, 'user_id_update');
+    }
+
+    public function userIdCreate()
+    {
+        return $this->hasOne(UserDetail::class, 'user_id_create');
+    }
+
     /**
      * $fillable: Define quais campos podem ser preenchidos em massa (mass assignment),
      * por exemplo, ao criar ou atualizar um registro usando Model::create($dados).

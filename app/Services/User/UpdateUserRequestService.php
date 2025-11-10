@@ -4,13 +4,13 @@ namespace App\Services\User;
 
 use App\Http\Dto\User\UpdateUserDto;
 use App\Http\Dto\UserDetails\UserDetailsDto;
-use App\Http\Requests\User\UserUpdateRequest;
+use App\Http\Requests\User\UpdateUserRequest;
 use App\Repositories\UserDetail\IUserDetailRepository;
 use App\Repositories\User\IUserRepository;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Hash;
 
-class UserUpdateRequestService implements IUserUpdateRequestService
+class UpdateUserRequestService implements IUpdateUserRequestService
 {
     protected IUserRepository $userRepository;
     protected IUserDetailRepository $userDetailRepository;
@@ -21,24 +21,26 @@ class UserUpdateRequestService implements IUserUpdateRequestService
         $this->userDetailRepository = $userDetailRepository;
     }
 
-    public function handler(UserUpdateRequest $userUpdateRequest)
+    public function handler(UpdateUserRequest $updateUserRequest)
     {
         try {
-            $this->validatePassword($userUpdateRequest);
+            $this->validatePassword($updateUserRequest);
 
             $userDto = new UpdateUserDto(
-                $userUpdateRequest->input('id'),
-                $userUpdateRequest->input('email'),
-                $userUpdateRequest->input('password')
+                $updateUserRequest->input('id'),
+                $updateUserRequest->input('email'),
+                $updateUserRequest->input('password')
             );
 
+            $userDto->setUpdatedBy($updateUserRequest->input('updated_by'));
+
             $userDetailDto = new UserDetailsDto(
-                $userUpdateRequest->input('name'),
-                $userUpdateRequest->input('document'),
-                $userUpdateRequest->input('phone'),
-                $userUpdateRequest->input('birth_date'),
-                $userUpdateRequest->input('address'),
-                $userUpdateRequest->input('id')
+                $updateUserRequest->input('name'),
+                $updateUserRequest->input('document'),
+                $updateUserRequest->input('phone'),
+                $updateUserRequest->input('birth_date'),
+                $updateUserRequest->input('address'),
+                $updateUserRequest->input('id')
             );
 
             $this->userRepository->update($userDto);
@@ -50,12 +52,11 @@ class UserUpdateRequestService implements IUserUpdateRequestService
         }
     }
 
-    public function validatePassword(UserUpdateRequest $userUpdateRequest): void
+    public function validatePassword(UpdateUserRequest $updateUserRequest): void
     {
-        $password = $userUpdateRequest->input('password');
-        $passwordConfirmation = $userUpdateRequest->input('password_confirmation');
+        $password = $updateUserRequest->input('password');
+        $passwordConfirmation = $updateUserRequest->input('password_confirmation');
 
-        // if password not provided, nothing to do
         if (empty($password) && empty($passwordConfirmation)) {
             return;
         }
@@ -64,10 +65,9 @@ class UserUpdateRequestService implements IUserUpdateRequestService
             throw new \Exception('A senha e a confirmação de senha não conferem.');
         }
 
-        $userUpdateRequest->merge(['password' => Hash::make($password)]);
-        // remove confirmation so it doesn't pollute DTOs
-        if ($userUpdateRequest->request->has('password_confirmation')) {
-            $userUpdateRequest->request->remove('password_confirmation');
+        $updateUserRequest->merge(['password' => Hash::make($password)]);
+        if ($updateUserRequest->request->has('password_confirmation')) {
+            $updateUserRequest->request->remove('password_confirmation');
         }
     }
 }

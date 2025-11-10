@@ -2,7 +2,8 @@
 
 namespace App\Repositories\User;
 
-use App\Http\Dto\User\UserDto;
+use App\Http\Dto\User\CreateUserDto;
+use App\Http\Dto\User\UpdateUserDto;
 use App\Models\User;
 use App\Repositories\BaseRepository;
 
@@ -13,20 +14,15 @@ class UserRepository extends BaseRepository implements IUserRepository
         parent::__construct(new User());
     }
 
-    public function store(UserDto $userDto)
+    public function store(CreateUserDto $createUserDto)
     {
-        $data = $userDto->toArray();
-        return $this->model->create($data);
+        $data = $createUserDto->toArray();
+        return $this->createBase($data);
     }
 
-    public function update(UserDto $userDto)
+    public function update(UpdateUserDto $updateUserDto)
     {
-        $user = $this->model->withoutTrashed()->find($userDto->getId());
-        if ($user) {
-            $user->update($userDto->toArray());
-            return $user;
-        }
-        return null;
+        return $this->updateBase($updateUserDto->getId(), $updateUserDto->toArray());
     }
 
     public function delete(User $user)

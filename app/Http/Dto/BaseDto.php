@@ -6,14 +6,30 @@ abstract class BaseDto
 {
 	public function toArray(): array
 	{
-		// Use reflection so we capture private/protected properties declared on subclasses
+		// Use reflection to collect properties from the class and its parents
+		// including private properties declared on the parents. Convert property
+		// names to snake_case so the returned array matches Eloquent column names.
+		$data = [];
 		try {
 			$reflect = new \ReflectionObject($this);
-			$props = $reflect->getProperties();
-			$data = [];
-			foreach ($props as $prop) {
-				$prop->setAccessible(true);
-				$data[$prop->getName()] = $prop->getValue($this);
+			// Walk the class hierarchy to ensure we capture private properties from parents
+			$cls = $reflect->getName();
+			while ($cls) {
+				$rc = new \ReflectionClass($cls);
+				$props = $rc->getProperties();
+				foreach ($props as $prop) {
+					$prop->setAccessible(true);
+					$name = $prop->getName();
+					$snake = $this->toSnake($name);
+					// Do not override if a child class already set this property
+					if (!array_key_exists($snake, $data)) {
+						$data[$snake] = $prop->getValue($this);
+					}
+				}
+				$cls = get_parent_class($cls);
+				if ($cls === false) {
+					break;
+				}
 			}
 		} catch (\Throwable $e) {
 			// fallback to get_object_vars if reflection fails
@@ -21,6 +37,21 @@ abstract class BaseDto
 		}
 
 		return $this->normalize($data);
+	}
+
+	/**
+	 * Convert a property name from camelCase or PascalCase to snake_case.
+	 */
+	protected function toSnake(string $name): string
+	{
+		// If already contains underscore, assume it's already snake_case
+		if (strpos($name, '_') !== false) {
+			return strtolower($name);
+		}
+
+		$snake = preg_replace('/([a-z0-9])([A-Z])/', '$1_$2', $name);
+		$snake = preg_replace('/([A-Z])([A-Z][a-z])/', '$1_$2', $snake);
+		return strtolower($snake);
 	}
 
 	/**

@@ -10,25 +10,12 @@ use Illuminate\Support\Facades\Route;
 
 class DashboardModule extends Module
 {
-    public const NAME = "Dashboard";
-    public const ICON = "fa fa-dashboard";
-
     public function register(Application $app)
     {
     }
 
     public function boot()  
     {
-    }
-
-    public function getName(): string
-    {
-        return self::NAME;
-    }
-
-    public function getIcon(): string
-    {
-        return self::ICON;
     }
 
     public function getRoutesWeb()

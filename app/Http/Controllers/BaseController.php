@@ -153,7 +153,6 @@ abstract class BaseController extends Controller
 
             if(Auth::user()) {
                 $request->request->add([
-                    'user_id_update' => Auth::user()->id,
                     'user_id_create' => Auth::user()->id,
                 ]);
             }

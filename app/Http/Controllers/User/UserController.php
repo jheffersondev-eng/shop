@@ -3,19 +3,24 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\BaseController;
-use App\Http\Requests\User\UserUpdateRequest;
+use App\Http\Requests\User\CreateUserRequest;
+use App\Http\Requests\User\UpdateUserRequest;
 use App\Repositories\User\IUserRepository;
 use App\Models\Profile;
 use App\Models\User;
+use App\Repositories\Profile\IProfileRepository;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 
 class UserController extends BaseController
 {
-    public function __construct(IUserRepository $userRepository)
+    protected IProfileRepository $profileRepository;
+
+    public function __construct(IUserRepository $userRepository, IProfileRepository $profileRepository)
     {
         parent::__construct($userRepository);
+        $this->profileRepository = $profileRepository;
 
         $this->setPages(10);
         $this->setName('Usuário');
@@ -29,16 +34,31 @@ class UserController extends BaseController
         return parent::IndexBase($request)->with('users', $this->repository->getUsers());
     }
 
+    public function Create(): View
+    {
+        $profiles = $this->profileRepository->getProfiles();
+        return parent::CreateBase()
+            ->with('profiles', $profiles);
+    }
+
+    public function Store(CreateUserRequest $createUserRequest): RedirectResponse
+    {
+        return parent::StoreBase($createUserRequest);
+    }
+
     public function Edit(User $user): View
     {
         $profiles = Profile::withoutTrashed()->get();
-        return parent::EditBase($user)->with('user', $user)->with('profiles', $profiles);
+        return parent::EditBase($user)
+            ->with('user', $user)
+            ->with('profiles', $profiles)
+            ->with('profile_id', $user->profile_id);
     }
 
-    public function Update(UserUpdateRequest $userUpdateRequest, User $user): View
+    public function Update(UpdateUserRequest $updateUserRequest, User $user): View
     {
-        $userUpdateRequest->request->add(['id' => $user->id]);
-        return parent::UpdateBase($user, $userUpdateRequest);
+        $updateUserRequest->request->add(['id' => $user->id]);
+        return parent::UpdateBase($user, $updateUserRequest);
     }
 
     public function Destroy(Request $request, User $user): RedirectResponse

@@ -4,10 +4,10 @@ namespace App\Http\Requests\User;
 
 use App\Http\Requests\BaseRequest;
 
-class UserUpdateRequest extends BaseRequest
+class UpdateUserRequest extends BaseRequest
 {
     public function rules(): array
-    {
+    {        
         return [
             'name' => ['required', 'string', 'max:200'],
             'profile_id' => ['required', 'integer'],

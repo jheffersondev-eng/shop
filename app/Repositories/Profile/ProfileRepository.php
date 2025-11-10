@@ -37,4 +37,9 @@ class ProfileRepository extends BaseRepository implements IProfileRepository
         }
         return null;
     }
+
+    public function delete(Profile $profile)
+    {
+        return $profile->delete();
+    }
 }

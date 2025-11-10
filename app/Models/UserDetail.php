@@ -20,7 +20,7 @@ class UserDetail extends Model
         'email',
         'address',
         'credit_limit',
-        // 'status' moved to users table
+        'user_id',
     ];
 
     protected $hidden = [
