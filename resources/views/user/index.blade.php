@@ -6,7 +6,7 @@
         <div class="card shadow-sm border-0 mt-3">
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h5 class="mb-0">Lista de Usuários</h5>
+                    <h5 class="mb-0">Usuários</h5>
                     <div class="d-flex gap-2 align-items-center">
                         <input id="table-search" type="search" class="form-control form-control-sm" placeholder="Pesquisar..."
                             style="min-width:200px;">

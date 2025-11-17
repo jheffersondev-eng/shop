@@ -4,21 +4,21 @@ namespace App\Modules\Config\Headers;
 
 use App\Modules\Config\HeaderMenu;
 
-class ProductHeader extends HeaderMenu
+class UnitHeader extends HeaderMenu
 {
     public function getName(): string
     {
-        return "Produtos";
+        return "Unidades";
     }
 
     public function getIcon(): string
     {
-        return "bi bi-box-seam";
+        return "bi bi-rulers";
     }
 
     public function getLink(): string
     {
-        return route('product.index');
+        return route('unit.index');
     }
 
     public function hasSubMenu(): bool

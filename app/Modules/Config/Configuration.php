@@ -3,18 +3,22 @@
 namespace App\Modules\Config;
 
 use App\Helpers\ClassHelper;
-use App\Models\Profile;
 use App\Modules\Config\Headers\ConfigurationHeader;
 use App\Modules\Config\Headers\DashboardHeader;
+use App\Modules\Config\Headers\ProductHeader;
 use App\Modules\Config\Headers\ProfileHeader;
 use App\Modules\Config\Headers\UserHeader;
+use App\Modules\Config\Headers\CategoryHeader;
+use App\Modules\Config\Headers\UnitHeader;
 use App\Modules\Dashboard\DashboardModule;
+use App\Modules\Product\ProductModule;
 use App\Modules\User\UserModule;
 use App\Modules\Profile\ProfileModule;
+use App\Modules\Category\CategoryModule;
+use App\Modules\Unit\UnitModule;
 use Illuminate\Support\Collection;
 use Exception;
 use RuntimeException;
-use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 class Configuration
 {
@@ -24,6 +28,9 @@ class Configuration
             new DashboardModule(),
             new UserModule(),
             new ProfileModule(),
+            new CategoryModule(),
+            new UnitModule(),
+            new ProductModule(),
         ];
     }
 
@@ -47,11 +54,14 @@ class Configuration
      */
     public static function getMenu(): Collection
     {
-        $menu = new Collection();
-        $menu->add(new DashboardHeader());
-        $menu->add(new UserHeader());
-        $menu->add(new ProfileHeader());
-        $menu->add(new ConfigurationHeader());
+    $menu = new Collection();
+    $menu->add(new DashboardHeader());
+    $menu->add(new UserHeader());
+    $menu->add(new ProfileHeader());
+    $menu->add(new CategoryHeader());
+    $menu->add(new UnitHeader());
+    $menu->add(new ProductHeader());
+    $menu->add(new ConfigurationHeader());
         
         return $menu;
     }
