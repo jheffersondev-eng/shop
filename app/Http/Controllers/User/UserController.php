@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Enums\EIsActive;
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\User\CreateUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
@@ -38,7 +39,8 @@ class UserController extends BaseController
     {
         $profiles = $this->profileRepository->getProfiles();
         return parent::CreateBase()
-            ->with('profiles', $profiles);
+            ->with('profiles', $profiles)
+            ->with('isActive', EIsActive::toArray());
     }
 
     public function Store(CreateUserRequest $createUserRequest): RedirectResponse
@@ -52,10 +54,11 @@ class UserController extends BaseController
         return parent::EditBase($user)
             ->with('user', $user)
             ->with('profiles', $profiles)
-            ->with('profile_id', $user->profile_id);
+            ->with('profile_id', $user->profile_id)
+            ->with('isActive', EIsActive::toArray());
     }
 
-    public function Update(UpdateUserRequest $updateUserRequest, User $user): View
+    public function Update(UpdateUserRequest $updateUserRequest, User $user): RedirectResponse
     {
         $updateUserRequest->request->add(['id' => $user->id]);
         return parent::UpdateBase($user, $updateUserRequest);

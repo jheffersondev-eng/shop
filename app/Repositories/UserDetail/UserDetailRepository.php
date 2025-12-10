@@ -20,10 +20,10 @@ class UserDetailRepository extends BaseRepository implements IUserDetailReposito
 
     public function update(UserDetailsDto $userDetailsDto)
     {
-        $client = $this->model->find($userDetailsDto->getUserId());
-        if ($client) {
-            $client->update($userDetailsDto->toArray());
-            return $client;
+        $userDetail = $this->model->where('user_id', $userDetailsDto->getUserId())->first();
+        if ($userDetail) {
+            $userDetail->update($userDetailsDto->toArray());
+            return $userDetail;
         }
         return null;
     }

@@ -22,7 +22,14 @@ class UserRepository extends BaseRepository implements IUserRepository
 
     public function update(UpdateUserDto $updateUserDto)
     {
-        return $this->updateBase($updateUserDto->getId(), $updateUserDto->toArray());
+        $data = $updateUserDto->toArray();
+        
+        // Remove password do array se for nulo para não sobrescrever a senha existente
+        if (is_null($data['password'] ?? null)) {
+            unset($data['password']);
+        }
+        
+        return $this->updateBase($updateUserDto->getId(), $data);
     }
 
     public function delete(User $user)

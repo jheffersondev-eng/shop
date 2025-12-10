@@ -22,6 +22,7 @@ class Product extends Model
         'stock_quantity',
         'min_quantity',
         'is_active',
+        'image',
     ];
 
     protected $casts = [

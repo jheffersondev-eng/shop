@@ -35,6 +35,11 @@ class BaseRepository implements IBaseRepository
         return $this->model->getModel()->find($id);
     }
 
+    public function findWithoutTrashed(int $id): ?Model
+    {
+        return $this->model->withoutTrashed()->find($id);
+    }
+
     public function findBy(array $filter): self
     {
         $tagsArray = explode(',', self::WHERE_TAGS);

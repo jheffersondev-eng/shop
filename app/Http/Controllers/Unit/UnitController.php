@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Unit;
 
+use App\Enums\EUnitFormat;
 use App\Http\Controllers\BaseController;
 use Illuminate\Http\Request;
 use App\Repositories\Unit\IUnitRepository;
-use App\Models\Unit;
 
 class UnitController extends BaseController
 {
@@ -18,16 +18,18 @@ class UnitController extends BaseController
         $this->setUrl(url('unit'));
         $this->setFolderView('unit');
         $this->setOrderList(['id', 'asc']);
+        $this->setModels('units');
     }
 
     public function Index(Request $request)
     {
-        return parent::IndexBase($request)->with('units', $this->repository->getUnits());
+        return parent::IndexBase($request);
     }
 
     public function Create()
     {
-        return parent::CreateBase();
+        return parent::CreateBase()
+            ->with('unitFormats', EUnitFormat::toArray());
     }
 
     public function Store(Request $request)
@@ -37,8 +39,10 @@ class UnitController extends BaseController
 
     public function Edit($id)
     {
-        $unit = $this->repository->getUnitById($id);
-        return parent::EditBase($unit)->with('unit', $unit)->with('model', $unit);
+        $unit = $this->repository->findWithoutTrashed($id);
+        return parent::EditBase($unit)
+            ->with('unit', $unit)
+            ->with('unitFormats', EUnitFormat::toArray());
     }
 
     public function Update(Request $request, int $id)

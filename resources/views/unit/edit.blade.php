@@ -28,7 +28,14 @@
                         <input type="text" class="form-control" id="abbreviation" name="abbreviation" placeholder="ex: kg" value="{{ old('abbreviation', $unit->abbreviation) }}">
                     </div>
                 </div>
-
+                <div class="col-md-3">
+                    <label for="format" class="form-label">Formato</label>
+                    <select class="form-select" id="format" name="format" required>
+                        @foreach($unitFormats as $value => $unitFormat)
+                            <option value="{{ $value }}" {{ (string) old('format', $unit->format) === (string) $value ? 'selected' : '' }}>{{ $unitFormat }}</option>
+                        @endforeach
+                    </select>
+                </div>
                 <div class="mt-4 d-flex gap-2">
                     <button type="submit" class="btn btn-primary">Salvar</button>
                     <a href="{{ route('unit.index') }}" class="btn btn-outline-secondary">Cancelar</a>

@@ -35,6 +35,7 @@ class UnitRepository extends BaseRepository implements IUnitRepository
             $unit->update($data);
             return $unit;
         }
+        
         return null;
     }
 
