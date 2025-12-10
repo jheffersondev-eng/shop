@@ -18,11 +18,12 @@ class CategoryController extends BaseController
         $this->setUrl(url('category'));
         $this->setFolderView('category');
         $this->setOrderList(['id', 'asc']);
+        $this->setModels('categories');
     }
 
     public function Index(Request $request)
     {
-        return parent::IndexBase($request)->with('categories', $this->repository->getCategories());
+        return parent::IndexBase($request);
     }
 
     public function Create()
@@ -37,8 +38,8 @@ class CategoryController extends BaseController
 
     public function Edit($id)
     {
-        $category = $this->repository->getCategoryById($id);
-        return parent::EditBase($category)->with('category', $category)->with('model', $category);
+        $category = $this->repository->findWithoutTrashed($id);
+        return parent::EditBase($category)->with('category', $category);
     }
 
     public function Update(Request $request, int $id)

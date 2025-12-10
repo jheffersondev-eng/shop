@@ -31,6 +31,22 @@
                         <tbody id="users-table-body">
                             @forelse($products ?? [] as $product)
                                 <tr class="user-row">
+                                    <th scope="row">{{ $product->id }}</th>
+                                    <td>
+                                        @if($product->image)
+                                            <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="img-thumbnail" style="width: 50px; height: 50px; object-fit: cover;">
+                                        @else
+                                            <span class="text-muted">Sem imagem</span>
+                                        @endif
+                                    </td>
+                                    <td>{{ $product->name }}</td>
+                                    <td>{{ $product->description }}</td>
+                                    <td>{{ $product->category->name ?? 'N/A' }}</td>
+                                    <td>{{ $product->quantity }} {{ $product->unit->abbreviation ?? '' }}</td>
+                                    <td>R$ {{ number_format($product->price, 2, ',', '.') }}</td>
+                                    <td class="text-end">                         
+                                        <a href="{{ route('product.edit', $product->id) }}" class="btn btn-sm btn-outline-primary">Editar</a>
+                                    </td>
                                     
                                 </tr>
                             @empty

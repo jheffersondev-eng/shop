@@ -29,20 +29,24 @@ class UpdateUserRequestService implements IUpdateUserRequestService
             $userDto = new UpdateUserDto(
                 $updateUserRequest->input('id'),
                 $updateUserRequest->input('email'),
-                $updateUserRequest->input('password')
+                $updateUserRequest->input('profile_id'),
+                $updateUserRequest->input('is_active')
             );
 
-            $userDto->setUpdatedBy($updateUserRequest->input('updated_by'));
-
+            if ($updateUserRequest->filled('password')) {
+                $userDto->setPassword($updateUserRequest->input('password'));
+            }
+            
             $userDetailDto = new UserDetailsDto(
                 $updateUserRequest->input('name'),
                 $updateUserRequest->input('document'),
                 $updateUserRequest->input('phone'),
                 $updateUserRequest->input('birth_date'),
-                $updateUserRequest->input('address'),
-                $updateUserRequest->input('id')
+                $updateUserRequest->input('address')
             );
-
+            
+            $userDetailDto->setUserId($updateUserRequest->input('id'));
+                        
             $this->userRepository->update($userDto);
             $this->userDetailRepository->update($userDetailDto);
 

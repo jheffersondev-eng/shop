@@ -2,9 +2,7 @@
 
 namespace App\Repositories\Product;
 
-use App\Http\Dto\User\CreateUserDto;
-use App\Http\Dto\User\UpdateUserDto;
-use App\Models\User;
+use App\Models\Product;
 use App\Repositories\BaseRepository;
 
 class ProductRepository extends BaseRepository implements IProductRepository
@@ -17,5 +15,21 @@ class ProductRepository extends BaseRepository implements IProductRepository
     public function getProducts()
     {
         return $this->model->withoutTrashed()->get();
+    }
+
+    public function store(array $data)
+    {
+        $this->model->create($data);
+    }
+
+    public function updateProduct($id, array $data)
+    {
+        $product = $this->model->withoutTrashed()->find($id);
+        if ($product) {
+            $product->update($data);
+            return $product;
+        }
+        
+        return null;
     }
 }

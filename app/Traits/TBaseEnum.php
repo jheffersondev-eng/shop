@@ -14,7 +14,7 @@ trait TBaseEnum
         return ucfirst(strtolower($this->name));
     }
 
-    public static function descriptions(): array
+    public static function toArray(): array
     {
         $result = [];
         foreach (self::cases() as $case) {

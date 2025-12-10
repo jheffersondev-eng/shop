@@ -24,8 +24,9 @@
 						!!}
 					</div>
 				@endsection
-				<form method="PUT" action="{{ route('user.update', $user->id) }}">
+				<form method="POST" action="{{ route('user.update', $user->id) }}">
 					@csrf
+					@method('PUT')
 					@include('user.form')
 				</form>
         	</div>

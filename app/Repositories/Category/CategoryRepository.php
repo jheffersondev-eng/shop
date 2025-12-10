@@ -17,11 +17,6 @@ class CategoryRepository extends BaseRepository implements ICategoryRepository
         return $this->model->withoutTrashed()->get();
     }
 
-    public function getCategoryById($id)
-    {
-        return $this->model->withoutTrashed()->find($id);
-    }
-
     public function store($request)
     {
         $data = method_exists($request, 'validated') ? $request->validated() : $request->all();
@@ -30,7 +25,7 @@ class CategoryRepository extends BaseRepository implements ICategoryRepository
 
     public function updateCategory($id, array $data)
     {
-        $category = $this->getCategoryById($id);
+        $category = $this->findWithoutTrashed($id);
         if ($category) {
             $category->update($data);
             return $category;

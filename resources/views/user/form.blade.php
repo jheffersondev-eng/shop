@@ -19,7 +19,7 @@
                         placeholder="exemplo@dominio.com" value="{{ isset($user) ? $user->email : '' }}" required>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <label for="profile_id" class="form-label">Perfil</label>
                 <div class="input-group">
                     <span class="input-group-text"><i class="bi bi-person-badge"></i></span>
@@ -29,6 +29,21 @@
                             <option value="{{ $profile->id }}"
                                 {{ (string) ($profile_id ?? '') === (string) $profile->id ? 'selected' : '' }}>
                                 {{ $profile->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <label for="is_active" class="form-label">Status</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-toggle-on"></i></span>
+                    <select class="form-select" id="is_active" name="is_active" required>
+                        <option value="">Selecione</option>
+                        @foreach ($isActive ?? [] as $key => $value)
+                            <option value="{{ $key }}"
+                                {{ $user->is_active ?? '' === $key ? 'selected' : '' }}>
+                                {{ $value }}
                             </option>
                         @endforeach
                     </select>

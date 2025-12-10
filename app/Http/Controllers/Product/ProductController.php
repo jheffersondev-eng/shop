@@ -2,58 +2,87 @@
 
 namespace App\Http\Controllers\Product;
 
+use App\Enums\EIsActive;
 use App\Http\Controllers\BaseController;
+use App\Http\Requests\Product\ProductRequest;
+use App\Http\Requests\Product\ProductUpdateRequest;
 use App\Models\Product;
-use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Repositories\Category\ICategoryRepository;
+use App\Repositories\Product\IProductRepository;
+use App\Repositories\Unit\IUnitRepository;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
 class ProductController extends BaseController
 {
-    public function __construct()
+    protected ICategoryRepository $categoryRepository;
+    protected IUnitRepository $unitRepository;
+
+    public function __construct(
+        ICategoryRepository $categoryRepository, 
+        IUnitRepository $unitRepository,
+        IProductRepository $productRepository)
     {
-        parent::__construct();
+        parent::__construct($productRepository);
+
+        $this->categoryRepository = $categoryRepository;
+        $this->unitRepository = $unitRepository;
 
         $this->setPages(10);
         $this->setName('Produtos');
         $this->setUrl(url('product'));
         $this->setFolderView('product');
         $this->setOrderList(['id', 'asc']);
+        $this->setModels('products');
     }
 
-    public function Index(): View
+    public function Index(Request $request)
     {
-        $products = Product::withoutTrashed()->get();
-        return view($this->getFolderView() . '.index', [
-            'url' => $this->getUrl(),
-            'title' => $this->getName(),
-            'products' => $products,
-        ]);
+        return parent::IndexBase($request);
     }
 
     public function Create(): View
     {
-        $categories = Category::withoutTrashed()->get();
-        return view($this->getFolderView() . '.create', [
+        $categories = $this->categoryRepository->getCategories();
+        $units = $this->unitRepository->getUnits();
+
+        return view($this->getFolderView() . '.create')->with([
             'url' => $this->getUrl(),
             'categories' => $categories,
+            'units' => $units,
+            'isActive' => EIsActive::class,
         ]);
     }
 
-    public function Store(Request $request): RedirectResponse
+    public function Store(ProductRequest $request): RedirectResponse
     {
-        $data = $request->only([
-            'name', 'description', 'category_id', 'price', 'stock_quantity'
-        ]);
+        return parent::StoreBase($request);
+    }
 
-        if ($request->hasFile('image') && $request->file('image')->isValid()) {
-            $path = $request->file('image')->store('products', 'public');
-            $data['image'] = $path;
+
+    public function Edit($id): View|RedirectResponse
+    {
+        $product = $this->repository->findWithoutTrashed($id);
+        if (!$product) {
+            return redirect()->route('product.index')
+                ->with('error', $this->getName() . ' não encontrado.');
         }
 
-        Product::create($data);
+        $categories = $this->categoryRepository->getCategories();
+        $units = $this->unitRepository->getUnits();
 
-        return redirect()->route('product.index');
+        return view($this->getFolderView() . '.edit')->with([
+            'url' => $this->getUrl(),
+            'product' => $product,
+            'categories' => $categories,
+            'units' => $units,
+            'isActive' => EIsActive::class,
+        ]);
+    }
+
+    public function Update(ProductUpdateRequest $productUpdateRequest, Product $product): RedirectResponse
+    {
+        return parent::UpdateBase($product, $productUpdateRequest);
     }
 }
