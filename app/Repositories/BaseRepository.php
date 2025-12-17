@@ -19,17 +19,6 @@ class BaseRepository implements IBaseRepository
         $this->model = $model->newQuery();
     }
 
-    protected function createBase(array $columns): Model
-    {
-        return $this->model->getModel()->create($columns);
-    }
-
-    protected function updateBase(int $id, array $columns): bool
-    {
-        $instance = $this->find($id);
-        return $instance ? $instance->update($columns) : false;
-    }
-
     public function find(int $id): ?Model
     {
         return $this->model->getModel()->find($id);

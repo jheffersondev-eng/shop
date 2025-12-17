@@ -6,25 +6,23 @@ use App\Http\Requests\Login\UserLoginRequest;
 use App\Models\User;    
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Redirect;
+use Exception;
+use App\Services\ServiceResult;
 
 class UserLoginRequestService implements IUserLoginRequestService
 {
     public function handler(UserLoginRequest $userLoginRequest)
     {
-        try {
-            $this->validEmail($userLoginRequest->email);
-            $this->validPassword($userLoginRequest);
-
-            $credentials = [
-                'email' => $userLoginRequest->email, 
-                'password' => $userLoginRequest->password
-            ];
-            
-            Auth::attempt($credentials);
-        } catch (\Exception $e) {
-            return Redirect::back()->withErrors(['Não foi possível fazer login' => $e->getMessage()]);
+        $credentials = [
+            'email' => $userLoginRequest->email,
+            'password' => $userLoginRequest->password
+        ];
+        
+        if (!Auth::attempt($credentials)) {
+            return ServiceResult::fail('E-mail ou senha incorretos');
         }
+
+        return ServiceResult::ok(null, 'Login realizado com sucesso');
     }
 
     private function validEmail(string $email): void

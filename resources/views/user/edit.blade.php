@@ -9,7 +9,7 @@
         <div class="card shadow-sm border-0 mt-3">
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h5 class="mb-0">Editar usuário</h5>
+                    <h5 class="mb-0">Editar usuário #{{ $user->id }}</h5>
                     <a href="{{ route('user.index') }}" class="btn btn-sm btn-outline-secondary">Voltar</a>
                 </div>
 				@section('actions')

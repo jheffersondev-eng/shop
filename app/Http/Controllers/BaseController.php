@@ -2,293 +2,96 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\BaseRepository;
-use App\Services\MediatorService;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Contracts\View\View;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Redirect;
+use Illuminate\Http\RedirectResponse;
+use Throwable;
+use Exception;
 
 /**
- * @package App\Http\Controllers
+ * BaseController - Classe auxiliar OPCIONAL
+ * 
+ * ⚠️ IMPORTANTE: Esta classe deve conter APENAS métodos auxiliares/helpers.
+ * NÃO use para criar fluxos complexos ou lógica de negócio.
+ * 
+ * ✅ BOM USO:
+ * - Helpers para respostas padronizadas
+ * - Wrappers para transações simples
+ * - Métodos utilitários compartilhados
+ * 
+ * ❌ MAU USO:
+ * - Métodos "mágicos" que escondem complexidade (StoreBase, UpdateBase, etc)
+ * - Integração com Mediator ou Service dentro do controller base
+ * - Forçar todos os controllers a seguirem o mesmo fluxo
+ * 
+ * 📌 PADRÃO RECOMENDADO:
+ * Controller → Service → Repository
  */
 abstract class BaseController extends Controller
 {
-    // Use protected para facilitar herança
-    protected string $pages;
-    protected string $url;
-    protected string $folder_view;
-    protected string $models;
-    protected string $name;
-    protected array $orderList = ['created_at', 'desc'];
-    protected ?BaseRepository $repository = null;
-    protected ?MediatorService $mediator = null;
-
-    public function __construct($repository = null, ?MediatorService $mediator = null)
+    protected function RedirectResult(callable $callback, string $context = 'operação')
     {
-        $this->repository = $repository ?? $repository;
-        $this->mediator = $mediator ?? null;
-    }
-
-    public function getMediator(): MediatorService
-    {
-        if ($this->mediator === null) {
-            $this->mediator = new MediatorService();
+        try {
+            DB::beginTransaction();
+            
+            $result = $callback();
+            
+            DB::commit();
+            return $result;
+            
+        } catch (Exception $e) {
+            DB::rollBack();
+            
+            Log::critical($e->getMessage(), [
+                'url' => url()->current(),
+                'method' => request()->method(),
+                'params' => request()->all(),
+            ]);
+            
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('error', "Erro ao executar {$context}: {$e->getMessage()}");
         }
-        return $this->mediator;
     }
 
-    public function getPages(): string
-    {
-        return $this->pages;
-    }
-
-    public function setPages(string $pages): void
-    {
-        $this->pages = $pages;
-    }
-
-    public function getUrl(): string
-    {
-        return $this->url;
-    }
-
-    public function setUrl(string $url): void
-    {
-        $this->url = $url;
-    }
-
-    public function getFolderView(): string
-    {
-        return $this->folder_view;
-    }
-
-    public function setFolderView(string $folder_view): void
-    {
-        $this->folder_view = $folder_view;
-    }
-
-    public function setModels(string $models): void
-    {
-        $this->models = $models;
-    }
-
-    public function getRepository(): BaseRepository
-    {
-        if ($this->repository === null) {
-            throw new \RuntimeException('Repository não inicializado para este controller.');
-        }
-        return $this->repository;
-    }
-
-    public function setRepository(BaseRepository $repository): void
-    {
-        $this->repository = $repository;
-    }
-
-    public function getOrderList(): array
-    {
-        return $this->orderList;
-    }
-
-    public function setOrderList(array $orderList): void
-    {
-        $this->orderList = $orderList;
-    }
-
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-    public function getModelName(): string
-    {
-        return $this->models ?? 'models';
-    }
-
-    public function setName(string $name): void
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * @throws \Exception
-     */
-    public function IndexBase(Request $request): Application|Factory|View
-    {
-        $this->getRepository()->findBy($request->all())->order($this->getOrderList()[0], $this->getOrderList()[1]);
-        /**
-         * @var LengthAwarePaginator $models
-         */
-        $models = $this->getRepository()->paginate($this->getPages());
-        $models->appends($request->except('page'));
-
-        return view( $this->getFolderView(). ".index", [
-            'url' => $this->getUrl(),
-            'title' => $this->getName(),
-            $this->getModelName() => $models,
-        ]);
-    }
-
-    public function CreateBase(): Factory|View
-    {
-        return view($this->getFolderView() . ".create", [
-            'url' => $this->getUrl()
-        ]);
-    }
-
-    /**
-     * @throws \Throwable
-     */
-    public function StoreBase($request): RedirectResponse
+    protected function execute(
+        callable $callback,
+        string $defaultSuccessMessage = 'Operação realizada com sucesso',
+        ?string $successRedirect = null,
+        ?string $errorRedirect = null
+    ): RedirectResponse 
     {
         try {
             DB::beginTransaction();
 
-            if(Auth::user()) {
-                $request->request->add([
-                    'user_id_create' => Auth::user()->id,
-                ]);
-            }
+            /** @var ServiceResult $result */
+            $result = $callback();
 
-            // Chama o Mediator para resolver o service correto; se não houver handler, fallback para repository
-            $result = $this->getMediator()->handle($request);
-            if ($result instanceof RedirectResponse) {
-                return $result;
-            }
-            if ($result === null) {
-                $this->getRepository()->store($request);
-            }
+            if (!$result->success) {
+                DB::rollBack();
 
-            if (isset($request->descriptionMessage) and isset($request->status)){
-                $request->session()->flash('message', "{$this->getName()}");
-            }else{
-                $request->session()->flash('message', "{$this->getName()} cadastrado com sucesso");
+                return redirect()
+                    ->to($errorRedirect ?? url()->previous())
+                    ->withInput()
+                    ->with('error', $result->message);
             }
 
             DB::commit();
-        } catch (\Exception $e) {
-            $request->session()->flash('error', "Erro ao cadastrar o {$this->getName()}:  {$e->getMessage()}");
+
+            return redirect()
+                ->to($successRedirect ?? url()->previous())
+                ->with('success', $result->message ?? $defaultSuccessMessage);
+
+        } catch (Throwable $e) {
 
             DB::rollBack();
+            Log::critical($e->getMessage());
 
-            Log::critical($e->getMessage(), [
-                'url' => url()->current(),
-                'method' => \request()->method(),
-                'params' => \request()->all(),
-            ]);
-
-            return redirect()->back()->withInput($request->all());
-        }
-        
-        return Redirect::to($this->getUrl());
-    }
-
-    public function EditBase($model): Factory|View
-    {
-        return view($this->getFolderView() . ".edit", [
-            'model' => $model,
-            'url' => $this->getUrl()
-        ]);
-    }
-
-    /**
-     * @throws \Throwable
-     */
-    public function UpdateBase($model, $request): RedirectResponse
-    {
-        try {
-            DB::beginTransaction();
-
-            $request->request->add([
-                'user_id_update' => Auth::user()->id
-            ]);
-
-            $result = $this->getMediator()->handle($request);
-            if ($result instanceof RedirectResponse) {
-                return $result;
-            }
-            if ($result === null) {
-                $this->getRepository()->replace($model, $request);
-            }
-
-            $request->session()->flash('message', "{$this->getName()} atualizado");
-            DB::commit();
-        } catch (\Exception $e) {
-            $request->session()->flash('error', "Erro ao atualizar o {$this->getName()}: {$e->getMessage()}");
-            DB::rollBack();
-
-            Log::critical($e->getMessage(), [
-                'url' => url()->current(),
-                'method' => \request()->method(),
-                'params' => \request()->all(),
-            ]);
-
-            return Redirect::back()->withInput($request->all());
-        }
-
-        return Redirect::back();
-    }
-
-    /**
-     * @throws \Throwable
-     */
-    public function DestroyBase($model, $request): RedirectResponse
-    {
-        try {
-            DB::beginTransaction();
-
-            $request->request->add([
-                'user_id_delete' => Auth::user()->id
-            ]);
-
-            $result = $this->getMediator()->handle($request);
-            if ($result instanceof RedirectResponse) {
-                return $result;
-            }
-
-            $this->getRepository()->delete($model);
-
-            $request->session()->flash('message', "{$this->getName()} removido");
-            DB::commit();
-        } catch (\Exception $e) {
-            $request->session()->flash('error', "Problema ao remover o {$this->getName()}: {$e->getMessage()}");
-
-            Log::critical($e->getMessage(), [
-                'url' => url()->current(),
-                'method' => \request()->method(),
-                'params' => \request()->all(),
-            ]);
-
-            DB::rollBack();
-        }
-
-        return Redirect::back();
-    }
-
-    public function RedirectBase(
-        Request $request, 
-        string $message, 
-        ?string $route = null
-    ): RedirectResponse
-    {
-        try {
-            $result = $this->getMediator()->handle($request);
-            if ($result instanceof RedirectResponse) {
-                return $result;
-            }
-
-            $request->session()->flash('success', $message);
-            return Redirect::to($route ?? $this->getUrl());
-        } catch (\Exception $e) {
-            $request->session()->flash('error', $e->getMessage());
-            return redirect()->back()->withInput($request->all());
+            return redirect()
+                ->to($errorRedirect ?? url()->previous())
+                ->withInput()
+                ->with('error', 'Erro interno: '.$e->getMessage());
         }
     }
 }

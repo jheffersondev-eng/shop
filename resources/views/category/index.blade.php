@@ -1,3 +1,6 @@
+@php
+    use App\Helpers\ButtonHelper;
+@endphp
 @extends('components.app.app')
 @section('title', 'Categorias')
 @section('content')
@@ -16,27 +19,41 @@
                     <tr>
                         <th>ID</th>
                         <th>Nome</th>
-                        <th>Ações</th>
+                        <th class="text-end">Ações</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($categories as $category)
+                    @foreach($categories->items() as $category)
                         <tr>
                             <td>{{ $category->id }}</td>
-                            <td>{{ $category->name }}</td>
-                            <td>
-                                <a href="{{ route('category.edit', $category->id) }}" class="btn btn-sm btn-outline-secondary">Editar</a>
-                                <form action="{{ route('category.destroy', $category->id) }}" method="POST" style="display:inline-block;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-outline-danger">Remover</button>
-                                </form>
+                            <td>{{ ucfirst(strtolower($category->name)) }}</td>
+                            <td class="text-end">    
+                                {!!
+                                    ButtonHelper::make('')
+                                        ->setLink(route('category.edit', $category->id))
+                                        ->setSize(30)
+                                        ->setClass('btn btn-sm btn-outline-primary')
+                                        ->setIcon('bi bi-pencil')
+                                        ->render('link') 
+                                !!}
+                                {!!
+                                    ButtonHelper::make('')
+                                        ->setType('button')
+                                        ->setSize(8)
+                                        ->setClass('btn btn-sm btn-outline-danger btn-confirm')
+                                        ->setTitle('Excluir')
+                                        ->setDataMethod('DELETE')
+                                        ->setDataAction(route('category.destroy', $category->id))
+                                        ->setDataTitle('Excluir categoria')
+                                        ->setDataMessage('Deseja realmente excluir esta categoria?')
+                                        ->setIcon('bi bi-trash')
+                                        ->render('button')
+                                !!}
                             </td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
-
             {{ $categories->links() }}
         </div>
     </div>

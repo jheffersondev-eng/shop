@@ -26,6 +26,11 @@ class ButtonHelper
 	protected ?string $icon = null;
 	protected ?string $target = null;
 	protected $confirm = null;
+	protected ?string $dataMethod = null;
+	protected ?string $dataAction = null;
+	protected ?string $dataTitle = null;
+	protected ?string $dataMessage = null;
+	protected ?string $title = null;
 
 	public function __construct(?string $name = null)
 	{
@@ -133,6 +138,36 @@ class ButtonHelper
 		return $this;
 	}
 
+	public function setDataMethod(string $method): self
+	{
+		$this->dataMethod = $method;
+		return $this;
+	}
+
+	public function setDataAction(string $action): self
+	{
+		$this->dataAction = $action;
+		return $this;
+	}
+
+	public function setDataTitle(string $title): self
+	{
+		$this->dataTitle = $title;
+		return $this;
+	}
+
+	public function setDataMessage(string $message): self
+	{
+		$this->dataMessage = $message;
+		return $this;
+	}
+
+	public function setTitle(string $title): self
+	{
+		$this->title = $title;
+		return $this;
+	}
+
 	/**
 	 * Gera o array de opções que será passado para o component Blade.
 	 */
@@ -167,6 +202,11 @@ class ButtonHelper
 			'icon' => $this->icon,
 			'target' => $this->target,
 			'confirm' => $this->confirm,
+			'dataMethod' => $this->dataMethod,
+			'dataAction' => $this->dataAction,
+			'dataTitle' => $this->dataTitle,
+			'dataMessage' => $this->dataMessage,
+			'title' => $this->title,
 		];
 	}
 

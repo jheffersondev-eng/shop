@@ -14,18 +14,27 @@ use App\Repositories\Product\IProductRepository;
 use App\Repositories\Product\ProductRepository;
 use App\Repositories\Unit\IUnitRepository;
 use App\Repositories\Unit\UnitRepository;
+use App\Services\Category\CategoryService;
+use App\Services\Category\ICategoryService;
 use App\Services\Login\IUserLoginRequestService;
 use App\Services\Login\IUserRegisterRequestService;
 use App\Services\Login\UserLoginRequestService;
 use App\Services\Login\UserRegisterRequestService;
-use App\Services\Product\IProductRequestService;
-use App\Services\Product\ProductRequestService;
+use App\Services\Product\IProductService;
+use App\Services\Product\ProductService;
+use App\Services\Profile\IProfileService;
+use App\Services\User\IUserService;
+use App\Services\Profile\ProfileService;
+use App\Services\UnitService\IUnitService;
+use App\Services\UnitService\UnitService;
+use App\Services\User\UserService;
 use Illuminate\Contracts\Foundation\Application;
 
 class AppDependencyInjection
 {
     public static function register(Application $app)
     {
+        //register bindings repositorys
         $app->bind(IUserDetailRepository::class, UserDetailRepository::class);
         $app->bind(IUserRepository::class, UserRepository::class);
         $app->bind(IProfileRepository::class, ProfileRepository::class);
@@ -34,8 +43,12 @@ class AppDependencyInjection
         $app->bind(IProductRepository::class, ProductRepository::class);
 
         //register bindings services
-        $app->bind(IUserRegisterRequestService::class, UserRegisterRequestService::class);
         $app->bind(IUserLoginRequestService::class, UserLoginRequestService::class);
-        $app->bind(IProductRequestService::class, ProductRequestService::class);
+        $app->bind(IUserRegisterRequestService::class, UserRegisterRequestService::class);
+        $app->bind(IUserService::class, UserService::class);
+        $app->bind(IProfileService::class, ProfileService::class);
+        $app->bind(ICategoryService::class, CategoryService::class);
+        $app->bind(IUnitService::class, UnitService::class);
+        $app->bind(IProductService::class, ProductService::class);
     }
 }

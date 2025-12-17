@@ -13,6 +13,11 @@
     $idAttr = isset($id) ? ' id="' . e($id) . '"' : '';
     $confirmAttr = isset($confirm) ? ' data-confirm="' . e($confirm) . '"' : '';
     $methodAttr = isset($method) ? ' data-method="' . e($method) . '"' : '';
+    $titleAttr = isset($title) ? ' title="' . e($title) . '"' : '';
+    $dataMethodAttr = isset($dataMethod) ? ' data-method="' . e($dataMethod) . '"' : '';
+    $dataActionAttr = isset($dataAction) ? ' data-action="' . e($dataAction) . '"' : '';
+    $dataTitleAttr = isset($dataTitle) ? ' data-title="' . e($dataTitle) . '"' : '';
+    $dataMessageAttr = isset($dataMessage) ? ' data-message="' . e($dataMessage) . '"' : '';
     $isDisabled = isset($disabled) ? (bool)$disabled : false;
 @endphp
 
@@ -21,7 +26,7 @@
     <button type="{{ $btnType }}" 
             class="{{ $classes }}" 
             aria-disabled="true" 
-            disabled{!! $idAttr !!}{!! $confirmAttr !!}{!! $methodAttr !!}{!! $attrString !!}
+            disabled{!! $idAttr !!}{!! $titleAttr !!}{!! $confirmAttr !!}{!! $methodAttr !!}{!! $dataMethodAttr !!}{!! $dataActionAttr !!}{!! $dataTitleAttr !!}{!! $dataMessageAttr !!}{!! $attrString !!}
             style="{{ $size ? 'width: ' . e($size) . '%' : '' }}">
         @if(!empty($icon))
             <i class="{{ $icon }}"></i>
@@ -30,7 +35,7 @@
     </button>
 @else
     <button type="{{ $btnType }}" 
-            class="{{ $classes }}"{!! $idAttr !!}{!! $confirmAttr !!}{!! $methodAttr !!}{!! $attrString !!}
+            class="{{ $classes }}"{!! $idAttr !!}{!! $titleAttr !!}{!! $confirmAttr !!}{!! $methodAttr !!}{!! $dataMethodAttr !!}{!! $dataActionAttr !!}{!! $dataTitleAttr !!}{!! $dataMessageAttr !!}{!! $attrString !!}
             style="{{ $size ? 'width: ' . e($size) . '%' : '' }}">
         @if(!empty($icon))
             <i class="{{ $icon }}"></i>

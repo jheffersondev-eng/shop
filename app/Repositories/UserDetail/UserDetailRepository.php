@@ -5,6 +5,7 @@ namespace App\Repositories\UserDetail;
 use App\Http\Dto\UserDetails\UserDetailsDto;
 use App\Models\UserDetail;
 use App\Repositories\BaseRepository;
+use Exception;
 
 class UserDetailRepository extends BaseRepository implements IUserDetailRepository
 {
@@ -13,18 +14,39 @@ class UserDetailRepository extends BaseRepository implements IUserDetailReposito
         parent::__construct(new UserDetail());
     }
 
-    public function store(UserDetailsDto $userDetailsDto): UserDetail
+    public function create(UserDetailsDto $userDetailsDto): UserDetail
     {
         return $this->model->create($userDetailsDto->toArray());
     }
 
+    public function delete(int $id)
+    {
+        $userDetail = $this->model->where('user_id', $id)->first();
+
+        if (!$userDetail) {
+            return throw new Exception("Detalhes do usuário não encontrados.");
+        }
+
+        return $userDetail->delete();
+    }
+
     public function update(UserDetailsDto $userDetailsDto)
     {
-        $userDetail = $this->model->where('user_id', $userDetailsDto->getUserId())->first();
-        if ($userDetail) {
-            $userDetail->update($userDetailsDto->toArray());
-            return $userDetail;
+        $userDetail = $this->model->where('user_id', $userDetailsDto->userId)->first();
+
+        if (!$userDetail) {
+            return throw new Exception("Detalhes do usuário não encontrados.");
         }
-        return null;
+
+        $data = [
+            'name' => $userDetailsDto->name,
+            'document' => $userDetailsDto->document,
+            'birthDate' => $userDetailsDto->birthDate,
+            'phone' => $userDetailsDto->phone,
+            'address' => $userDetailsDto->address,
+            'creditLimit' => $userDetailsDto->creditLimit,
+        ];
+        
+        return $userDetail->update($data);
     }
 }

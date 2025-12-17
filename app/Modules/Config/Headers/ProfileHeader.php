@@ -13,7 +13,7 @@ class ProfileHeader extends HeaderMenu
 
     public function getIcon(): string
     {
-        return "bi bi-people";
+        return "bi bi-puzzle";
     }
 
     public function getLink(): string

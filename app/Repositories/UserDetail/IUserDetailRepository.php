@@ -7,6 +7,7 @@ use App\Models\UserDetail;
 
 interface IUserDetailRepository
 {
-    public function store(UserDetailsDto $userDetailsDto): UserDetail;
+    public function create(UserDetailsDto $userDetailsDto): UserDetail;
     public function update(UserDetailsDto $userDetailsDto);
+    public function delete(int $id);
 }

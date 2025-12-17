@@ -1,5 +1,9 @@
+@php
+    use App\Helpers\ButtonHelper;
+    use App\Helpers\NumberHelper;
+@endphp
 @extends('components.app.app')
-@section('title', 'Usuários')
+@section('title', 'Produtos')
 @section('content')
     <div class="container-fluid px-4">
         @include('components.message')
@@ -8,7 +12,10 @@
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h5 class="mb-0">Produtos</h5>
                     <div class="d-flex gap-2 align-items-center">
-                        <input id="table-search" type="search" class="form-control form-control-sm" placeholder="Pesquisar..."
+                        <input id="table-search" 
+                            type="search" 
+                            class="form-control form-control-sm" 
+                            placeholder="Pesquisar..."
                             style="min-width:200px;">
                         <a href="{{ route('product.create') }}" class="btn btn-sm btn-primary">Novo</a>
                     </div>
@@ -24,7 +31,6 @@
                                 <th scope="col">Categoria</th>
                                 <th scope="col">Quantidade</th>
                                 <th scope="col">Valor</th>
-
                                 <th scope="col" class="text-end">Ações</th>
                             </tr>
                         </thead>
@@ -41,13 +47,35 @@
                                     </td>
                                     <td>{{ $product->name }}</td>
                                     <td>{{ $product->description }}</td>
-                                    <td>{{ $product->category->name ?? 'N/A' }}</td>
-                                    <td>{{ $product->quantity }} {{ $product->unit->abbreviation ?? '' }}</td>
-                                    <td>R$ {{ number_format($product->price, 2, ',', '.') }}</td>
-                                    <td class="text-end">                         
-                                        <a href="{{ route('product.edit', $product->id) }}" class="btn btn-sm btn-outline-primary">Editar</a>
+                                    <td>{{ $product->category->name }}</td>
+                                    <td>
+                                        {{ NumberHelper::simple($product->stock_quantity) }} 
+                                        {{ $product->unit->abbreviation }}
                                     </td>
-                                    
+                                    <td>{{ NumberHelper::currency($product->price) }}</td>
+                                    <td class="text-end">    
+                                        {!!
+                                            ButtonHelper::make('')
+                                                ->setLink(route('product.edit', $product->id))
+                                                ->setSize(30)
+                                                ->setClass('btn btn-sm btn-outline-primary')
+                                                ->setIcon('bi bi-pencil')
+                                                ->render('link') 
+                                        !!}
+                                        {!!
+                                            ButtonHelper::make('')
+                                                ->setType('button')
+                                                ->setSize(23)
+                                                ->setClass('btn btn-sm btn-outline-danger btn-confirm')
+                                                ->setTitle('Excluir')
+                                                ->setDataMethod('DELETE')
+                                                ->setDataAction(route('product.destroy', $product->id))
+                                                ->setDataTitle('Excluir produto')
+                                                ->setDataMessage('Deseja realmente excluir este produto?')
+                                                ->setIcon('bi bi-trash')
+                                                ->render('button')
+                                        !!}
+                                    </td>
                                 </tr>
                             @empty
                                 <tr>
@@ -60,8 +88,4 @@
             </div>
         </div>
     </div>
-
-    @section('scripts')
-    
-    @endsection
 @endsection

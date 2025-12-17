@@ -1,3 +1,6 @@
+@php
+    use App\Helpers\ButtonHelper;
+@endphp
 @extends('components.app.app')
 @section('title', 'Usuários')
 @section('content')
@@ -30,9 +33,9 @@
                             @forelse($users ?? [] as $user)
                                 <tr class="user-row">
                                     <th scope="row">{{ $loop->iteration }}</th>
-                                    <td class="user-name">{{ $user->userDetail->name_and_surname ?? ($user->name ?? '-') }}</td>
-                                    <td class="user-email">{{ $user->email ?? '-' }}</td>
-                                    <td class="user-profile">{{ $user->profile->name ?? '-' }}</td>
+                                    <td class="user-name">{{ ucwords(strtolower($user->userDetail->name)) }}</td>
+                                    <td class="user-email">{{ ucfirst($user->email) }}</td>
+                                    <td class="user-profile">{{ ucfirst(strtolower($user->profile->name)) }}</td>
                                     <td class="user-active">
                                         @if (optional($user)->is_active)
                                             <span class="badge bg-success">Sim</span>
@@ -42,17 +45,28 @@
                                     </td>
                                     <td class="text-muted small">{{ optional($user->created_at)->format('d/m/Y') ?? '-' }}
                                     </td>
-                                    <td class="text-end">
-                                        <a href="" class="btn btn-sm btn-light border" title="Ver"><i
-                                                class="bi bi-eye"></i></a>
-                                        <a href="{{ route('user.edit', $user) }}" class="btn btn-sm btn-outline-primary"
-                                            title="Editar"><i class="bi bi-pencil"></i></a>
-                                        <button type="button" class="btn btn-sm btn-outline-danger btn-confirm"
-                                            title="Excluir" data-action="{{ route('user.destroy', $user->id) }}"
-                                            data-method="DELETE" data-title="Excluir usuário"
-                                            data-message="Deseja realmente excluir este usuário?">
-                                            <i class="bi bi-trash"></i>
-                                        </button>
+                                    <td class="text-end">    
+                                        {!!
+                                            ButtonHelper::make('')
+                                                ->setLink(route('user.edit', $user->id))
+                                                ->setSize(30)
+                                                ->setClass('btn btn-sm btn-outline-primary')
+                                                ->setIcon('bi bi-pencil')
+                                                ->render('link') 
+                                        !!}
+                                        {!!
+                                            ButtonHelper::make('')
+                                                ->setType('button')
+                                                ->setSize(23)
+                                                ->setClass('btn btn-sm btn-outline-danger btn-confirm')
+                                                ->setTitle('Excluir')
+                                                ->setDataMethod('DELETE')
+                                                ->setDataAction(route('user.destroy', $user->id))
+                                                ->setDataTitle('Excluir usuário')
+                                                ->setDataMessage('Deseja realmente excluir este usuário?')
+                                                ->setIcon('bi bi-trash')
+                                                ->render('button')
+                                        !!}
                                     </td>
                                 </tr>
                             @empty
