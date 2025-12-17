@@ -2,8 +2,11 @@
 
 namespace App\Repositories\Category;
 
+use App\Http\Dto\Category\CategoryDto;
 use App\Models\Category;
 use App\Repositories\BaseRepository;
+use Exception;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class CategoryRepository extends BaseRepository implements ICategoryRepository
 {
@@ -12,29 +15,54 @@ class CategoryRepository extends BaseRepository implements ICategoryRepository
         parent::__construct(new Category());
     }
 
-    public function getCategories()
+    public function getCategories(): LengthAwarePaginator
     {
-        return $this->model->withoutTrashed()->get();
+        return $this->model->paginate(10);
     }
 
-    public function store($request)
+    public function getCategoryById(int $id): Category
     {
-        $data = method_exists($request, 'validated') ? $request->validated() : $request->all();
-        $this->model->getModel()->create($data);
-    }
+        $category = $this->model->find($id);
 
-    public function updateCategory($id, array $data)
-    {
-        $category = $this->findWithoutTrashed($id);
-        if ($category) {
-            $category->update($data);
-            return $category;
+        if (!$category) {
+            throw new Exception("Categoria não encontrada.");
         }
-        return null;
+
+        return $category;
     }
 
-    public function delete(Category $category)
+    public function create(CategoryDto $categoryDto): Category
     {
+        $data = [
+            'name' => $categoryDto->name,
+        ];
+
+        return $this->model->create($data);
+    }
+
+    public function update(CategoryDto $categoryDto, int $id)
+    {
+        $category = $this->model->find($id);
+
+        if (!$category) {
+            throw new Exception("Categoria não encontrada.");
+        }
+        
+        $data = [
+            'name' => $categoryDto->name,
+        ];
+
+        return $category->update($data);
+    }
+
+    public function delete(int $id)
+    {
+        $category = $this->model->find($id);
+
+        if (!$category) {
+            throw new Exception("Categoria não encontrada.");
+        }
+
         return $category->delete();
     }
 }

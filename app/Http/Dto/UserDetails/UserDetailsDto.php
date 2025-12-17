@@ -3,87 +3,23 @@
 namespace App\Http\Dto\UserDetails;
 
 use App\Http\Dto\BaseDto;
+use Illuminate\Support\Carbon;
 
 class UserDetailsDto extends BaseDto
 {
-    private string $name;
-    private string $document;
-    private string $phone;
-    private string $birth_date;
-    private string $address;
-    private ?int $user_id = null;
+	public function __construct(
+		public string $name,
+        public string $document,
+        public Carbon $birthDate,
+        public string $phone,
+        public string $address,
+        public float $creditLimit,
+        public ?int $userId = null) {}
 
-    public function __construct(
-        string $name,
-        string $document,
-        string $phone,
-        string $birth_date,
-        string $address,
-    ) {
-        $this->name = $name;
-        $this->document = $document;
-        $this->phone = $phone;
-        $this->birth_date = $birth_date;
-        $this->address = $address;
-    }
-
-    public function getName(): string
+    public function withUserId(int $id): self
     {
-        return $this->name;
-    }
-
-    public function setName(string $name): void
-    {
-        $this->name = $name;
-    }
-
-    public function getDocument(): string
-    {
-        return $this->document;
-    }
-
-    public function setDocument(string $document): void
-    {
-        $this->document = $document;
-    }
-
-    public function getPhone(): string
-    {
-        return $this->phone;
-    }
-
-    public function setPhone(string $phone): void
-    {
-        $this->phone = $phone;
-    }
-
-    public function getBirthDate(): string
-    {
-        return $this->birth_date;
-    }
-
-    public function setBirthDate(string $birth_date): void
-    {
-        $this->birth_date = $birth_date;
-    }
-
-    public function getAddress(): string
-    {
-        return $this->address;
-    }
-    
-    public function setAddress(string $address): void
-    {
-        $this->address = $address;
-    }
-
-    public function getUserId(): ?int
-    {
-        return $this->user_id;
-    }
-
-    public function setUserId(?int $user_id = null): void
-    {
-        $this->user_id = $user_id;
+        $clone = clone $this;
+        $clone->userId = $id;
+        return $clone;
     }
 }

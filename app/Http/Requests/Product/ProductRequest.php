@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Product;
 
 use App\Enums\EUnitFormat;
+use App\Http\Dto\Product\ProductDto;
 use App\Http\Requests\BaseRequest;
 use App\Models\Unit;
 
@@ -12,12 +13,14 @@ class ProductRequest extends BaseRequest
     {
         $rules = [
             'name' => 'required|string|max:255',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'description' => 'nullable|string',
             'category_id' => 'required|exists:categories,id',
             'unit_id' => 'required|exists:units,id',
+            'barcode' => 'nullable|string|max:255',
             'price' => 'required|numeric|min:0',
             'cost_price' => 'nullable|numeric|min:0',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'is_active' => 'required|in:0,1',
         ];
 
         // Verificar o formato da unidade selecionada
@@ -74,5 +77,22 @@ class ProductRequest extends BaseRequest
             'image.mimes' => 'A imagem deve ser do tipo: jpeg, png, jpg.',
             'image.max' => 'A imagem não pode exceder 2MB.',
         ];
+    }
+
+    public function getDto()
+    {
+        return new ProductDto(
+            name: (string) $this->input('name'),
+            image: $this->file('image'),
+            description:  (string) $this->input('description'),
+            categoryId: (int) $this->input('category_id'),
+            unitId: (int) $this->input('unit_id'),
+            barcode: (string) $this->input('barcode'),
+            price: (float) $this->input('price'),
+            costPrice: (float) $this->input('cost_price', 0),
+            stockQuantity: (float) $this->input('stock_quantity', 0),
+            minQuantity: (float) $this->input('min_quantity', 0),
+            isActive: (bool) $this->input('is_active'),
+        );
     }
 }

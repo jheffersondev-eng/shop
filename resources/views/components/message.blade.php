@@ -1,6 +1,6 @@
-@if(session('message'))
+@if(session('success'))
 	<div class="alert alert-success" role="alert">
-		{{ session('message') }}
+		{{ session('success') }}
 	</div>
 @endif
 

@@ -4,20 +4,35 @@ namespace App\Http\Controllers\Login;
 
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Login\UserLoginRequest;
+use App\Services\Login\IUserLoginRequestService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Redirect;
 
 class LoginController extends BaseController
 {
-    public function __construct()
+    protected IUserLoginRequestService $userLoginRequestService;
+
+    public function __construct(IUserLoginRequestService $userLoginRequestService)
     {
-        $this->setPages(10);
-        $this->setName('Login');
-        $this->setOrderList(['id', 'asc']);
-        $this->setUrl(url("login"));
-        $this->setFolderView("login");
+        $this->userLoginRequestService = $userLoginRequestService;
+    }
+
+    protected function getFolderView(): string
+    {
+        return "login";
+    }
+
+    protected function getUrl(): string
+    {
+        return "login";
+    }
+
+    protected function getName(): string
+    {
+        return "Login";
     }
 
     public function Index(): View
@@ -28,9 +43,13 @@ class LoginController extends BaseController
         ]);
     }
 
-    public function Login(UserLoginRequest $userLoginRequest): RedirectResponse
+    public function Login(UserLoginRequest $request): RedirectResponse
     {
-        return parent::RedirectBase($userLoginRequest, 'Login realizado com sucesso', route('dashboard'));
+        return $this->execute(
+            callback: fn() => $this->userLoginRequestService->handler($request),
+            defaultSuccessMessage: 'Login realizado com sucesso',
+            successRedirect: route('dashboard'),
+        );
     }
 
     public function Logout(Request $request): RedirectResponse
@@ -38,6 +57,6 @@ class LoginController extends BaseController
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return parent::RedirectBase($request, 'Logout realizado com sucesso', route('login'));
+        return Redirect::to($this->getUrl());
     }
 }

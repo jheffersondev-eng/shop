@@ -23,11 +23,11 @@
                 <label for="profile_id" class="form-label">Perfil</label>
                 <div class="input-group">
                     <span class="input-group-text"><i class="bi bi-person-badge"></i></span>
-                    <select class="form-select" id="profile_id" name="profile_id" required>
+                    <select class="form-select form-control" id="profile_id" name="profile_id" required>
                         <option value="">Selecione</option>
-                        @foreach ($profiles ?? [] as $profile)
+                        @foreach ($profiles->items() ?? [] as $profile)
                             <option value="{{ $profile->id }}"
-                                {{ (string) ($profile_id ?? '') === (string) $profile->id ? 'selected' : '' }}>
+                                {{ (string) ($user->profile_id ?? '') === (string) $profile->id ? 'selected' : '' }}>
                                 {{ $profile->name }}
                             </option>
                         @endforeach
@@ -35,10 +35,10 @@
                 </div>
             </div>
             <div class="col-md-2">
-                <label for="is_active" class="form-label">Status</label>
+                <label for="is_active" class="form-label">Ativo</label>
                 <div class="input-group">
                     <span class="input-group-text"><i class="bi bi-toggle-on"></i></span>
-                    <select class="form-select" id="is_active" name="is_active" required>
+                    <select class="form-select form-control" id="is_active" name="is_active" required>
                         <option value="">Selecione</option>
                         @foreach ($isActive ?? [] as $key => $value)
                             <option value="{{ $key }}"

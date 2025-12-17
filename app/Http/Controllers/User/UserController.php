@@ -6,66 +6,88 @@ use App\Enums\EIsActive;
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\User\CreateUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
-use App\Repositories\User\IUserRepository;
-use App\Models\Profile;
-use App\Models\User;
-use App\Repositories\Profile\IProfileRepository;
+use App\Services\Profile\IProfileService;
+use App\Services\User\IUserService;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\View\View;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class UserController extends BaseController
 {
-    protected IProfileRepository $profileRepository;
+    protected IUserService $userService;
+    protected IProfileService $profileService;
 
-    public function __construct(IUserRepository $userRepository, IProfileRepository $profileRepository)
-    {
-        parent::__construct($userRepository);
-        $this->profileRepository = $profileRepository;
-
-        $this->setPages(10);
-        $this->setName('Usuário');
-        $this->setUrl(url("user"));
-        $this->setFolderView("user");
-        $this->setOrderList(['id', 'asc']);
+    public function __construct(
+        IUserService $userService,
+        IProfileService $profileService
+    ) {
+        $this->userService = $userService;
+        $this->profileService = $profileService;
     }
 
     public function Index(Request $request): View
     {
-        return parent::IndexBase($request)->with('users', $this->repository->getUsers());
+        $users = $this->userService->getUsers();
+
+        return view('user.index', [
+            'url' => route('user.index'),
+            'title' => 'Usuário',
+            'users' => $users,
+        ]);
     }
 
     public function Create(): View
     {
-        $profiles = $this->profileRepository->getProfiles();
-        return parent::CreateBase()
-            ->with('profiles', $profiles)
-            ->with('isActive', EIsActive::toArray());
+        $profiles = $this->profileService->getProfiles();
+
+        return view('user.create', [
+            'url' => route('user.index'),
+            'profiles' => $profiles,
+            'isActive' => EIsActive::toArray(),
+        ]);
+    }
+
+    public function Edit(int $id): View
+    {
+        $user = $this->userService->getUserById($id);
+        $profiles = $this->profileService->getProfiles();
+
+        return view('user.edit', [
+            'url' => route('user.index'),
+            'user' => $user,
+            'profiles' => $profiles,
+            'isActive' => EIsActive::toArray(),
+        ]);
     }
 
     public function Store(CreateUserRequest $createUserRequest): RedirectResponse
     {
-        return parent::StoreBase($createUserRequest);
+        $dto = $createUserRequest->getDto();
+
+        return $this->execute(
+            callback: fn() => $this->userService->create($dto),
+            defaultSuccessMessage: 'Usuário criado com sucesso',
+            successRedirect: route('user.index'),
+        );
     }
 
-    public function Edit(User $user): View
+    public function Update(UpdateUserRequest $updateUserRequest, int $id): RedirectResponse
     {
-        $profiles = Profile::withoutTrashed()->get();
-        return parent::EditBase($user)
-            ->with('user', $user)
-            ->with('profiles', $profiles)
-            ->with('profile_id', $user->profile_id)
-            ->with('isActive', EIsActive::toArray());
+        $dto = $updateUserRequest->getDto();
+
+        return $this->execute(
+            callback: fn() => $this->userService->update($dto, $id),
+            defaultSuccessMessage: 'Usuário atualizado com sucesso',
+            successRedirect: route('user.index'),
+        );
     }
 
-    public function Update(UpdateUserRequest $updateUserRequest, User $user): RedirectResponse
+    public function Destroy(int $id): RedirectResponse
     {
-        $updateUserRequest->request->add(['id' => $user->id]);
-        return parent::UpdateBase($user, $updateUserRequest);
-    }
-
-    public function Destroy(Request $request, User $user): RedirectResponse
-    {
-        return parent::DestroyBase($user, $request);
+        return $this->execute(
+            callback: fn() => $this->userService->delete($id),
+            defaultSuccessMessage: 'Usuário removido com sucesso',
+            successRedirect: route('user.index'),
+        );
     }
 }

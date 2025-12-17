@@ -5,84 +5,98 @@ namespace App\Http\Controllers\Product;
 use App\Enums\EIsActive;
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Product\ProductRequest;
-use App\Http\Requests\Product\ProductUpdateRequest;
-use App\Models\Product;
-use Illuminate\Http\Request;
-use App\Repositories\Category\ICategoryRepository;
-use App\Repositories\Product\IProductRepository;
-use App\Repositories\Unit\IUnitRepository;
+use App\Services\Category\ICategoryService;
+use App\Services\Product\IProductService;
+use App\Services\UnitService\IUnitService;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class ProductController extends BaseController
 {
-    protected ICategoryRepository $categoryRepository;
-    protected IUnitRepository $unitRepository;
+    protected IProductService $productService;
+    protected ICategoryService $categoryService;
+    protected IUnitService $unitService;
 
     public function __construct(
-        ICategoryRepository $categoryRepository, 
-        IUnitRepository $unitRepository,
-        IProductRepository $productRepository)
-    {
-        parent::__construct($productRepository);
-
-        $this->categoryRepository = $categoryRepository;
-        $this->unitRepository = $unitRepository;
-
-        $this->setPages(10);
-        $this->setName('Produtos');
-        $this->setUrl(url('product'));
-        $this->setFolderView('product');
-        $this->setOrderList(['id', 'asc']);
-        $this->setModels('products');
+        IProductService $productService,
+        ICategoryService $categoryService,
+        IUnitService $unitService
+    ) {
+        $this->productService = $productService;
+        $this->categoryService = $categoryService;
+        $this->unitService = $unitService;
     }
 
-    public function Index(Request $request)
+    public function Index(Request $request): View
     {
-        return parent::IndexBase($request);
+        $products = $this->productService->getProducts();
+
+        return view('product.index', [
+            'url' => route('product.index'),
+            'title' => 'Produtos',
+            'products' => $products,
+        ]);
     }
 
     public function Create(): View
     {
-        $categories = $this->categoryRepository->getCategories();
-        $units = $this->unitRepository->getUnits();
+        $categories = $this->categoryService->getCategories();
+        $units = $this->unitService->getUnits();
+        $isActive = EIsActive::toArray();
 
-        return view($this->getFolderView() . '.create')->with([
-            'url' => $this->getUrl(),
+        return view('product.create', [
+            'url' => route('product.index'),
             'categories' => $categories,
             'units' => $units,
-            'isActive' => EIsActive::class,
+            'isActive' => $isActive,
         ]);
     }
 
-    public function Store(ProductRequest $request): RedirectResponse
+    public function Edit(int $id): View
     {
-        return parent::StoreBase($request);
-    }
+        $product = $this->productService->getProductById($id);
+        $categories = $this->categoryService->getCategories();
+        $units = $this->unitService->getUnits();
+        $isActive = EIsActive::toArray();
 
-
-    public function Edit($id): View|RedirectResponse
-    {
-        $product = $this->repository->findWithoutTrashed($id);
-        if (!$product) {
-            return redirect()->route('product.index')
-                ->with('error', $this->getName() . ' não encontrado.');
-        }
-
-        $categories = $this->categoryRepository->getCategories();
-        $units = $this->unitRepository->getUnits();
-
-        return view($this->getFolderView() . '.edit')->with([
-            'url' => $this->getUrl(),
+        return view('product.edit', [
+            'url' => route('product.index'),
             'product' => $product,
             'categories' => $categories,
             'units' => $units,
-            'isActive' => EIsActive::class,
+            'isActive' => $isActive,
         ]);
     }
 
-    public function Update(ProductUpdateRequest $productUpdateRequest, Product $product): RedirectResponse
+    public function Store(ProductRequest $productRequest): RedirectResponse
     {
-        return parent::UpdateBase($product, $productUpdateRequest);
+        $dto = $productRequest->getDto();
+
+        return $this->execute(
+            callback: fn() => $this->productService->create($dto),
+            defaultSuccessMessage: 'Produto criado com sucesso',
+            successRedirect: route('product.index'),
+        );
+    }
+
+    public function Update(ProductRequest $productRequest, int $id): RedirectResponse
+    {
+        $dto = $productRequest->getDto();
+
+        return $this->execute(
+            callback: fn() => $this->productService->update($dto, $id),
+            defaultSuccessMessage: 'Produto atualizado com sucesso',
+            successRedirect: route('product.index'),
+        );
+    }
+
+    public function Destroy(int $id): RedirectResponse
+    {
+        return $this->execute(
+            callback: fn() => $this->productService->delete($id),
+            defaultSuccessMessage: 'Produto removido com sucesso',
+            successRedirect: route('product.index'),
+        );
     }
 }

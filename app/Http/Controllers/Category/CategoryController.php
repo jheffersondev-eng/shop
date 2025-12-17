@@ -3,55 +3,77 @@
 namespace App\Http\Controllers\Category;
 
 use App\Http\Controllers\BaseController;
+use App\Http\Requests\Category\CategoryRequest;
 use Illuminate\Http\Request;
-use App\Repositories\Category\ICategoryRepository;
-use App\Models\Category;
+use App\Services\Category\ICategoryService;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 class CategoryController extends BaseController
 {
-    public function __construct(ICategoryRepository $categoryRepository)
-    {
-        parent::__construct($categoryRepository);
+    protected ICategoryService $categoryService;
 
-        $this->setPages(10);
-        $this->setName('Categoria');
-        $this->setUrl(url('category'));
-        $this->setFolderView('category');
-        $this->setOrderList(['id', 'asc']);
-        $this->setModels('categories');
+    public function __construct(ICategoryService $categoryService)
+    {
+        $this->categoryService = $categoryService;
     }
 
-    public function Index(Request $request)
+    public function Index(Request $request): View
     {
-        return parent::IndexBase($request);
+        $categories = $this->categoryService->getCategories();
+
+        return view('category.index', [
+            'url' => route('category.index'),
+            'title' => 'Categorias',
+            'categories' => $categories,
+        ]);
     }
 
-    public function Create()
+    public function Create(): View
     {
-        return parent::CreateBase();
+        return view('category.create', [
+            'url' => route('category.index'),
+        ]);
     }
 
-    public function Store(Request $request)
+    public function Edit(int $id): View
     {
-        return parent::StoreBase($request);
+        $category = $this->categoryService->getCategoryById($id);
+
+        return view('category.edit', [
+            'url' => route('category.index'),
+            'category' => $category,
+        ]);
     }
 
-    public function Edit($id)
+    public function Store(CategoryRequest $categoryRequest): RedirectResponse
     {
-        $category = $this->repository->findWithoutTrashed($id);
-        return parent::EditBase($category)->with('category', $category);
+        $dto = $categoryRequest->getDto();
+
+        return $this->execute(
+            callback: fn() => $this->categoryService->create($dto),
+            defaultSuccessMessage: 'Categoria criada com sucesso',
+            successRedirect: route('category.index'),
+        );
     }
 
-    public function Update(Request $request, int $id)
+    public function Update(CategoryRequest $categoryRequest, int $id): RedirectResponse
     {
-        $data = $request->all();
-        $this->repository->updateCategory($id, $data);
-        return redirect()->route('category.index')->with('success', 'Categoria atualizada com sucesso.');
+        $dto = $categoryRequest->getDto();
+
+        return $this->execute(
+            callback: fn() => $this->categoryService->update($dto, $id),
+            defaultSuccessMessage: 'Categoria atualizada com sucesso',
+            successRedirect: route('category.index'),
+        );
     }
 
-    public function Destroy(Request $request, int $id)
+    public function Destroy(int $id): RedirectResponse
     {
-        $category = $this->repository->find($id);
-        return parent::DestroyBase($category, $request);
+        return $this->execute(
+            callback: fn() => $this->categoryService->delete($id),
+            defaultSuccessMessage: 'Categoria removida com sucesso',
+            successRedirect: route('category.index'),
+        );
     }
 }

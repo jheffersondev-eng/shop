@@ -3,53 +3,76 @@
 namespace App\Http\Controllers\Profile;
 
 use App\Http\Controllers\BaseController;
+use App\Http\Requests\Profile\ProfileRequest;
 use Illuminate\Http\Request;
-use App\Repositories\Profile\IProfileRepository;
+use App\Services\Profile\IProfileService;
+use Illuminate\Http\RedirectResponse;
 
 class ProfileController extends BaseController
 {
-    public function __construct(IProfileRepository $profileRepository)
+    protected IProfileService $profileService;
+    
+    public function __construct(IProfileService $profileService)
     {
-        parent::__construct($profileRepository);
-
-        $this->setPages(10);
-        $this->setName('Profile');
-        $this->setUrl(url('profile'));
-        $this->setFolderView('profile');
-        $this->setOrderList(['id', 'asc']);
+        $this->profileService = $profileService;
     }
 
     public function Index(Request $request)
     {
-        return parent::IndexBase($request)->with('profiles', $this->repository->getProfiles());
+        $profiles = $this->profileService->getProfiles();
+
+        return view('profile.index', [
+            'url' => route('profile.index'),
+            'title' => 'Perfis',
+            'profiles' => $profiles,
+        ]);
     }
 
     public function Create()
     {
-        return parent::CreateBase();
+        return view('profile.create', [
+            'url' => route('profile.index'),
+        ]);
     }
 
-    public function Store(Request $request)
+    public function Edit(int $id)
     {
-        return parent::StoreBase($request);
+        $profile = $this->profileService->getProfileById($id);
+
+        return view('profile.edit')->with([
+            'url' => route('profile.index'),
+            'profile' => $profile,
+        ]);
     }
 
-    public function Edit($id)
+    public function Store(ProfileRequest $profileRequest): RedirectResponse
     {
-        $profile = $this->repository->getProfileById($id);
-        return parent::EditBase($profile)->with('profile', $profile);
+        $dto = $profileRequest->getDto();
+
+        return $this->execute(
+            callback: fn() => $this->profileService->create($dto),
+            defaultSuccessMessage: 'Perfil criado com sucesso',
+            successRedirect: route('profile.index'),
+        );
     }
 
-    public function Update(Request $request, int $id)
+    public function Update(ProfileRequest $profileRequest, int $id)
     {
-        $data = $request->all();
-        $this->repository->updateProfile($id, $data);
-        return redirect()->route('profile.index')->with('success', 'Profile updated successfully.');
+        $dto = $profileRequest->getDto();
+
+        return $this->execute(
+            callback: fn() => $this->profileService->update($dto, $id),
+            defaultSuccessMessage: 'Perfil atualizado com sucesso',
+            successRedirect: route('profile.index'),
+        );
     }
 
     public function Destroy(Request $request, int $id)
     {
-        $profile = $this->repository->find($id);
-        return parent::DestroyBase($profile, $request);
+        return $this->execute(
+            callback: fn() => $this->profileService->delete($id),
+            defaultSuccessMessage: 'Perfil removido com sucesso',
+            successRedirect: route('profile.index'),
+        );
     }
 }

@@ -4,57 +4,80 @@ namespace App\Http\Controllers\Unit;
 
 use App\Enums\EUnitFormat;
 use App\Http\Controllers\BaseController;
+use App\Http\Requests\Unit\UnitRequest;
 use Illuminate\Http\Request;
-use App\Repositories\Unit\IUnitRepository;
+use App\Services\UnitService\IUnitService;
 
 class UnitController extends BaseController
 {
-    public function __construct(IUnitRepository $unitRepository)
-    {
-        parent::__construct($unitRepository);
+    protected IUnitService $unitService;
 
-        $this->setPages(10);
-        $this->setName('Unidade');
-        $this->setUrl(url('unit'));
-        $this->setFolderView('unit');
-        $this->setOrderList(['id', 'asc']);
-        $this->setModels('units');
+    public function __construct(IUnitService $unitService) 
+    {
+        $this->unitService = $unitService;
     }
 
     public function Index(Request $request)
     {
-        return parent::IndexBase($request);
+        $units = $this->unitService->getUnits();
+
+        return view('unit.index', [
+            'url' => route('unit.index'),
+            'title' => 'Unidades',
+            'units' => $units,
+        ]);
     }
 
     public function Create()
     {
-        return parent::CreateBase()
-            ->with('unitFormats', EUnitFormat::toArray());
+        $unitFormats = EUnitFormat::toArray();
+
+        return view('unit.create', [
+            'url' => route('unit.index'),
+            'unitFormats' => $unitFormats,
+        ]);
     }
 
-    public function Store(Request $request)
+    public function Edit(int $id)
     {
-        return parent::StoreBase($request);
+        $unit = $this->unitService->getUnitById($id);
+        $unitFormats = EUnitFormat::toArray();
+
+        return view('unit.edit')->with([
+            'url' => route('unit.index'),
+            'unit' => $unit,
+            'unitFormats' => $unitFormats,
+        ]);
     }
 
-    public function Edit($id)
+    public function Store(UnitRequest $request)
     {
-        $unit = $this->repository->findWithoutTrashed($id);
-        return parent::EditBase($unit)
-            ->with('unit', $unit)
-            ->with('unitFormats', EUnitFormat::toArray());
+        $dto = $request->getDto();
+
+        return $this->execute(
+            callback: fn() => $this->unitService->create($dto),
+            defaultSuccessMessage: 'Unidade criada com sucesso',
+            successRedirect: route('unit.index'),
+        );
     }
 
-    public function Update(Request $request, int $id)
+    public function Update(UnitRequest $request, int $id)
     {
-        $data = $request->all();
-        $this->repository->updateUnit($id, $data);
-        return redirect()->route('unit.index')->with('success', 'Unidade atualizada com sucesso.');
+        $dto = $request->getDto();
+
+        return $this->execute(
+            callback: fn() => $this->unitService->update($dto, $id),
+            defaultSuccessMessage: 'Unidade atualizada com sucesso',
+            successRedirect: route('unit.index'),
+        );
     }
 
-    public function Destroy(Request $request, int $id)
+    public function Destroy(int $id)
     {
-        $unit = $this->repository->find($id);
-        return parent::DestroyBase($unit, $request);
+        return $this->execute(
+            callback: fn() => $this->unitService->delete($id),
+            defaultSuccessMessage: 'Unidade removida com sucesso',
+            successRedirect: route('unit.index'),
+        );
     }
 }

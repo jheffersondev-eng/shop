@@ -1,9 +1,11 @@
+@php
+    use App\Helpers\ButtonHelper;
+@endphp
 @extends('components.app.app')
 @section('title', 'Unidades')
 @section('content')
 <div class="container-fluid px-4">
     @include('components.message')
-
     <div class="card shadow-sm border-0 mt-3">
         <div class="card-body">
             <div class="d-flex justify-content-between align-items-center mb-3">
@@ -17,7 +19,7 @@
                         <th>ID</th>
                         <th>Nome</th>
                         <th>Abreviação</th>
-                        <th>Ações</th>
+                        <th class="text-end">Ações</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -26,22 +28,35 @@
                             <td>{{ $unit->id }}</td>
                             <td>{{ $unit->name }}</td>
                             <td>{{ $unit->abbreviation }}</td>
-                            <td>
-                                <a href="{{ route('unit.edit', $unit->id) }}" class="btn btn-sm btn-outline-secondary">Editar</a>
-                                <form action="{{ route('unit.destroy', $unit->id) }}" method="POST" style="display:inline-block;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-outline-danger">Remover</button>
-                                </form>
+                            <td class="text-end">    
+                                {!!
+                                    ButtonHelper::make('')
+                                        ->setLink(route('unit.edit', $unit->id))
+                                        ->setSize(30)
+                                        ->setClass('btn btn-sm btn-outline-primary')
+                                        ->setIcon('bi bi-pencil')
+                                        ->render('link') 
+                                !!}
+                                {!!
+                                    ButtonHelper::make('')
+                                        ->setType('button')
+                                        ->setSize(9)
+                                        ->setClass('btn btn-sm btn-outline-danger btn-confirm')
+                                        ->setTitle('Excluir')
+                                        ->setDataMethod('DELETE')
+                                        ->setDataAction(route('unit.destroy', $unit->id))
+                                        ->setDataTitle('Excluir unidade')
+                                        ->setDataMessage('Deseja realmente excluir esta unidade?')
+                                        ->setIcon('bi bi-trash')
+                                        ->render('button')
+                                !!}
                             </td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
-
             {{ $units->links() }}
         </div>
     </div>
 </div>
-
 @endsection

@@ -2,45 +2,72 @@
 
 namespace App\Repositories\Unit;
 
+use App\Http\Dto\Unit\UnitDto;
 use App\Models\Unit;
 use App\Repositories\BaseRepository;
+use Exception;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class UnitRepository extends BaseRepository implements IUnitRepository
 {
+    const PAGINATION_SIZE = 10;
+
     public function __construct()
     {
         parent::__construct(new Unit());
     }
 
-    public function getUnits()
+    public function getUnits(): LengthAwarePaginator
     {
-        return $this->model->withoutTrashed()->get();
+        return $this->model->paginate(self::PAGINATION_SIZE);
     }
 
-    public function getUnitById($id)
+    public function getUnitById(int $id): Unit
     {
-        return $this->model->withoutTrashed()->find($id);
-    }
+        $unit = $this->model->find($id);
 
-    public function store($request)
-    {
-        $data = method_exists($request, 'validated') ? $request->validated() : $request->all();
-        $this->model->getModel()->create($data);
-    }
-
-    public function updateUnit($id, array $data)
-    {
-        $unit = $this->getUnitById($id);
-        if ($unit) {
-            $unit->update($data);
-            return $unit;
+        if (!$unit) {
+            throw new Exception("Unidade não encontrada.");
         }
         
-        return null;
+        return $unit;
     }
 
-    public function delete(Unit $unit)
+    public function create(UnitDto $unitDto)
     {
+        $data = [
+            'name' => $unitDto->name,
+            'abbreviation' => $unitDto->abbreviation,
+            'format' => $unitDto->format,
+        ];
+        
+        return $this->model->create($data);
+    }
+
+    public function update(UnitDto $unitDto, int $id)
+    {
+        $unit = $this->model->find($id);
+
+        if (!$unit) {
+            throw new Exception("Unidade não encontrada.");
+        }
+        $data = [
+            'name' => $unitDto->name,
+            'abbreviation' => $unitDto->abbreviation,
+            'format' => $unitDto->format,
+        ];
+        
+        return $this->model->update($data);
+    }
+
+    public function delete(int $id)
+    {
+        $unit = $this->model->find($id);
+        
+        if (!$unit) {
+            throw new Exception("Unidade não encontrada.");
+        }
+
         return $unit->delete();
     }
 }

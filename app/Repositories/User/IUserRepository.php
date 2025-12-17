@@ -2,15 +2,15 @@
 
 namespace App\Repositories\User;
 
-use App\Http\Dto\User\CreateUserDto;
-use App\Http\Dto\User\UpdateUserDto;
+use App\Http\Dto\User\UserDto;
 use App\Models\User;
 
 interface IUserRepository
 {
-    public function update(UpdateUserDto $updateUserDto);
-    public function store(CreateUserDto $createUserDto);
-    public function delete(User $user);
     public function getUsers();
-    public function findByEmail(string $email): ?User;
+    public function getUserById(int $id): User;
+    public function findByEmail(string $email);
+    public function create(UserDto $userDto): User;
+    public function update(UserDto $userDto, int $id);
+    public function delete(int $id);
 }
