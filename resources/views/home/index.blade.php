@@ -41,7 +41,7 @@
                 </div>
                 <div class="hero-actions">
                     <a class="btn btn-info" href="{{ route('login') }}" tabindex="0">Entrar</a>
-                    <a class="btn btn-outline-info" href="{{ route('register') }}" tabindex="0">Cadastre-se</a>
+                    <a class="btn btn-outline-info" href="{{ route('register.create') }}" tabindex="0">Cadastre-se</a>
                 </div>
             </div>
             <div class="hero-image">

@@ -21,9 +21,9 @@
     @forelse ($values ?? [] as $value)
         <option
             value="{{ $value->id }}"
-            @if (old($old, $selected ?? '') == $value->id) selected @endif
+            @if ($selected == $value->id) selected @endif
         >
-            {{ $value[$objectName ?? 'name'] }}
+            {{ ucfirst(strtolower($value[$objectName ?? 'name'])) }}
         </option>
     @empty
         <option disabled>Nenhuma opção disponível</option>

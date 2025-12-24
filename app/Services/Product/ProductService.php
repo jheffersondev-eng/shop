@@ -2,7 +2,9 @@
 
 namespace App\Services\Product;
 
+use App\Http\Dto\Product\FilterDto;
 use App\Http\Dto\Product\ProductDto;
+use App\Mapper\ProductAggregateMapper;
 use App\Models\Product;
 use App\Repositories\Product\IProductRepository;
 use App\Services\ServiceResult;
@@ -23,12 +25,41 @@ class ProductService implements IProductService
 
     public function getProducts(): LengthAwarePaginator
     {
-        return $this->productRepository->getProducts();
+        try {
+            $products = $this->productRepository->getProducts();
+            $productsAggregate = ProductAggregateMapper::map($products);
+            
+            return $productsAggregate;
+
+        } catch (Throwable $e) {
+            Log::error('Erro ao listar produtos: '.$e->getMessage());
+            throw $e;
+        }
     }
 
     public function getProductById(int $id): Product
     {
-        return $this->productRepository->getProductById($id);
+        try {
+            $product = $this->productRepository->getProductById($id);
+            return $product;
+
+        } catch (Throwable $e) {
+            Log::error('Erro ao obter produto por ID: '.$e->getMessage());
+            throw $e;
+        }
+    }
+
+    public function getProductsByFilter(FilterDto $filterDto): LengthAwarePaginator
+    {
+        try {
+            $products = $this->productRepository->getProductsByFilter($filterDto);
+            $productsAggregate = ProductAggregateMapper::map($products);
+            
+            return $productsAggregate;
+        } catch (Throwable $e) {
+            Log::error('Erro ao filtrar produtos: '.$e->getMessage());
+            throw $e;
+        }
     }
 
     private function deleteOldImage(Product $product): void
@@ -66,6 +97,9 @@ class ProductService implements IProductService
             if ($productDto->image instanceof UploadedFile) {
                 $this->deleteOldImage($product);
                 $productDto->image = $productDto->image->store('products', 'public');
+            } else if ($productDto->image === null) {
+                // Se nenhuma nova imagem foi enviada, manter a imagem atual
+                $productDto->image = $product->image;
             }
             
             $this->productRepository->update($productDto, $id);

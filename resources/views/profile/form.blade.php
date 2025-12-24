@@ -1,5 +1,5 @@
 <div class="row g-3">
-    <div class="col-md-6">
+    <div class="col-md-12">
         <label for="name" class="form-label">Nome</label>
         <div class="input-group">
             <span class="input-group-text"><i class="bi bi-puzzle"></i></span>
@@ -8,3 +8,4 @@
         </div>
     </div>
 </div>
+@yield('actions')

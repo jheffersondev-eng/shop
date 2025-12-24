@@ -15,6 +15,9 @@ class Payment extends Model
         'method',
         'amount',
         'paid_at',
+        'user_id_created',
+        'user_id_updated',
+        'user_id_deleted',
     ];
 
     protected $casts = [

@@ -4,12 +4,12 @@ namespace App\Http\Controllers\Product;
 
 use App\Enums\EIsActive;
 use App\Http\Controllers\BaseController;
+use App\Http\Requests\Product\FilterRequest;
 use App\Http\Requests\Product\ProductRequest;
 use App\Services\Category\ICategoryService;
 use App\Services\Product\IProductService;
 use App\Services\UnitService\IUnitService;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class ProductController extends BaseController
@@ -28,14 +28,20 @@ class ProductController extends BaseController
         $this->unitService = $unitService;
     }
 
-    public function Index(Request $request): View
+    public function Index(FilterRequest $filterRequest): View
     {
-        $products = $this->productService->getProducts();
+        $products = $this->productService->getProductsByFilter($filterRequest->getDto());
+        $categories = $this->categoryService->getCategories();
+        $units = $this->unitService->getUnits();
+        $isActive = EIsActive::toArrayOptions();
 
         return view('product.index', [
             'url' => route('product.index'),
             'title' => 'Produtos',
             'products' => $products,
+            'categories' => $categories,
+            'units' => $units,
+            'isActive' => $isActive,
         ]);
     }
 
@@ -43,7 +49,7 @@ class ProductController extends BaseController
     {
         $categories = $this->categoryService->getCategories();
         $units = $this->unitService->getUnits();
-        $isActive = EIsActive::toArray();
+        $isActive = EIsActive::toArrayOptions();
 
         return view('product.create', [
             'url' => route('product.index'),
@@ -58,7 +64,7 @@ class ProductController extends BaseController
         $product = $this->productService->getProductById($id);
         $categories = $this->categoryService->getCategories();
         $units = $this->unitService->getUnits();
-        $isActive = EIsActive::toArray();
+        $isActive = EIsActive::toArrayOptions();
 
         return view('product.edit', [
             'url' => route('product.index'),

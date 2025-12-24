@@ -22,7 +22,6 @@ class SelectHelper
 	protected $options = [];
 	protected ?string $objectName = 'name';
 	protected ?string $selected = null;
-	protected ?string $oldValue = null;
 	protected ?string $label = null;
 	protected bool $required = false;
 	protected array $attributes = [];
@@ -82,13 +81,7 @@ class SelectHelper
 
 	public function setSelected($selected): self
 	{
-		$this->selected = $selected;
-		return $this;
-	}
-
-	public function setOldValue(string $oldValue): self
-	{
-		$this->oldValue = $oldValue;
+		$this->selected = old($this->name, $selected);
 		return $this;
 	}
 
@@ -141,7 +134,7 @@ class SelectHelper
 			'values' => $this->options,
 			'objectName' => $this->objectName,
 			'selected' => $this->selected,
-			'old' => $this->oldValue,
+
 			'label' => $this->label,
 			'required' => $this->required,
 			'disabled' => $this->disabled,
@@ -174,7 +167,7 @@ class SelectHelper
 				foreach ($opts['values'] as $value) {
 					$optionValue = $value->id ?? '';
 					$optionName = $value[$opts['objectName'] ?? 'name'] ?? '';
-					$selected = (old($opts['old'], $opts['selected'] ?? '') == $optionValue) ? ' selected' : '';
+					$selected = ($opts['selected'] == $optionValue) ? ' selected' : '';
 					$html .= '<option value="' . e($optionValue) . '"' . $selected . '>' . e($optionName) . '</option>';
 				}
 			}

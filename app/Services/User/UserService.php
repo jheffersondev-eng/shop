@@ -2,12 +2,13 @@
 
 namespace App\Services\User;
 
+use App\Http\Dto\User\FilterDto;
 use App\Http\Dto\User\UserDto;
+use App\Mapper\UserAggregateMapper;
 use App\Models\User;
 use App\Repositories\User\IUserRepository;
 use App\Repositories\UserDetail\IUserDetailRepository;
 use App\Services\ServiceResult;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Log;
 use Throwable;
@@ -25,17 +26,58 @@ class UserService implements IUserService
 
     public function getUsers(): LengthAwarePaginator
     {
-        return $this->userRepository->getUsers();
+        try {
+            $users = $this->userRepository->getUsers();
+            return $users;
+
+        } catch (Throwable $e) {
+            Log::error('Erro ao listar usuários: '.$e->getMessage());
+            throw $e;
+        }
     }
 
     public function getUserById(int $id): User
     {
-        return $this->userRepository->getUserById($id);
+        try {
+            $user = $this->userRepository->getUserById($id);
+            return $user;
+
+        } catch (Throwable $e) {
+            Log::error('Erro ao obter usuário por ID: '.$e->getMessage());
+            throw $e;
+        }
+    }
+
+    public function getUsersByFilter(FilterDto $filterDto): LengthAwarePaginator
+    {
+        try {
+            $users = $this->userRepository->getUsersByFilter($filterDto);
+            $usersAggregate = UserAggregateMapper::map($users);
+            
+            return $usersAggregate;
+        } catch (Throwable $e) {
+            Log::error('Erro ao filtrar usuários: '.$e->getMessage());
+            throw $e;
+        }
     }
     
     public function create(UserDto $userDto): ServiceResult
     {
         try {
+            $email = $this->userRepository->findByEmail($userDto->email);
+            if ($email) {
+                return ServiceResult::fail('E-mail já cadastrado');
+            }
+
+            $document = $this->userDetailRepository->findByDocument($userDto->userDetailsDto->document);
+            if ($document) {
+                return ServiceResult::fail('Documento já cadastrado');
+            }
+
+            if($userDto->userDetailsDto->birthDate > now()->subYears(17)->toDateString()) {
+                return ServiceResult::fail('Usuário deve ser maior de 18 anos');
+            }
+            
             $user = $this->userRepository->create($userDto);
             $userDto->userDetailsDto = $userDto->userDetailsDto->withUserId($user->id);
             $this->userDetailRepository->create($userDto->userDetailsDto);

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Profile;
 
+use App\Enums\EIsActive;
 use App\Http\Controllers\BaseController;
+use App\Http\Requests\Profile\FilterRequest;
 use App\Http\Requests\Profile\ProfileRequest;
 use Illuminate\Http\Request;
 use App\Services\Profile\IProfileService;
@@ -17,14 +19,16 @@ class ProfileController extends BaseController
         $this->profileService = $profileService;
     }
 
-    public function Index(Request $request)
+    public function Index(FilterRequest $filterRequest)
     {
-        $profiles = $this->profileService->getProfiles();
+        $profiles = $this->profileService->getProfilesByFilter($filterRequest->getDto());
+        $isActive = EIsActive::toArrayOptions();
 
         return view('profile.index', [
             'url' => route('profile.index'),
             'title' => 'Perfis',
             'profiles' => $profiles,
+            'isActive' => $isActive,
         ]);
     }
 

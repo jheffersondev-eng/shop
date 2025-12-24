@@ -53,7 +53,7 @@
                 </div>
                 <button type="submit" class="btn btn-login">Entrar</button>
             </form>
-            <a href="{{ route('register.post') }}" class="login-link">Não tem conta? Cadastre-se</a>
+            <a href="{{ route('register.create') }}" class="login-link">Não tem conta? Cadastre-se</a>
         </div>
     </main>
     <div class="footer">

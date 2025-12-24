@@ -14,6 +14,9 @@ class Unit extends Model
         'name',
         'abbreviation',
         'format',
+        'user_id_created',
+        'user_id_updated',
+        'user_id_deleted',
     ];
 
     protected $casts = [

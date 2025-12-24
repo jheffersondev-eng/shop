@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Category;
 
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Category\CategoryRequest;
-use Illuminate\Http\Request;
+use App\Http\Requests\Category\FilterRequest;
 use App\Services\Category\ICategoryService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
@@ -18,9 +18,9 @@ class CategoryController extends BaseController
         $this->categoryService = $categoryService;
     }
 
-    public function Index(Request $request): View
+    public function Index(FilterRequest $filterRequest): View
     {
-        $categories = $this->categoryService->getCategories();
+        $categories = $this->categoryService->getCategoriesByFilter($filterRequest->getDto());
 
         return view('category.index', [
             'url' => route('category.index'),

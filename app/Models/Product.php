@@ -23,6 +23,9 @@ class Product extends Model
         'min_quantity',
         'is_active',
         'image',
+        'user_id_created',
+        'user_id_updated',
+        'user_id_deleted',
     ];
 
     protected $casts = [

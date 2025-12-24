@@ -9,9 +9,9 @@ class UserDto extends BaseDto
 {
 	public function __construct(
 		public string $email,
-		public ?string $password,
+		public string|null $password,
 		public bool $isActive,
 		public int $profileId,
-		public int $userIdCreate,
+		public int|null $userIdCreate,
 		public UserDetailsDto $userDetailsDto) {}
 }

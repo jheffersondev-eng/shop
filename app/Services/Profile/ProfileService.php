@@ -2,7 +2,9 @@
 
 namespace App\Services\Profile;
 
+use App\Http\Dto\Profile\FilterDto;
 use App\Http\Dto\Profile\ProfileDto;
+use App\Mapper\ProfileAggregateMapper;
 use App\Models\Profile;
 use App\Repositories\Profile\IProfileRepository;
 use App\Services\ServiceResult;
@@ -21,12 +23,39 @@ class ProfileService implements IProfileService
 
     public function getProfiles(): LengthAwarePaginator
     {
-        return $this->profileRepository->getProfiles();
+        try {
+            $profiles = $this->profileRepository->getProfiles();
+            return $profiles;
+
+        } catch (Throwable $e) {
+            Log::error('Erro ao listar perfis: '.$e->getMessage());
+            throw $e;
+        }
     }
 
     public function getProfileById(int $id): Profile
     {
-        return $this->profileRepository->getProfileById($id);
+        try {
+            $profile = $this->profileRepository->getProfileById($id);
+            return $profile;
+
+        } catch (Throwable $e) {
+            Log::error('Erro ao obter perfil por ID: '.$e->getMessage());
+            throw $e;
+        }
+    }
+
+    public function getProfilesByFilter(FilterDto $filterDto): LengthAwarePaginator
+    {
+        try {
+            $profiles = $this->profileRepository->getProfilesByFilter($filterDto);
+            $profilesAggregate = ProfileAggregateMapper::map($profiles);
+            
+            return $profilesAggregate;
+        } catch (Throwable $e) {
+            Log::error('Erro ao filtrar perfis: '.$e->getMessage());
+            throw $e;
+        }
     }
 
     public function create(ProfileDto $profileDto): ServiceResult

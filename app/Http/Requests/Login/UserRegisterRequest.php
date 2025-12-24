@@ -5,25 +5,16 @@ namespace App\Http\Requests\Login;
 use App\Enums\EProfile;
 use App\Helpers\DocumentHelper;
 use App\Helpers\PhoneHelper;
+use App\Http\Dto\User\UserDto;
+use App\Http\Dto\UserDetails\UserDetailsDto;
 use App\Http\Requests\BaseRequest;
+use Illuminate\Support\Carbon;
 
 class UserRegisterRequest extends BaseRequest
 {
     public function rules(): array
     {
-        if (!$this->input('profile_id')) {
-            $this->merge(['profile_id' => EProfile::ADMIN->value]);
-        }
-
-        $this->merge([
-            'email' => strtolower($this->input('email')),
-            'document' => DocumentHelper::stripSpecialChars($this->input('document')),
-            'phone' => PhoneHelper::normalize($this->input('phone')),
-            'address' => strtolower($this->input('address')),
-            'name' => strtoupper($this->input('name')),
-        ]);
-
-        return [
+        $rules = [
             'name' => ['required', 'string', 'max:200'],
             'profile_id' => ['required', 'integer'],
             'email' => ['required', 'email', 'max:200'],
@@ -33,6 +24,23 @@ class UserRegisterRequest extends BaseRequest
             'address' => ['required', 'string', 'max:255'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ];
+
+        $this->normalizeInputs();
+
+        return $rules;
+    }
+
+    protected function normalizeInputs(): void
+    {
+        $this->merge([
+            'profile_id' => EProfile::ADMIN->value,
+            'email' => strtolower($this->input('email')),
+            'document' => DocumentHelper::stripSpecialChars($this->input('document')),
+            'phone' => PhoneHelper::normalize($this->input('phone')),
+            'address' => strtolower($this->input('address')),
+            'name' => strtoupper($this->input('name')),
+            'birth_date' => Carbon::parse($this->input('birth_date')),
+        ]);
     }
 
     public function messages(): array
@@ -69,5 +77,25 @@ class UserRegisterRequest extends BaseRequest
             'password.min' => 'A senha deve ter no mínimo 8 caracteres.',
             'password.confirmed' => 'A confirmação da senha não corresponde.',
         ];
+    }
+
+    public function getDto(): UserDto
+    {
+        return new UserDto(
+            email: $this->input('email'),
+            password: $this->input('password'),
+            isActive: true,
+            profileId: $this->input('profile_id'),
+            userIdCreate: null,
+            userDetailsDto: new UserDetailsDto(
+                name: $this->input('name'),
+                document: $this->input('document'),
+                birthDate: $this->input('birth_date'),
+                phone: $this->input('phone'),
+                address: $this->input('address'),
+                creditLimit: 0.0,
+                userId: null
+            )
+        );
     }
 }

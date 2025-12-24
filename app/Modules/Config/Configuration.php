@@ -17,7 +17,6 @@ use App\Modules\Profile\ProfileModule;
 use App\Modules\Category\CategoryModule;
 use App\Modules\Unit\UnitModule;
 use Illuminate\Support\Collection;
-use Exception;
 use RuntimeException;
 
 class Configuration
@@ -26,19 +25,14 @@ class Configuration
     {
         return [
             new DashboardModule(),
+            new ProductModule(),
             new UserModule(),
             new ProfileModule(),
             new CategoryModule(),
             new UnitModule(),
-            new ProductModule(),
         ];
     }
 
-    /**
-     * @param String $name
-     * @return Module
-     * @throws Exception
-     */
     public static function getModuleByName(string $name): Module
     {
         foreach (self::getModules() as $module) {
@@ -49,19 +43,16 @@ class Configuration
         throw new RuntimeException("Impossível identificar o relatorio");
     }
 
-    /**
-     * @return Collection
-     */
     public static function getMenu(): Collection
     {
-    $menu = new Collection();
-    $menu->add(new DashboardHeader());
-    $menu->add(new UserHeader());
-    $menu->add(new ProfileHeader());
-    $menu->add(new CategoryHeader());
-    $menu->add(new UnitHeader());
-    $menu->add(new ProductHeader());
-    $menu->add(new ConfigurationHeader());
+        $menu = new Collection();
+        $menu->add(new DashboardHeader());
+        $menu->add(new ProductHeader());
+        $menu->add(new UserHeader());
+        $menu->add(new ProfileHeader());
+        $menu->add(new CategoryHeader());
+        $menu->add(new UnitHeader());
+        $menu->add(new ConfigurationHeader());
         
         return $menu;
     }

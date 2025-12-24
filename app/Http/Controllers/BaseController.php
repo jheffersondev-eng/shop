@@ -84,7 +84,6 @@ abstract class BaseController extends Controller
                 ->with('success', $result->message ?? $defaultSuccessMessage);
 
         } catch (Throwable $e) {
-
             DB::rollBack();
             Log::critical($e->getMessage());
 

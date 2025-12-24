@@ -21,8 +21,8 @@ class RegisterModule extends Module
     public function getRoutesWeb(): RouteModule
     {
         return new RouteModule("register", function () {
-            Route::get('/', [RegisterController::class, 'SignUp'])->name('register');
-            Route::post('/', [RegisterController::class, 'Register'])->name('register.post');
+            Route::get('/create', [RegisterController::class, 'SignUp'])->name('register.create');
+            Route::post('/', [RegisterController::class, 'Register'])->name('register.store');
         });
     }
 

@@ -10,7 +10,7 @@
                 class="form-control"
                 id="name" name="name"
                 placeholder="Nome do produto"
-                value="{{ old('name', $product->name ?? '') }}" required>
+                value="{{ $product?->name ?? Request::get('name') }}" required>
         </div>
     </div>
     <div class="col-md-3">
@@ -20,6 +20,7 @@
             {!! 
                 SelectHelper::make('category_id')
                     ->setOptions($categories)
+                    ->setSelected($product?->category_id ?? Request::get('category_id'))
                     ->setClass('form-control')
                     ->render();
             !!}
@@ -32,6 +33,7 @@
             {!! 
                 SelectHelper::make('unit_id')
                     ->setOptions($units)
+                    ->setSelected($product?->unit_id ?? Request::get('unit_id'))
                     ->setClass('form-control')
                     ->render();
             !!}
@@ -46,7 +48,7 @@
                 id="barcode" 
                 name="barcode" 
                 placeholder="Código de barras"
-                value="{{ old('barcode', $product->barcode ?? '') }}">
+                value="{{ $product?->barcode ?? Request::get('barcode') }}">
         </div>
     </div>
     <div class="col-md-4">
@@ -59,7 +61,7 @@
                 id="price" 
                 name="price" 
                 placeholder="0.00"
-                value="{{ old('price', $product->price ?? '') }}">
+                value="{{ $product?->price ?? Request::get('price') }}">
         </div>
     </div>
     <div class="col-md-4">
@@ -72,7 +74,7 @@
                 id="cost_price" 
                 name="cost_price" 
                 placeholder="0.00"
-                value="{{ old('cost_price', $product->cost_price ?? '') }}">
+                value="{{ $product?->cost_price ?? Request::get('cost_price') }}">
         </div>
     </div>
     <div class="col-12">
@@ -82,7 +84,7 @@
             <textarea class="form-control" 
                 id="description" 
                 name="description" 
-                rows="3">{{ old('description', $product->description ?? '') }}</textarea>
+                rows="3">{{ $product?->description ?? Request::get('description') }}</textarea>
         </div>
     </div>
     <div class="col-md-3">
@@ -94,7 +96,7 @@
                 id="stock_quantity" 
                 name="stock_quantity" 
                 placeholder="0"
-                value="{{ old('stock_quantity', isset($product->stock_quantity) ? (isset($product->unit) && $product->unit->format == 2 ? (int) $product->stock_quantity : $product->stock_quantity) : '') }}">
+                value="{{  $product?->stock_quantity ?? Request::get('stock_quantity') }}">
         </div>
     </div>
     <div class="col-md-3">
@@ -106,21 +108,20 @@
                 id="min_quantity" 
                 name="min_quantity" 
                 placeholder="0"
-                value="{{ old('min_quantity', isset($product->min_quantity) ? (isset($product->unit) && $product->unit->format == 2 ? (int) $product->min_quantity : $product->min_quantity) : '') }}">
+                value="{{ $product?->min_quantity ?? Request::get('min_quantity') }}">
         </div>
     </div>
     <div class="col-md-3">
         <label for="is_active" class="form-label">Ativo</label>
         <div class="input-group">
             <span class="input-group-text"><i class="bi bi-toggle-on"></i></span>
-            <select class="form-select form-control" id="is_active" name="is_active" required>
-                <option value="">Selecione</option>
-                @foreach ($isActive ?? [] as $key => $value)
-                    <option value="{{ $key }}" {{ $product->is_active ?? '' === $key ? 'selected' : '' }}>
-                        {{ $value }}
-                    </option>
-                @endforeach
-            </select>
+            {!! 
+                SelectHelper::make('is_active')
+                    ->setOptions($isActive)
+                    ->setSelected($product?->is_active?->value ?? Request::get('is_active'))
+                    ->setClass('form-control')
+                    ->render();
+            !!}
         </div>
     </div>
     <div class="col-md-3">

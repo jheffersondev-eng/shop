@@ -9,14 +9,14 @@ enum EIsActive: int implements IBaseEnum
 {
     use TBaseEnum;
 
-    case ACTIVE = 0;
-    case INACTIVE = 1;
+    case ACTIVE = 1;
+    case INACTIVE = 0;
 
     public function getClasseBadge(): string
     {
         return match ($this) {
-            self::ACTIVE => 'success',
-            self::INACTIVE => 'danger',
+            self::ACTIVE => 'badge bg-success',
+            self::INACTIVE => 'badge bg-danger',
         };
     }
 }

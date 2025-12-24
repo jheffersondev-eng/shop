@@ -3,6 +3,8 @@
 namespace App\Services\Category;
 
 use App\Http\Dto\Category\CategoryDto;
+use App\Http\Dto\Category\FilterDto;
+use App\Mapper\CategoryAggregateMapper;
 use App\Models\Category;
 use App\Repositories\Category\ICategoryRepository;
 use App\Services\ServiceResult;
@@ -21,12 +23,39 @@ class CategoryService implements ICategoryService
 
     public function getCategories(): LengthAwarePaginator
     {
-        return $this->categoryRepository->getCategories();
+        try {
+            $categories = $this->categoryRepository->getCategories();
+            return $categories;
+
+        } catch (Throwable $e) {
+            Log::error('Erro ao listar categorias: '.$e->getMessage());
+            throw $e;
+        }
+    }
+
+    public function getCategoriesByFilter(FilterDto $filterDto): LengthAwarePaginator
+    {
+        try {
+            $categories = $this->categoryRepository->getCategoriesByFilter($filterDto);
+            $categoriesAggregate = CategoryAggregateMapper::map($categories);
+            
+            return $categoriesAggregate;
+        } catch (Throwable $e) {
+            Log::error('Erro ao filtrar categorias: '.$e->getMessage());
+            throw $e;
+        }
     }
 
     public function getCategoryById(int $id): Category
     {
-        return $this->categoryRepository->getCategoryById($id);
+        try {
+            $category = $this->categoryRepository->getCategoryById($id);
+            return $category;
+
+        } catch (Throwable $e) {
+            Log::error('Erro ao obter categoria por ID: '.$e->getMessage());
+            throw $e;
+        }
     }
     
     public function create(CategoryDto $categoryDto): ServiceResult

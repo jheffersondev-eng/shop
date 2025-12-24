@@ -2,11 +2,13 @@
 
 namespace App\Repositories\Profile;
 
+use App\Http\Dto\Profile\FilterDto;
 use App\Http\Dto\Profile\ProfileDto;
 use App\Models\Profile;
 use App\Repositories\BaseRepository;
 use Exception;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\DB;
 
 class ProfileRepository extends BaseRepository implements IProfileRepository
 {
@@ -31,6 +33,45 @@ class ProfileRepository extends BaseRepository implements IProfileRepository
         }
 
         return $profile;
+    }
+
+    public function getProfilesByFilter(FilterDto $filterDto): LengthAwarePaginator
+    {
+        $query = DB::table('profiles as p')
+            ->select(
+                    'p.id',
+                    'p.name',
+                    'p.description',
+                    'p.user_id_created',
+                    'p.user_id_updated',
+                    'p.created_at',
+                    'p.updated_at'
+                );
+
+        $query = $this->applyFilters($query, $filterDto);
+
+        return $query->paginate(self::PAGINATION_SIZE);
+    }
+
+    private function applyFilters($query, FilterDto $filterDto)
+    {
+        if ($filterDto->id) {
+            $query->where('id', $filterDto->id);
+        }
+
+        if ($filterDto->name) {
+            $query->where('name', 'like', '%' . $filterDto->name . '%');
+        }
+
+        if ($filterDto->dateDe) {
+            $query->whereDate('created_at', '>=', $filterDto->dateDe);
+        }
+
+        if ($filterDto->dateAte) {
+            $query->whereDate('created_at', '<=', $filterDto->dateAte);
+        }
+
+        return $query;
     }
 
     public function create(ProfileDto $profileDto): Profile

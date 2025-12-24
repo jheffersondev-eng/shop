@@ -21,6 +21,9 @@ class UserDetail extends Model
         'address',
         'credit_limit',
         'user_id',
+        'user_id_created',
+        'user_id_updated',
+        'user_id_deleted',
     ];
 
     protected $hidden = [
