@@ -1,5 +1,6 @@
 @php
     use App\Helpers\ButtonHelper;
+    use App\Enums\EIsActive;
 @endphp
 @extends('components.app.app')
 @section('title', 'Usuários')
@@ -11,11 +12,18 @@
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h5 class="mb-0">Usuários</h5>
                     <div class="d-flex gap-2 align-items-center">
-                        <input id="table-search" type="search" class="form-control form-control-sm" placeholder="Pesquisar..."
-                            style="min-width:200px;">
-                        <a href="{{ route('user.create') }}" class="btn btn-sm btn-primary">Novo</a>
+                        {!! ButtonHelper::make('Novo Usuário')
+                            ->setLink(route('user.create'))
+                            ->setSize(30)
+                            ->setClass('btn btn-sm btn-success')
+                            ->setIcon('bi bi-plus-lg')
+                            ->render('link')
+                        !!}
                     </div>
                 </div>
+                <!-- Filtros -->
+                @include('user.filter')
+                <!-- End Filtros -->
                 <div class="table-responsive">
                     <table class="table table-hover align-middle">
                         <thead class="table-light text-muted small">
@@ -32,18 +40,17 @@
                         <tbody id="users-table-body">
                             @forelse($users ?? [] as $user)
                                 <tr class="user-row">
-                                    <th scope="row">{{ $loop->iteration }}</th>
-                                    <td class="user-name">{{ ucwords(strtolower($user->userDetail->name)) }}</td>
+                                    <th scope="row">{{ $user->id }}</th>
+                                    <td class="user-name">{{ ucwords(strtolower($user->userDetails->name)) }}</td>
                                     <td class="user-email">{{ ucfirst($user->email) }}</td>
                                     <td class="user-profile">{{ ucfirst(strtolower($user->profile->name)) }}</td>
                                     <td class="user-active">
-                                        @if (optional($user)->is_active)
-                                            <span class="badge bg-success">Sim</span>
-                                        @else
-                                            <span class="badge bg-secondary">Não</span>
-                                        @endif
+                                        @php($isActive = EIsActive::from($user->isActive))
+                                        <span class="{{ $isActive->getClasseBadge() }}">
+                                            {{$isActive->getDescription()}}
+                                        </span>
                                     </td>
-                                    <td class="text-muted small">{{ optional($user->created_at)->format('d/m/Y') ?? '-' }}
+                                    <td class="text-muted small">{{ $user->createdAt->format('d/m/Y') }}
                                     </td>
                                     <td class="text-end">    
                                         {!!
@@ -80,28 +87,4 @@
             </div>
         </div>
     </div>
-
-    @section('scripts')
-        @parent
-        <script>
-            // Busca client-side simples: filtra linhas por nome, email ou perfil
-            (function() {
-                const input = document.getElementById('table-search');
-                if (!input) return;
-                const tbody = document.getElementById('users-table-body');
-                input.addEventListener('input', function() {
-                    const q = this.value.trim().toLowerCase();
-                    const rows = tbody.querySelectorAll('.user-row');
-                    rows.forEach(r => {
-                        const name = r.querySelector('.user-name')?.textContent.toLowerCase() || '';
-                        const email = r.querySelector('.user-email')?.textContent.toLowerCase() || '';
-                        const profile = r.querySelector('.user-profile')?.textContent.toLowerCase() || '';
-                        const match = q === '' || name.includes(q) || email.includes(q) || profile.includes(
-                            q);
-                        r.style.display = match ? '' : 'none';
-                    });
-                });
-            })();
-        </script>
-    @endsection
 @endsection

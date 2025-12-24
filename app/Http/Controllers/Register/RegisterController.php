@@ -4,26 +4,37 @@ namespace App\Http\Controllers\Register;
 
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Login\UserRegisterRequest;
+use App\Services\User\IUserService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 
 class RegisterController extends BaseController
 {
-    public function __construct()
+    protected IUserService $userService;
+
+    public function __construct(
+        IUserService $userService
+    ) 
     {
-        $this->setPages(1);
-        $this->setName('Novo Usuário');
-        $this->setUrl(url('register'));
-        $this->setFolderView('register');
+        $this->userService = $userService;
     }
 
     public function SignUp(): View
     {
-        return parent::CreateBase();
+        return view('register.create', [
+            'url' => route('register.create'),
+            'title' => 'Cadastre-se',
+        ]);
     }
 
     public function Register(UserRegisterRequest $userRegisterRequest): RedirectResponse
     {
-        return parent::StoreBase($userRegisterRequest);
+        $dto = $userRegisterRequest->getDto();
+
+        return $this->execute(
+            callback: fn() => $this->userService->create($dto),
+            defaultSuccessMessage: 'Usuário criado com sucesso',
+            successRedirect: route('user.index'),
+        );
     }
 }

@@ -19,8 +19,9 @@ class User extends Authenticatable
         'password',
         'profile_id',
         'is_active',
-        'user_id_update',
-        'user_id_create',
+        'user_id_created',
+        'user_id_updated',
+        'user_id_deleted',
     ];
 
     protected $hidden = [
@@ -52,14 +53,14 @@ class User extends Authenticatable
         return $this->hasOne(UserDetail::class, 'user_id');
     }
 
-    public function userIdUpdate()
+    public function userIdUpdated()
     {
-        return $this->hasOne(UserDetail::class, 'user_id_update');
+        return $this->hasOne(UserDetail::class, 'user_id_updated');
     }
 
-    public function userIdCreate()
+    public function userIdCreated()
     {
-        return $this->hasOne(UserDetail::class, 'user_id_create');
+        return $this->hasOne(UserDetail::class, 'user_id_created');
     }
 
     /**

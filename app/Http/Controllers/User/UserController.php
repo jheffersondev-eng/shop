@@ -5,11 +5,11 @@ namespace App\Http\Controllers\User;
 use App\Enums\EIsActive;
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\User\CreateUserRequest;
+use App\Http\Requests\User\FilterRequest;
 use App\Http\Requests\User\UpdateUserRequest;
 use App\Services\Profile\IProfileService;
 use App\Services\User\IUserService;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class UserController extends BaseController
@@ -20,30 +20,36 @@ class UserController extends BaseController
     public function __construct(
         IUserService $userService,
         IProfileService $profileService
-    ) {
+    ) 
+    {
         $this->userService = $userService;
         $this->profileService = $profileService;
     }
 
-    public function Index(Request $request): View
+    public function Index(FilterRequest $filterRequest): View
     {
-        $users = $this->userService->getUsers();
+        $users = $this->userService->getUsersByFilter($filterRequest->getDto());
+        $profiles = $this->profileService->getProfiles();
+        $isActive = EIsActive::toArrayOptions();
 
         return view('user.index', [
             'url' => route('user.index'),
             'title' => 'Usuário',
             'users' => $users,
+            'profiles' => $profiles,
+            'isActive' => $isActive,
         ]);
     }
 
     public function Create(): View
     {
         $profiles = $this->profileService->getProfiles();
+        $isActive = EIsActive::toArrayOptions();
 
         return view('user.create', [
             'url' => route('user.index'),
             'profiles' => $profiles,
-            'isActive' => EIsActive::toArray(),
+            'isActive' => $isActive,
         ]);
     }
 
@@ -51,12 +57,13 @@ class UserController extends BaseController
     {
         $user = $this->userService->getUserById($id);
         $profiles = $this->profileService->getProfiles();
+        $isActive = EIsActive::toArrayOptions();
 
         return view('user.edit', [
             'url' => route('user.index'),
             'user' => $user,
             'profiles' => $profiles,
-            'isActive' => EIsActive::toArray(),
+            'isActive' => $isActive,
         ]);
     }
 

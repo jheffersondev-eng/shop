@@ -10,8 +10,18 @@
         <div class="card-body">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h5 class="mb-0">Lista de Perfis</h5>
-                <a href="{{ route('profile.create') }}" class="btn btn-sm btn-primary">Novo perfil</a>
+                {!! 
+                    ButtonHelper::make('Novo Perfil')
+                        ->setLink(route('profile.create'))
+                        ->setSize(30)
+                        ->setClass('btn btn-sm btn-success')
+                        ->setIcon('bi bi-plus-lg')
+                        ->render('link')
+                !!}
             </div>
+            <!-- Filtros -->
+            @include('profile.filter')
+            <!-- End Filtros -->
             <div class="table-responsive">
                 <table class="table table-hover align-middle">
                     <thead class="table-light text-muted small">
@@ -23,11 +33,11 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($profiles ?? $models ?? [] as $profile)
+                        @forelse($profiles as $profile)
                         <tr>
                             <th scope="row">{{ $profile->id }}</th>
                             <td>{{ ucfirst(strtolower($profile->name)) }}</td>
-                            <td class="text-muted small">{{ $profile->created_at->format('d/m/Y') }}</td>
+                            <td class="text-muted small">{{ $profile->createdAt->format('d/m/Y') }}</td>
                             <td class="text-end">    
                                 {!!
                                     ButtonHelper::make('')

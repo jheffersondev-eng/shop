@@ -17,6 +17,9 @@ class Sale extends Model
         'total',
         'discount',
         'status',
+        'user_id_created',
+        'user_id_updated',
+        'user_id_deleted',
     ];
 
     protected $casts = [

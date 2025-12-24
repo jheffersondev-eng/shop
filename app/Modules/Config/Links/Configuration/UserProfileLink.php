@@ -3,8 +3,9 @@
 namespace App\Modules\Config\Links\Configuration;
 
 use App\Modules\Config\LinkMenu;
+use Illuminate\Support\Facades\Auth;
 
-class PerfilLink extends LinkMenu
+class UserProfileLink extends LinkMenu
 {
     public function getName(): String
     {
@@ -23,6 +24,6 @@ class PerfilLink extends LinkMenu
 
     public function getLink(): String
     {
-        return route('profile.index');
+        return route('userProfile.edit', Auth::user()->id);
     }
 }

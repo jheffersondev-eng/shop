@@ -14,6 +14,11 @@ class UserDetailRepository extends BaseRepository implements IUserDetailReposito
         parent::__construct(new UserDetail());
     }
 
+    public function findByDocument(string $document): UserDetail|null
+    {
+        return $this->model->where('document', $document)->first();
+    }
+
     public function create(UserDetailsDto $userDetailsDto): UserDetail
     {
         return $this->model->create($userDetailsDto->toArray());

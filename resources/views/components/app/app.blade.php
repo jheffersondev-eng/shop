@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/home/login.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/app/sidebar.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/app/main.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{{ asset('assets/js/app.js') }}"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     @yield('styles')
@@ -37,11 +38,12 @@
                 </div>
             </div>
         </div>
+        @yield('script-before')
         @yield('content')
     </div>
     @include('components.app.footer')
     @include('components.confirm-modal')
-    @yield('scripts')
+    @yield('scripts-after')
 </body>
 
 </html>

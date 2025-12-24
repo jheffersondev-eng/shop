@@ -21,12 +21,26 @@ class UnitService implements IUnitService
 
     public function getUnits(): LengthAwarePaginator
     {
-        return $this->unitRepository->getUnits();
+        try {
+            $units = $this->unitRepository->getUnits();
+            return $units;
+
+        } catch (Throwable $e) {
+            Log::error('Erro ao listar unidades: '.$e->getMessage());
+            throw $e;
+        }
     }
 
     public function getUnitById(int $id): Unit
     {
-        return $this->unitRepository->getUnitById($id);
+        try {
+            $unit = $this->unitRepository->getUnitById($id);
+            return $unit;
+
+        } catch (Throwable $e) {
+            Log::error('Erro ao obter unidade por ID: '.$e->getMessage());
+            throw $e;
+        }
     }
     
     public function create(UnitDto $unitDto): ServiceResult

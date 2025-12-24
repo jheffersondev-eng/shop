@@ -12,14 +12,18 @@
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h5 class="mb-0">Produtos</h5>
                     <div class="d-flex gap-2 align-items-center">
-                        <input id="table-search" 
-                            type="search" 
-                            class="form-control form-control-sm" 
-                            placeholder="Pesquisar..."
-                            style="min-width:200px;">
-                        <a href="{{ route('product.create') }}" class="btn btn-sm btn-primary">Novo</a>
+                        {!! ButtonHelper::make('Novo Produto')
+                            ->setLink(route('product.create'))
+                            ->setSize(30)
+                            ->setClass('btn btn-sm btn-success')
+                            ->setIcon('bi bi-plus-lg')
+                            ->render('link')
+                        !!}
                     </div>
                 </div>
+                <!-- Filtros -->
+                @include('product.filter')
+                <!-- End Filtros -->
                 <div class="table-responsive">
                     <table class="table table-hover align-middle">
                         <thead class="table-light text-muted small">
@@ -45,11 +49,11 @@
                                             <span class="text-muted">Sem imagem</span>
                                         @endif
                                     </td>
-                                    <td>{{ $product->name }}</td>
-                                    <td>{{ $product->description }}</td>
-                                    <td>{{ $product->category->name }}</td>
+                                    <td>{{ ucfirst(strtolower($product->name)) }}</td>
+                                    <td>{{ ucfirst(strtolower($product->description)) }}</td>
+                                    <td>{{ ucfirst(strtolower($product->category->name)) }}</td>
                                     <td>
-                                        {{ NumberHelper::simple($product->stock_quantity) }} 
+                                        {{ NumberHelper::simple($product->stockQuantity) }} 
                                         {{ $product->unit->abbreviation }}
                                     </td>
                                     <td>{{ NumberHelper::currency($product->price) }}</td>

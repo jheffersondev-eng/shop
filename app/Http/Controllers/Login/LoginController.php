@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Login;
 
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Login\UserLoginRequest;
-use App\Services\Login\IUserLoginRequestService;
+use App\Services\Login\ILoginService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
@@ -13,11 +13,11 @@ use Illuminate\Support\Facades\Redirect;
 
 class LoginController extends BaseController
 {
-    protected IUserLoginRequestService $userLoginRequestService;
+    protected ILoginService $loginService;
 
-    public function __construct(IUserLoginRequestService $userLoginRequestService)
+    public function __construct(ILoginService $loginService)
     {
-        $this->userLoginRequestService = $userLoginRequestService;
+        $this->loginService = $loginService;
     }
 
     protected function getFolderView(): string
@@ -46,7 +46,7 @@ class LoginController extends BaseController
     public function Login(UserLoginRequest $request): RedirectResponse
     {
         return $this->execute(
-            callback: fn() => $this->userLoginRequestService->handler($request),
+            callback: fn() => $this->loginService->handler($request),
             defaultSuccessMessage: 'Login realizado com sucesso',
             successRedirect: route('dashboard'),
         );

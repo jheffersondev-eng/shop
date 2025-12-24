@@ -16,10 +16,8 @@ use App\Repositories\Unit\IUnitRepository;
 use App\Repositories\Unit\UnitRepository;
 use App\Services\Category\CategoryService;
 use App\Services\Category\ICategoryService;
-use App\Services\Login\IUserLoginRequestService;
-use App\Services\Login\IUserRegisterRequestService;
-use App\Services\Login\UserLoginRequestService;
-use App\Services\Login\UserRegisterRequestService;
+use App\Services\Login\ILoginService;
+use App\Services\Login\LoginService;
 use App\Services\Product\IProductService;
 use App\Services\Product\ProductService;
 use App\Services\Profile\IProfileService;
@@ -43,8 +41,7 @@ class AppDependencyInjection
         $app->bind(IProductRepository::class, ProductRepository::class);
 
         //register bindings services
-        $app->bind(IUserLoginRequestService::class, UserLoginRequestService::class);
-        $app->bind(IUserRegisterRequestService::class, UserRegisterRequestService::class);
+        $app->bind(ILoginService::class, LoginService::class);
         $app->bind(IUserService::class, UserService::class);
         $app->bind(IProfileService::class, ProfileService::class);
         $app->bind(ICategoryService::class, CategoryService::class);

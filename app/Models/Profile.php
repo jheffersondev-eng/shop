@@ -12,6 +12,10 @@ class Profile extends Model
 
     protected $fillable = [
         'name',
+        'description',
+        'user_id_created',
+        'user_id_updated',
+        'user_id_deleted',
     ];
 
     protected $casts = [

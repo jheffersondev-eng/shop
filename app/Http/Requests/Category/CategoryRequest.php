@@ -18,6 +18,7 @@ class CategoryRequest extends BaseRequest
 
         $rules = [
             'name' => 'required|string|max:50',
+            'description' => 'nullable|string|max:255',
         ];
 
         return $rules;
@@ -36,6 +37,9 @@ class CategoryRequest extends BaseRequest
             'name.required' => 'O campo Nome é obrigatório.',
             'name.string' => 'O campo Nome deve ser um texto.',
             'name.max' => 'O campo Nome deve ter no máximo 50 caracteres.',
+
+            'description.string' => 'O campo Descrição deve ser um texto.',
+            'description.max' => 'O campo Descrição deve ter no máximo 255 caracteres.',
         ];
     }
 
@@ -43,6 +47,7 @@ class CategoryRequest extends BaseRequest
     {
         return new CategoryDto(
             $this->input('name'),
+            $this->input('description'),
         );
     }
 }

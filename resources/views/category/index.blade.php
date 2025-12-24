@@ -6,28 +6,38 @@
 @section('content')
 <div class="container-fluid px-4">
     @include('components.message')
-
     <div class="card shadow-sm border-0 mt-3">
         <div class="card-body">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h5 class="mb-0">Categorias</h5>
-                <a href="{{ route('category.create') }}" class="btn btn-sm btn-primary">Nova Categoria</a>
+                {!! 
+                    ButtonHelper::make('Nova Categoria')
+                        ->setLink(route('category.create'))
+                        ->setSize(30)
+                        ->setClass('btn btn-sm btn-success')
+                        ->setIcon('bi bi-plus-lg')
+                        ->render('link')
+                !!}
             </div>
-
+            <!-- Filtros -->
+            @include('category.filter')
+            <!-- End Filtros -->
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Nome</th>
-                        <th class="text-end">Ações</th>
+                        <th colspan="1">ID</th>
+                        <th colspan="4">Nome</th>
+                        <th colspan="5">Descrição</th>
+                        <th colspan="2" class="text-end">Ações</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($categories->items() as $category)
                         <tr>
-                            <td>{{ $category->id }}</td>
-                            <td>{{ ucfirst(strtolower($category->name)) }}</td>
-                            <td class="text-end">    
+                            <td colspan="1">{{ $category->id }}</td>
+                            <td colspan="4">{{ ucfirst(strtolower($category->name)) }}</td>
+                            <td colspan="5">{{ ucfirst(strtolower($category->description ?? '-')) }}</td>
+                            <td colspan="2" class="text-end">    
                                 {!!
                                     ButtonHelper::make('')
                                         ->setLink(route('category.edit', $category->id))
@@ -58,5 +68,4 @@
         </div>
     </div>
 </div>
-
 @endsection

@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Exception;
 use App\Services\ServiceResult;
 
-class UserLoginRequestService implements IUserLoginRequestService
+class LoginService implements ILoginService
 {
     public function handler(UserLoginRequest $userLoginRequest)
     {

@@ -1,3 +1,6 @@
+@php
+    use App\Helpers\ButtonHelper;
+@endphp
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -43,7 +46,7 @@
                 Cadastre-se
             </div>
             @include('components.message')
-            <form method="POST" action="register">
+            <form method="POST" action="{{ route('register.store') }}">
                 @csrf
                 <div class="row g-3">
                     <div class="col-md-6">
@@ -103,7 +106,14 @@
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-register">Cadastrar</button>
+                {!! 
+                    ButtonHelper::make('Cadastrar')
+                        ->setLink(route('register.store'))
+                        ->setType('submit')
+                        ->setSize(100)
+                        ->setClass('btn btn-primary')
+                        ->render('button') 
+                !!}
             </form>
             <a href="{{ route('login') }}" class="register-link">Já tenho cadastro</a>
         </div>

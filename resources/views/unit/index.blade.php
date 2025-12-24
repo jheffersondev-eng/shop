@@ -10,9 +10,15 @@
         <div class="card-body">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h5 class="mb-0">Unidades</h5>
-                <a href="{{ route('unit.create') }}" class="btn btn-sm btn-primary">Nova Unidade</a>
+                {!! 
+                    ButtonHelper::make('Nova Unidade')
+                        ->setLink(route('unit.create'))
+                        ->setSize(30)
+                        ->setClass('btn btn-sm btn-success')
+                        ->setIcon('bi bi-plus-lg')
+                        ->render('link')
+                !!}
             </div>
-
             <table class="table table-striped">
                 <thead>
                     <tr>
