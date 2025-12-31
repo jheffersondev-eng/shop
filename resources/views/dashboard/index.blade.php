@@ -1,11 +1,16 @@
+@php
+    use App\Helpers\NumberHelper;
+@endphp
 @extends('components.app.app')
 @section('title', 'Dashboard')
 @section('content')
     <div class="dashboard-cards">
         <div class="card-stat">
             <div class="stat-title">Novos usuários (30 dias)</div>
-            <div class="stat-value">1.434.023</div>
-            <div class="stat-change">+2.3%</div>
+            <div class="stat-value">{{ $statistics->quantityNewUsersCurrentMonth }}</div>
+            <div class="stat-change {{ $statistics->percentageGrowthNewUsers < 0 ? 'text-danger' : '' }}">
+                {{ NumberHelper::format($statistics->percentageGrowthNewUsers) }}%
+            </div>
         </div>
         <div class="card-stat">
             <div class="stat-title">Receita (30 dias)</div>
@@ -14,8 +19,10 @@
         </div>
         <div class="card-stat">
             <div class="stat-title">Produtos</div>
-            <div class="stat-value">2.340</div>
-            <div class="stat-change">+1.1%</div>
+            <div class="stat-value">{{ $statistics->quantityNewProductsCurrentMonth }}</div>
+            <div class="stat-change {{ $statistics->percentageGrowthNewProducts < 0 ? 'text-danger' : '' }}">
+                {{ NumberHelper::format($statistics->percentageGrowthNewProducts) }}%
+            </div>
         </div>
         <div class="card-stat">
             <div class="stat-title">Vendas (30 dias)</div>

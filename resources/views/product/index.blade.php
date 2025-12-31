@@ -1,6 +1,8 @@
 @php
     use App\Helpers\ButtonHelper;
     use App\Helpers\NumberHelper;
+    use App\Helpers\ButtonInformationHelper;
+    use App\Helpers\ModalHelper;
 @endphp
 @extends('components.app.app')
 @section('title', 'Produtos')
@@ -14,8 +16,8 @@
                     <div class="d-flex gap-2 align-items-center">
                         {!! ButtonHelper::make('Novo Produto')
                             ->setLink(route('product.create'))
-                            ->setSize(30)
-                            ->setClass('btn btn-sm btn-success')
+                            ->setSize('md')
+                            ->setClass('btn btn-success')
                             ->setIcon('bi bi-plus-lg')
                             ->render('link')
                         !!}
@@ -35,6 +37,7 @@
                                 <th scope="col">Categoria</th>
                                 <th scope="col">Quantidade</th>
                                 <th scope="col">Valor</th>
+                                <th scope="col">Criado em</th>
                                 <th scope="col" class="text-end">Ações</th>
                             </tr>
                         </thead>
@@ -43,8 +46,10 @@
                                 <tr class="user-row">
                                     <th scope="row">{{ $product->id }}</th>
                                     <td>
-                                        @if($product->image)
-                                            <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="img-thumbnail" style="width: 50px; height: 50px; object-fit: cover;">
+                                        @if(count($product->images) > 0)
+                                            <img src="{{ asset('storage/' . $product->images[0]) }}" 
+                                                alt="{{ $product->name }}" class="img-thumbnail" 
+                                                style="width: 50px; height: 50px; object-fit: cover;">
                                         @else
                                             <span class="text-muted">Sem imagem</span>
                                         @endif
@@ -57,20 +62,39 @@
                                         {{ $product->unit->abbreviation }}
                                     </td>
                                     <td>{{ NumberHelper::currency($product->price) }}</td>
+                                    <td>{{ $product->createdAt->format('d/m/Y') }}</td>
                                     <td class="text-end">    
+                                        {!! 
+                                            ButtonInformationHelper::make()
+                                                ->setCreatedBy(ucwords(strtolower($product->userCreatedName)))
+                                                ->setCreatedAt($product->createdAt)
+                                                ->setUpdatedBy(ucwords(strtolower($product->userUpdatedName)))
+                                                ->setUpdatedAt($product->updatedAt)
+                                                ->render() 
+                                        !!}
+                                        {!! 
+                                            ModalHelper::make()
+                                                ->setSize('lg')
+                                                ->setTitle('#'. $product->id . ' Produto ' . ucfirst(strtolower($product->name)))
+                                                ->setIcon('bi bi-eye')
+                                                ->setButtonClass('btn btn-outline-warning btn-sm')
+                                                ->setBody('product.product-modal')
+                                                ->setData(['product' => $product])
+                                                ->render()
+                                        !!} 
                                         {!!
                                             ButtonHelper::make('')
                                                 ->setLink(route('product.edit', $product->id))
-                                                ->setSize(30)
-                                                ->setClass('btn btn-sm btn-outline-primary')
+                                                ->setSize('sm')
+                                                ->setClass('btn btn-outline-primary')
                                                 ->setIcon('bi bi-pencil')
                                                 ->render('link') 
                                         !!}
                                         {!!
                                             ButtonHelper::make('')
                                                 ->setType('button')
-                                                ->setSize(23)
-                                                ->setClass('btn btn-sm btn-outline-danger btn-confirm')
+                                                ->setSize('sm')
+                                                ->setClass('btn btn-outline-danger btn-confirm')
                                                 ->setTitle('Excluir')
                                                 ->setDataMethod('DELETE')
                                                 ->setDataAction(route('product.destroy', $product->id))
@@ -83,11 +107,12 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="8" class="text-center text-muted">Nenhum usuário encontrado.</td>
+                                    <td colspan="10" class="text-center text-muted">Nenhum usuário encontrado.</td>
                                 </tr>
                             @endforelse
                         </tbody>
                     </table>
+                    {{ $products->links() }}
                 </div>
             </div>
         </div>

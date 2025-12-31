@@ -18,7 +18,7 @@
 							ButtonHelper::make('Cadastrar')
 								->setLink(route('profile.store'))
 								->setType('submit')
-								->setSize(100)
+								->setSize('lg')
 								->setClass('btn btn-primary')
 								->render('button') 
 						!!}
@@ -32,4 +32,7 @@
         	</div>
     	</div>
 	</div>
+@endsection
+@section('scripts-after')
+    <script src="{{ asset('assets/js/profile/accordionProfilePermissions.js') }}"></script>
 @endsection

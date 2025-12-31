@@ -9,8 +9,11 @@ use App\Models\User;
 use App\Repositories\User\IUserRepository;
 use App\Repositories\UserDetail\IUserDetailRepository;
 use App\Services\ServiceResult;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Throwable;
 
 class UserService implements IUserService
@@ -60,10 +63,19 @@ class UserService implements IUserService
             throw $e;
         }
     }
+
+    private function deleteOldImage(string|null $image): void
+    {
+        if ($image && Storage::disk('public')->exists($image)) {
+            Storage::disk('public')->delete($image);
+        }
+    }
     
     public function create(UserDto $userDto): ServiceResult
     {
         try {
+            $userDto->ownerId = Auth::id();
+
             $email = $this->userRepository->findByEmail($userDto->email);
             if ($email) {
                 return ServiceResult::fail('E-mail já cadastrado');
@@ -79,7 +91,9 @@ class UserService implements IUserService
             }
             
             $user = $this->userRepository->create($userDto);
-            $userDto->userDetailsDto = $userDto->userDetailsDto->withUserId($user->id);
+            $user->owner_id =  $userDto->ownerId ?? $user->id;
+            $this->userRepository->save($user);
+            $userDto->userDetailsDto->userId = $user->id;
             $this->userDetailRepository->create($userDto->userDetailsDto);
 
             return ServiceResult::ok(
@@ -96,8 +110,15 @@ class UserService implements IUserService
     public function update(UserDto $userDto, int $id): ServiceResult
     {
         try {
+            $userDetail = $this->userDetailRepository->getUserDetailByUserId($id);
+            $userDto->userDetailsDto->userId = $id;
+            
+            if ($userDto->userDetailsDto->image instanceof UploadedFile) {
+                $this->deleteOldImage($userDetail->image);
+                $userDto->userDetailsDto->image = $userDto->userDetailsDto->image->store('users', 'public');
+            }
+
             $this->userRepository->update($userDto, $id);
-            $userDto->userDetailsDto = $userDto->userDetailsDto->withUserId($id);
             $this->userDetailRepository->update($userDto->userDetailsDto);
 
             return ServiceResult::ok(

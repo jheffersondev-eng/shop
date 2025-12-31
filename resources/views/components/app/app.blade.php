@@ -16,9 +16,11 @@
     <link rel="stylesheet" href="{{ asset('assets/css/home/login.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/app/sidebar.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/app/main.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/app/scrollbar.css') }}">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{{ asset('assets/js/app.js') }}"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{{ asset('assets/css/app/pagination.css') }}">
     @yield('styles')
 </head>
 
@@ -33,7 +35,11 @@
                         {{ Auth::user()->userDetail->name_and_surname }}
                     </span>
                     <span class="rounded-avatar border-main">
-                        <i class="bi bi-person-fill text-primary-main" style="font-size:1.5rem;"></i>
+                        @if(Auth::user()->userDetail->image)
+                            <img src="{{ Storage::url(Auth::user()->userDetail->image) }}" alt="Perfil" class="rounded-avatar-img">
+                        @else
+                            <i class="bi bi-person-fill text-primary-main" style="font-size:1.5rem;"></i>
+                        @endif
                     </span>
                 </div>
             </div>
@@ -43,6 +49,10 @@
     </div>
     @include('components.app.footer')
     @include('components.confirm-modal')
+    
+    <!-- Modals Container -->
+    <div id="modals-container"></div>
+    
     @yield('scripts-after')
 </body>
 

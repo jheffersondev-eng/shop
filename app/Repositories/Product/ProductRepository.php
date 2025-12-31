@@ -8,15 +8,21 @@ use App\Models\Product;
 use App\Repositories\BaseRepository;
 use Exception;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class ProductRepository extends BaseRepository implements IProductRepository
 {
     const PAGINATION_SIZE = 10;
-
+    protected int $userLoggedId;
+    protected int $ownerId;
+    
     public function __construct()
     {
         parent::__construct(new Product());
+        $this->userLoggedId = Auth::id();
+        $this->ownerId = Auth::user()->owner_id;
     }
 
     public function getProducts(): LengthAwarePaginator
@@ -40,12 +46,14 @@ class ProductRepository extends BaseRepository implements IProductRepository
         $query = DB::table('products as p')
             ->join('categories as c', 'p.category_id', '=', 'c.id')
             ->join('units as u', 'p.unit_id', '=', 'u.id')
+            ->leftJoin('users as uc', 'p.user_id_created', '=', 'uc.id')
+            ->leftJoin('user_details as udc', 'uc.id', '=', 'udc.user_id')
+            ->leftJoin('users as uu', 'p.user_id_updated', '=', 'uu.id')
+            ->leftJoin('user_details as udu', 'uu.id', '=', 'udu.user_id')
             ->select(
                     'p.id as id',
                     'p.name',
-                    'p.description as description', 
-                    'p.image',
-                    'p.description',
+                    'p.description as description',
                     'c.name as category_name',
                     'c.description as category_description',
                     'u.name as unit_name',
@@ -57,8 +65,11 @@ class ProductRepository extends BaseRepository implements IProductRepository
                     'p.cost_price',
                     'p.min_quantity',
                     'p.is_active',
+                    'udc.name as user_created_name',
+                    'udu.name as user_updated_name',
                     'p.created_at',
-                    'p.updated_at'
+                    'p.updated_at',
+                    'p.deleted_at'
                 );
 
         $query = $this->applyFilters($query, $filterDto);
@@ -66,20 +77,26 @@ class ProductRepository extends BaseRepository implements IProductRepository
         return $query->paginate(self::PAGINATION_SIZE);
     }
 
-    private function applyFilters( $query, FilterDto $filterDto)
+    private function applyFilters($query, FilterDto $filterDto)
     {
-        $query->where('p.deleted_at', null);
+        $query->whereNull('p.deleted_at')
+            ->where(function($q) {
+                $q->where('p.user_id_created', '=', $this->userLoggedId)
+                    ->orWhere('p.owner_id', '=', $this->ownerId);
+            });
+
+        $query->whereNull('p.deleted_at');
 
         if($filterDto->id) {
             $query->where('p.id', $filterDto->id);
         }
         
         if($filterDto->dateDe) {
-            $query->where('p.created_at', '>=', $filterDto->dateDe);
+            $query->whereDate('p.created_at', '>=', $filterDto->dateDe);
         }
-
+        
         if($filterDto->dateAte) {
-            $query->where('p.created_at', '<=', $filterDto->dateAte);
+            $query->whereDate('p.created_at', '<=', $filterDto->dateAte);
         }
 
         if ($filterDto->name) {
@@ -113,7 +130,6 @@ class ProductRepository extends BaseRepository implements IProductRepository
     {
         $data = [
             'name' => $productDto->name,
-            'image' => $productDto->image,
             'description' => $productDto->description,
             'category_id' => $productDto->categoryId,
             'unit_id' => $productDto->unitId,
@@ -123,6 +139,8 @@ class ProductRepository extends BaseRepository implements IProductRepository
             'stock_quantity' => $productDto->stockQuantity,
             'min_quantity' => $productDto->minQuantity,
             'is_active' => $productDto->isActive,
+            'user_id_created' => $this->userLoggedId,
+            'owner_id' => $this->ownerId,
         ];
         
         return $this->model->create($data);
@@ -138,7 +156,6 @@ class ProductRepository extends BaseRepository implements IProductRepository
 
         $data = [
             'name' => $productDto->name,
-            'image' => $productDto->image,
             'description' => $productDto->description,
             'category_id' => $productDto->categoryId,
             'unit_id' => $productDto->unitId,
@@ -148,6 +165,7 @@ class ProductRepository extends BaseRepository implements IProductRepository
             'stock_quantity' => $productDto->stockQuantity,
             'min_quantity' => $productDto->minQuantity,
             'is_active' => $productDto->isActive,
+            'user_id_updated' => $this->userLoggedId,
         ];
 
         return $product->update($data);
@@ -161,6 +179,22 @@ class ProductRepository extends BaseRepository implements IProductRepository
             throw new Exception("Produto não encontrado.");
         }
 
-        return $product->delete();
+        $product->user_id_deleted = $this->userLoggedId;
+        $product->deleted_at = now();
+        
+        return $product->save();
+    }
+
+    public function getProductCountByMonth(Carbon $date): int
+    {
+        $count = $this->model
+            ->where('owner_id', $this->ownerId)
+            ->whereBetween('created_at', [
+                $date->copy()->startOfMonth(),
+                $date->copy()->endOfMonth()
+            ])
+            ->count();
+
+        return $count;
     }
 }

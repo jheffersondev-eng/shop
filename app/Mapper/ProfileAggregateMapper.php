@@ -15,8 +15,11 @@ class ProfileAggregateMapper
                 id: $profile->id,
                 name: $profile->name,
                 description: $profile->description,
+                permissions: explode(',', $profile->permission),
                 userIdCreated: $profile->user_id_created,
                 userIdUpdated: $profile->user_id_updated,
+                userCreatedName: $profile->user_created_name,
+                userUpdatedName: $profile->user_updated_name,
                 createdAt: Carbon::parse($profile->created_at),
                 updatedAt: Carbon::parse($profile->updated_at)
             );

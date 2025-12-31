@@ -1,7 +1,16 @@
 @php
-    $size = $size ?? null;
+    $size = $size ?? 'md';
     $rawClass = trim((string)($class ?? ''));
-    $classes = trim(($rawClass ? $rawClass : 'btn'));
+    
+    // Define classes baseadas no tamanho
+    $sizeClass = '';
+    if ($size === 'sm') {
+        $sizeClass = ' btn-sm';
+    } elseif ($size === 'lg') {
+        $sizeClass = ' w-100';
+    }
+    
+    $classes = trim(($rawClass ? $rawClass : 'btn') . $sizeClass);
 
     $attributes = $attributes ?? [];
     $attrString = '';
@@ -26,8 +35,7 @@
     <button type="{{ $btnType }}" 
             class="{{ $classes }}" 
             aria-disabled="true" 
-            disabled{!! $idAttr !!}{!! $titleAttr !!}{!! $confirmAttr !!}{!! $methodAttr !!}{!! $dataMethodAttr !!}{!! $dataActionAttr !!}{!! $dataTitleAttr !!}{!! $dataMessageAttr !!}{!! $attrString !!}
-            style="{{ $size ? 'width: ' . e($size) . '%' : '' }}">
+            disabled{!! $idAttr !!}{!! $titleAttr !!}{!! $confirmAttr !!}{!! $methodAttr !!}{!! $dataMethodAttr !!}{!! $dataActionAttr !!}{!! $dataTitleAttr !!}{!! $dataMessageAttr !!}{!! $attrString !!}>
         @if(!empty($icon))
             <i class="{{ $icon }}"></i>
         @endif
@@ -35,8 +43,7 @@
     </button>
 @else
     <button type="{{ $btnType }}" 
-            class="{{ $classes }}"{!! $idAttr !!}{!! $titleAttr !!}{!! $confirmAttr !!}{!! $methodAttr !!}{!! $dataMethodAttr !!}{!! $dataActionAttr !!}{!! $dataTitleAttr !!}{!! $dataMessageAttr !!}{!! $attrString !!}
-            style="{{ $size ? 'width: ' . e($size) . '%' : '' }}">
+            class="{{ $classes }}"{!! $idAttr !!}{!! $titleAttr !!}{!! $confirmAttr !!}{!! $methodAttr !!}{!! $dataMethodAttr !!}{!! $dataActionAttr !!}{!! $dataTitleAttr !!}{!! $dataMessageAttr !!}{!! $attrString !!}>
         @if(!empty($icon))
             <i class="{{ $icon }}"></i>
         @endif

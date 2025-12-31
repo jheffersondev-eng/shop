@@ -18,13 +18,13 @@
 							ButtonHelper::make('Atualizar')
 								->setLink(route('userProfile.update', $user->id))
 								->setType('submit')
-								->setSize(100)
+								->setSize('lg')
 								->setClass('btn btn-primary')
 								->render('button') 
 						!!}
 					</div>
 				@endsection
-				<form method="POST" action="{{ route('userProfile.update', $user->id) }}">
+				<form method="POST" action="{{ route('userProfile.update', $user->id) }}" enctype="multipart/form-data">
 					@csrf
 					@method('PUT')
 					@include('userProfile.form')

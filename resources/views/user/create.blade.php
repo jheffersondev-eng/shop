@@ -20,7 +20,7 @@
                             ButtonHelper::make('Cadastrar')
                                 ->setLink(route('user.store'))
                                 ->setType('submit')
-                                ->setSize(100)
+                                ->setSize('lg')
                                 ->setClass('btn btn-primary')
                                 ->render('button') 
                         !!}

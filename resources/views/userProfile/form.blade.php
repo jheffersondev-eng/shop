@@ -26,8 +26,26 @@
 </ul>
 <div class="tab-content p-3 border border-top-0" id="editUserTabContent">
     <div class="tab-pane fade show active" id="account" role="tabpanel" aria-labelledby="account-tab">
+        <div class="mb-4 text-center">
+            <div class="d-inline-block position-relative" style="width: 150px; height: 150px;">
+                <img id="profileImage" 
+                    src="{{ asset('storage/' . ($user?->userDetail?->image ?? 'default-profile.png')) }}" 
+                    class="rounded-circle w-100 h-100"
+                    style="object-fit: cover; border: 3px solid #dee2e6; display: block;">
+                <label for="profile_image_input" 
+                    class="btn btn-sm btn-primary position-absolute bottom-0 end-0 rounded-circle"
+                    style="cursor: pointer; width: 40px; height: 40px; padding: 0; display: flex; align-items: center; justify-content: center;">
+                    <i class="bi bi-pencil"></i>
+                </label>
+            </div>
+            <input type="file" 
+                id="profile_image_input" 
+                name="image" 
+                class="d-none" 
+                accept="image/*">
+        </div>
         <div class="row g-3">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <label for="email" class="form-label">E-mail</label>
                 <div class="input-group">
                     <span class="input-group-text"><i class="bi bi-envelope"></i></span>
@@ -36,24 +54,11 @@
                         id="email" 
                         name="email"
                         placeholder="exemplo@dominio.com" 
-                        value="{{ $user?->email ?? Request::get('email') }}" required>
+                        value="{{ $user?->email ?? old('email') }}" required>
                 </div>
             </div>
             <div class="col-md-6">
-                <label for="profile_id" class="form-label">Perfil</label>
-                <div class="input-group">
-                    <span class="input-group-text"><i class="bi bi-person-badge"></i></span>
-                    {!! 
-                        SelectHelper::make('profile_id')
-                            ->setOptions($profiles)
-                            ->setSelected($user?->profile_id ?? Request::get('profile_id'))
-                            ->setClass('form-control')
-                            ->render();
-                    !!}
-                </div>
-            </div>
-            <div class="col-md-6">
-                <label for="password" class="form-label">Senha (deixe em branco para manter)</label>
+                <label for="password" class="form-label">Senha</label>
                 <div class="input-group">
                     <span class="input-group-text"><i class="bi bi-key"></i></span>
                     <input type="password" 
@@ -87,7 +92,7 @@
                         id="name" 
                         name="name" 
                         placeholder="Nome completo"
-                        value="{{ $user?->userDetail?->name ?? Request::get('name') }}" required>
+                        value="{{ $user?->userDetail?->name ?? old('name') }}" required>
                 </div>
             </div>
             <div class="col-md-4">
@@ -99,7 +104,7 @@
                         id="document" 
                         name="document" 
                         placeholder="CPF/CNPJ"
-                        value="{{ $user?->userDetail?->document ?? Request::get('document') }}">
+                        value="{{ $user?->userDetail?->document ?? old('document') }}">
                 </div>
             </div>
             <div class="col-md-4">
@@ -110,7 +115,7 @@
                         class="form-control" 
                         id="birth_date" 
                         name="birth_date"
-                        value="{{ DateHelper::formatForInput( $user?->userDetail?->birth_date ?? Request::get('birth_date') ) }}">
+                        value="{{ DateHelper::formatForInput( $user?->userDetail?->birth_date ?? old('birth_date') ) }}">
                 </div>
             </div>
             <div class="col-md-4">
@@ -122,7 +127,7 @@
                         id="phone" 
                         name="phone"
                         placeholder="(00) 00000-0000" 
-                        value="{{ $user?->userDetail?->phone ?? Request::get('phone') }}">
+                        value="{{ $user?->userDetail?->phone ?? old('phone') }}">
                 </div>
             </div>
             <div class="col-8">
@@ -134,13 +139,15 @@
                         id="address" 
                         name="address"
                         placeholder="Rua/Bairro/Apto." 
-                        value="{{ $user?->userDetail?->address ?? Request::get('address') }}">
+                        value="{{ $user?->userDetail?->address ?? old('address') }}">
                 </div>
             </div>
         </div>
     </div>
 </div>
+<br>
 @yield('actions')
 @section('scripts-after')
     <script src="{{ asset('assets/js/mask/mask.js') }}"></script>
+    <script src="{{ asset('assets/js/userProfile/profileImageInput.js') }}"></script>
 @endsection

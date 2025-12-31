@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Unit;
 
 use App\Enums\EUnitFormat;
 use App\Http\Controllers\BaseController;
+use App\Http\Requests\Unit\FilterRequest;
 use App\Http\Requests\Unit\UnitRequest;
 use Illuminate\Http\Request;
 use App\Services\UnitService\IUnitService;
@@ -17,9 +18,9 @@ class UnitController extends BaseController
         $this->unitService = $unitService;
     }
 
-    public function Index(Request $request)
+    public function Index(FilterRequest $filterRequest)
     {
-        $units = $this->unitService->getUnits();
+        $units = $this->unitService->getUnitsByFilter($filterRequest->getDto());
 
         return view('unit.index', [
             'url' => route('unit.index'),

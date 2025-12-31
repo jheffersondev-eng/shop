@@ -4,6 +4,8 @@ namespace App\Models;
 
 use App\Enums\EIsActive;
 use App\Models\UserDetail;
+use App\Traits\HasOwner;
+use App\Traits\HasPermissionCheck;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -11,7 +13,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, SoftDeletes;
+    use HasFactory, Notifiable, SoftDeletes, HasOwner, HasPermissionCheck;
 
     protected $fillable = [
         'name',
@@ -19,6 +21,7 @@ class User extends Authenticatable
         'password',
         'profile_id',
         'is_active',
+        'owner_id',
         'user_id_created',
         'user_id_updated',
         'user_id_deleted',
@@ -47,7 +50,6 @@ class User extends Authenticatable
         return $this->hasOne(UserDetail::class, 'user_id');
     }
 
-    // Alias for user details to match view expectations (userDetail)
     public function userDetailAlias()
     {
         return $this->hasOne(UserDetail::class, 'user_id');
@@ -64,19 +66,22 @@ class User extends Authenticatable
     }
 
     /**
-     * $fillable: Define quais campos podem ser preenchidos em massa (mass assignment),
-     * por exemplo, ao criar ou atualizar um registro usando Model::create($dados).
-     * Isso protege contra atribuição de campos não autorizados.
+     * Sobrescreve o método can() do Laravel para suportar permissões customizadas
+     * Se a permissão for no formato "ControllerName@method", usa hasPermission()
+     * Senão, chama o método pai para usar o sistema padrão do Laravel
+     * 
+     * @param mixed $abilities
+     * @param mixed $arguments
+     * @return bool
      */
+    public function can($abilities, $arguments = [])
+    {
+        // Se for uma string simples com @, é uma permissão de ação nossa
+        if (is_string($abilities) && strpos($abilities, '@') !== false) {
+            return $this->hasPermission($abilities);
+        }
 
-    /**
-     * $hidden: Esconde os campos listados ao transformar o model em array ou JSON,
-     * útil para não expor informações sensíveis como senha ou tokens em APIs.
-     */
-
-    /**
-     * $casts: Converte automaticamente os valores dos campos para o tipo especificado
-     * ao acessar ou salvar no banco. Exemplo: 'is_active' => 'boolean' faz o campo
-     * ser tratado como booleano, 'deleted_at' => 'datetime' como data/hora.
-     */
+        // Senão, chama o método pai (compatível com policies do Laravel)
+        return parent::can($abilities, $arguments);
+    }
 }

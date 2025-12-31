@@ -72,18 +72,14 @@ class Action
                 continue;
             }
             $actionsWebObj = $module->getActionsWeb();
-            if (!is_object($actionsWebObj) || !method_exists($actionsWebObj, 'getScreen')) {
+            if (!is_object($actionsWebObj) || !method_exists($actionsWebObj, 'getActionsWeb')) {
                 continue;
             }
-            $actionsWeb = $actionsWebObj->getScreen();
-            if (!is_array($actionsWeb)) {
+            $actionsWeb = $actionsWebObj->getActionsWeb();
+            if (!is_array($actionsWeb) || !isset($actionsWeb['actions'])) {
                 continue;
             }
-            foreach ($actionsWeb as $actions) {
-                if (is_array($actions)) {
-                    $allSystemActions = array_merge($allSystemActions, self::getAllModuleAction($actions));
-                }
-            }
+            $allSystemActions = array_merge($allSystemActions, $actionsWeb['actions']);
         }
         return $allSystemActions;
     }

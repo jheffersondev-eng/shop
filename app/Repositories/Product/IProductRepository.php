@@ -6,6 +6,7 @@ use App\Http\Dto\Product\FilterDto;
 use App\Http\Dto\Product\ProductDto;
 use App\Models\Product;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Carbon;
 
 interface IProductRepository
 {
@@ -15,4 +16,5 @@ interface IProductRepository
     public function create(ProductDto $productDto);
     public function update(ProductDto $productDto, int $id);
     public function delete(int $id);
+    public function getProductCountByMonth(Carbon $date): int;
 }

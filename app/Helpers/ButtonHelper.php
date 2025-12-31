@@ -16,7 +16,7 @@ class ButtonHelper
 	protected ?string $class = null;
 	protected ?string $link = null;
 	protected ?string $route = null;
-	protected ?int $size = 100;
+	protected string|int $size = 'md';
 	protected ?string $method = null;
 	protected ?string $id = null;
 	protected ?string $type = 'button';
@@ -67,7 +67,7 @@ class ButtonHelper
 		return $this;
 	}
 
-	public function setSize(int $size): self
+	public function setSize(string|int $size): self
 	{
 		$this->size = $size;
 		return $this;

@@ -1,0 +1,17 @@
+<?php
+
+namespace App\Http\Dto\Unit;
+
+use App\Http\Dto\BaseDto;
+use Carbon\Carbon;
+
+class FilterDto extends BaseDto
+{
+	public function __construct(
+        public int|null $id,
+        public string|null $name,
+		public string|null $abbreviation,
+        public int|null $format,
+		public Carbon|null $dateDe,
+		public Carbon|null $dateAte) {}
+}

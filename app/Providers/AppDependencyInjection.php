@@ -11,13 +11,19 @@ use App\Repositories\Profile\ProfileRepository;
 use App\Repositories\Category\ICategoryRepository;
 use App\Repositories\Category\CategoryRepository;
 use App\Repositories\Product\IProductRepository;
+use App\Repositories\ProductImage\ProductImageRepository;
 use App\Repositories\Product\ProductRepository;
+use App\Repositories\ProductImage\IProductImageRepository;
 use App\Repositories\Unit\IUnitRepository;
 use App\Repositories\Unit\UnitRepository;
 use App\Services\Category\CategoryService;
 use App\Services\Category\ICategoryService;
+use App\Services\Dashboard\DashboardService;
+use App\Services\Dashboard\IDashboardService;
 use App\Services\Login\ILoginService;
 use App\Services\Login\LoginService;
+use App\Services\ProductImage\IProductImageService;
+use App\Services\ProductImage\ProductImageService;
 use App\Services\Product\IProductService;
 use App\Services\Product\ProductService;
 use App\Services\Profile\IProfileService;
@@ -39,6 +45,7 @@ class AppDependencyInjection
         $app->bind(ICategoryRepository::class, CategoryRepository::class);
         $app->bind(IUnitRepository::class, UnitRepository::class);
         $app->bind(IProductRepository::class, ProductRepository::class);
+        $app->bind(IProductImageRepository::class, ProductImageRepository::class);
 
         //register bindings services
         $app->bind(ILoginService::class, LoginService::class);
@@ -47,5 +54,7 @@ class AppDependencyInjection
         $app->bind(ICategoryService::class, CategoryService::class);
         $app->bind(IUnitService::class, UnitService::class);
         $app->bind(IProductService::class, ProductService::class);
+        $app->bind(IProductImageService::class, ProductImageService::class);
+        $app->bind(IDashboardService::class, DashboardService::class);
     }
 }

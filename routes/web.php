@@ -4,6 +4,7 @@ use App\Modules\Config\Configuration;
 use App\Modules\Login\LoginModule;
 use App\Modules\Register\RegisterModule;
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\CheckPermission;
 
 Route::get('/', function () {
     return view('home.index');
@@ -32,8 +33,8 @@ Route::middleware([])->group(function () {
     }
 });
 
-// Rotas protegidas (com autenticação)
-Route::middleware(['auth'])->group(function () {
+// Rotas protegidas (com autenticação E verificação de permissões)
+Route::middleware(['auth', CheckPermission::class])->group(function () {
     $modules = Configuration::getModules();
 
     foreach ($modules as $module) {

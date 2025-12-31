@@ -14,7 +14,7 @@
                 value="{{ Request::get('id') }}" 
                 placeholder="ID do produto" />
         </div>
-        <div class="col-md-2">
+        <div class="col-md-4">
             <label for="filterName" class="form-label">Nome</label>
             <input type="text" 
                 class="form-control" 
@@ -53,12 +53,28 @@
                     ->render();
             !!}
         </div>
+                <div class="col-md-2">
+            <label for="filterDateDe" class="form-label">Criado a partir</label>
+            <input type="date" 
+                class="form-control" 
+                id="filterDateDe" 
+                name="date_de" 
+                value="{{ Request::get('date_de') }}" />
+        </div>
+        <div class="col-md-2">
+            <label for="filterDateAte" class="form-label">Criado até</label>
+            <input type="date" 
+                class="form-control" 
+                id="filterDateAte" 
+                name="date_ate" 
+                value="{{ Request::get('date_ate') }}" />
+        </div>
         <!-- col-md-1 offset-md-2 d-flex align-items-end -->
-        <div class="col-md-1 d-flex align-items-end">
+        <div class="col-md-1 offset-md-6 d-flex align-items-end">
             {!! 
                 ButtonHelper::make('Limpar')
                     ->setLink(route('product.index'))
-                    ->setSize(23)
+                    ->setSize('md')
                     ->setClass('btn btn-secondary w-100')
                     ->setTitle('Limpar Filtros')
                     ->setIcon('bi bi-eraser')
@@ -69,7 +85,7 @@
             {!!
                 ButtonHelper::make('Filtrar')
                     ->setType('submit')
-                    ->setSize(23)
+                    ->setSize('md')
                     ->setClass('btn btn-primary w-100')
                     ->setTitle('Filtrar')
                     ->setDataMethod('GET')

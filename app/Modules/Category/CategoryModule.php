@@ -3,7 +3,9 @@
 namespace App\Modules\Category;
 
 use App\Http\Controllers\Category\CategoryController;
+use App\Modules\Config\ActionModule;
 use App\Modules\Config\Module;
+use App\Modules\Config\PermissionBlock;
 use App\Modules\Config\RouteModule;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -38,7 +40,15 @@ class CategoryModule extends Module
     {
     }
 
-    public function getActionsWeb()
+    public function getActionsWeb(): ActionModule
     {
+        $permissions = new PermissionBlock("Category", CategoryController::class);
+        
+        $permissions->addAction('Consultar', 'Index')
+            ->addAction("Cadastrar", "store")
+            ->addAction("Atualizar", "update")
+            ->addAction("Remover", "destroy");
+        
+        return new ActionModule('Categoria', $permissions->toArray()['actions']);
     }
 }

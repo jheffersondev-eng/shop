@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\BaseController;
-use App\Http\Requests\User\UpdateUserRequest;
+use App\Http\Requests\User\UpdateUserProfileRequest;
 use App\Services\Profile\IProfileService;
 use App\Services\User\IUserService;
 use Illuminate\Http\RedirectResponse;
@@ -35,7 +35,7 @@ class UserProfileController extends BaseController
         ]);
     }
 
-    public function Update(UpdateUserRequest $updateUserRequest, int $id): RedirectResponse
+    public function Update(UpdateUserProfileRequest $updateUserRequest, int $id): RedirectResponse
     {
         $dto = $updateUserRequest->getDto();
 

@@ -1,0 +1,22 @@
+    .permission-list-container {
+        border-radius: 0.375rem;
+        background-color: #f8f9fa;
+    }
+
+    .permission-list-container::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .permission-list-container::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 10px;
+    }
+
+    .permission-list-container::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 10px;
+    }
+
+    .permission-list-container::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }

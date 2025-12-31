@@ -47,16 +47,16 @@ class NumberHelper
 	 * Formata um número como moeda (BRL).
 	 * 
 	 * Exemplos:
-	 * - 112.00 → R$ 112
+	 * - 112.00 → R$ 112,00
 	 * - 112.20 → R$ 112,20
 	 * - 1234.56 → R$ 1.234,56
 	 * 
 	 * @param float|int|string $number O número a ser formatado
 	 * @param string $symbol Símbolo da moeda (padrão: 'R$')
-	 * @param bool $removeTrailingZeros Remove zeros decimais (padrão: true)
+	 * @param bool $removeTrailingZeros Remove zeros decimais (padrão: false)
 	 * @return string Valor formatado como moeda
 	 */
-	public static function currency($number, string $symbol = 'R$', bool $removeTrailingZeros = true): string
+	public static function currency($number, string $symbol = 'R$', bool $removeTrailingZeros = false): string
 	{
 		if ($removeTrailingZeros) {
 			$formatted = self::format($number, 2, true);
@@ -69,7 +69,7 @@ class NumberHelper
 	}
 
 	/**
-	 * Formata um número sem separador de milhares.
+	 * Formata um número com separador de milhares.
 	 * 
 	 * @param float|int|string $number O número a ser formatado
 	 * @param int $decimals Número de casas decimais (padrão: 2)
@@ -77,7 +77,7 @@ class NumberHelper
 	 */
 	public static function simple($number, int $decimals = 2): string
 	{
-		return self::format($number, $decimals, false);
+		return self::format($number, $decimals, true);
 	}
 
 	/**

@@ -11,6 +11,8 @@ class CategoryAggregateDto extends BaseDto
         public int $id,
 		public string $name,
         public string|null $description,
+        public string|null $userCreatedName,
+        public string|null $userUpdatedName,
         public Carbon $createdAt,
         public Carbon $updatedAt) {}
 }

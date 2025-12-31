@@ -36,7 +36,7 @@
                         id="email" 
                         name="email"
                         placeholder="exemplo@dominio.com" 
-                        value="{{ $user?->email ?? Request::get('email') }}" required>
+                        value="{{ $user?->email ?? old('email') }}" required>
                 </div>
             </div>
             <div class="col-md-3">
@@ -46,7 +46,7 @@
                     {!! 
                         SelectHelper::make('profile_id')
                             ->setOptions($profiles)
-                            ->setSelected($user?->profile_id ?? Request::get('profile_id'))
+                            ->setSelected($user?->profile_id ?? old('profile_id'))
                             ->setClass('form-control')
                             ->render();
                     !!}
@@ -59,14 +59,14 @@
                     {!! 
                         SelectHelper::make('is_active')
                             ->setOptions($isActive)
-                            ->setSelected($user?->is_active?->value ?? Request::get('is_active'))
+                            ->setSelected($user?->is_active?->value ?? old('is_active') ?? '1')
                             ->setClass('form-control')
                             ->render();
                     !!}
                 </div>
             </div>
             <div class="col-md-6">
-                <label for="password" class="form-label">Senha (deixe em branco para manter)</label>
+                <label for="password" class="form-label">Senha</label>
                 <div class="input-group">
                     <span class="input-group-text"><i class="bi bi-key"></i></span>
                     <input type="password" 
@@ -100,7 +100,7 @@
                         id="name" 
                         name="name" 
                         placeholder="Nome completo"
-                        value="{{ $user?->userDetail?->name ?? Request::get('name') }}" required>
+                        value="{{ $user?->userDetail?->name ?? old('name') }}" required>
                 </div>
             </div>
             <div class="col-md-4">
@@ -112,7 +112,7 @@
                         id="document" 
                         name="document" 
                         placeholder="CPF/CNPJ"
-                        value="{{ $user?->userDetail?->document ?? Request::get('document') }}">
+                        value="{{ $user?->userDetail?->document ?? old('document') }}">
                 </div>
             </div>
             <div class="col-md-4">
@@ -123,7 +123,7 @@
                         class="form-control" 
                         id="birth_date" 
                         name="birth_date"
-                        value="{{ DateHelper::formatForInput( $user?->userDetail?->birth_date ?? Request::get('birth_date') ) }}">
+                        value="{{ DateHelper::formatForInput( $user?->userDetail?->birth_date ?? old('birth_date') ) }}">
                 </div>
             </div>
             <div class="col-md-4">
@@ -135,7 +135,7 @@
                         id="phone" 
                         name="phone"
                         placeholder="(00) 00000-0000" 
-                        value="{{ $user?->userDetail?->phone ?? Request::get('phone') }}">
+                        value="{{ $user?->userDetail?->phone ?? old('phone') }}">
                 </div>
             </div>
             <div class="col-8">
@@ -147,10 +147,11 @@
                         id="address" 
                         name="address"
                         placeholder="Rua/Bairro/Apto." 
-                        value="{{ $user?->userDetail?->address ?? Request::get('address') }}">
+                        value="{{ $user?->userDetail?->address ?? old('address') }}">
                 </div>
             </div>
         </div>
     </div>
 </div>
+<br>
 @yield('actions')

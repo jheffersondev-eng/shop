@@ -21,7 +21,7 @@
                 id="filterName" 
                 name="name" 
                 value="{{ Request::get('name') }}" 
-                placeholder="Nome do perfil" />
+                placeholder="Nome da categoria" />
         </div>
         <div class="col-md-2">
             <label for="filterDateDe" class="form-label">Criado a partir</label>
@@ -44,7 +44,7 @@
             {!! 
                 ButtonHelper::make('Limpar')
                     ->setLink(route('category.index'))
-                    ->setSize(23)
+                    ->setSize('md')
                     ->setClass('btn btn-secondary w-100')
                     ->setTitle('Limpar Filtros')
                     ->setIcon('bi bi-eraser')
@@ -55,7 +55,7 @@
             {!!
                 ButtonHelper::make('Filtrar')
                     ->setType('submit')
-                    ->setSize(23)
+                    ->setSize('md')
                     ->setClass('btn btn-primary w-100')
                     ->setTitle('Filtrar')
                     ->setDataMethod('GET')

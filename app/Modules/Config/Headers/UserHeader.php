@@ -25,4 +25,9 @@ class UserHeader extends HeaderMenu
     {
         return false;
     }
+
+    public function getPermission(): string
+    {
+        return "UserController@Index";
+    }
 }

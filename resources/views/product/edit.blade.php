@@ -2,7 +2,7 @@
     use App\Helpers\ButtonHelper;
 @endphp
 @extends('components.app.app')
-@section('title', 'Usuários')
+@section('title', 'Produtos')
 @section('content')
     <div class="container-fluid px-4">
         @include('components.message')
@@ -17,7 +17,7 @@
 						{!! 
 							ButtonHelper::make('Atualizar')
 								->setType('submit')
-								->setSize(100)
+								->setSize('lg')
 								->setClass('btn btn-primary')
 								->render('button') 
 						!!}

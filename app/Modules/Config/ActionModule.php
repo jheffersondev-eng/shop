@@ -4,34 +4,44 @@ namespace App\Modules\Config;
 
 class ActionModule
 {
-    private string $module;
-
-    private array $screen;
+    private string $name;
+    private array $actions;
 
     /**
      * ActionModule constructor.
-     * @param string $module
-     * @param array $screen
+     * @param string $name
+     * @param array $actions
      */
-    public function __construct(string $module, array $screen)
+    public function __construct(string $name, array $actions)
     {
-        $this->module = $module;
-        $this->screen = $screen;
+        $this->name = $name;
+        $this->actions = $actions;
     }
 
     /**
      * @return String
      */
-    public function getModule(): string
+    public function getName(): string
     {
-        return $this->module;
+        return $this->name;
     }
 
     /**
      * @return array
      */
-    public function getScreen(): array
+    public function getActions(): array
     {
-        return $this->screen;
+        return $this->actions;
+    }
+
+    /**
+     * @return array
+     */
+    public function getActionsWeb(): array
+    {
+        return [
+            'name' => $this->name,
+            'actions' => $this->actions
+        ];
     }
 }

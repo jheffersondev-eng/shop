@@ -64,7 +64,7 @@
             {!! 
                 ButtonHelper::make('Limpar')
                     ->setLink(route('user.index'))
-                    ->setSize(23)
+                    ->setSize('md')
                     ->setClass('btn btn-secondary w-100')
                     ->setTitle('Limpar Filtros')
                     ->setIcon('bi bi-eraser')
@@ -75,7 +75,7 @@
             {!!
                 ButtonHelper::make('Filtrar')
                     ->setType('submit')
-                    ->setSize(23)
+                    ->setSize('md')
                     ->setClass('btn btn-primary w-100')
                     ->setTitle('Filtrar')
                     ->setDataMethod('GET')

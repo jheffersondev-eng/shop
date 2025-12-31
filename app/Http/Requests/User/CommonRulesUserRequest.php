@@ -13,7 +13,6 @@ class CommonRulesUserRequest extends BaseRequest
     {
         return [
             'name' => ['required', 'string', 'max:200'],
-            'profile_id' => ['required', 'integer'],
             'email' => ['required', 'email', 'max:200'],
             'document' => ['required', 'string', 'max:20'],
             'phone' => ['required', 'string', 'max:20'],
