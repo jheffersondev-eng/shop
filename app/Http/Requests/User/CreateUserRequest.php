@@ -4,7 +4,6 @@ namespace App\Http\Requests\User;
 
 use App\Http\Dto\User\UserDto;
 use App\Http\Dto\UserDetails\UserDetailsDto;
-use Illuminate\Support\Facades\Auth;
 
 class CreateUserRequest extends CommonRulesUserRequest
 {
@@ -33,7 +32,9 @@ class CreateUserRequest extends CommonRulesUserRequest
             $this->input('birth_date'),
             $this->input('phone'),
             $this->input('address'),
-            $this->input('credit_limit', 0.0)
+            $this->input('credit_limit', 0.0),
+            $this->file('image', null),
+            $this->input('user_id', null),
         );
 
         return new UserDto(
@@ -41,8 +42,8 @@ class CreateUserRequest extends CommonRulesUserRequest
             $this->input('password'),
             $this->input('is_active', true),
             $this->input('profile_id'),
-            Auth::id(),
-            $userDetailsDto
+            $userDetailsDto,
+            $this->input('owner_id', null)
         );
     }
 }

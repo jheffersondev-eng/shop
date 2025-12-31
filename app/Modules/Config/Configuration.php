@@ -56,4 +56,45 @@ class Configuration
         
         return $menu;
     }
+
+    public static function getPermissionNames(array $actions): array
+    {
+        $permissionNames = [];
+        $modules = self::getModules();
+
+        foreach ($actions as $actionString) {
+            foreach ($modules as $module) {
+                if (!method_exists($module, 'getActionsWeb')) {
+                    continue;
+                }
+
+                $actionModule = $module->getActionsWeb();
+                if (!is_object($actionModule) || !method_exists($actionModule, 'getActionsWeb')) {
+                    continue;
+                }
+
+                $actionsWeb = $actionModule->getActionsWeb();
+                if (!is_array($actionsWeb) || !isset($actionsWeb['actions'], $actionsWeb['name'])) {
+                    continue;
+                }
+
+                $moduleName = $actionsWeb['name'];
+                $moduleActions = $actionsWeb['actions'];
+
+                // Procurar a ação neste módulo
+                foreach ($moduleActions as $action) {
+                    if (isset($action['action']) && isset($action['name'])) {
+                        // Comparação case-insensitive
+                        if (strtolower($action['action']) === strtolower($actionString)) {
+                            // Retornar "Nome da Action Nome do Module"
+                            $permissionNames[] = $action['name'] . ' ' . $moduleName;
+                            break 2; // Sair dos dois foreach quando encontrado
+                        }
+                    }
+                }
+            }
+        }
+
+        return $permissionNames;
+    }
 }

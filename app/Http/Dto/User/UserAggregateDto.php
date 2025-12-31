@@ -15,6 +15,9 @@ class UserAggregateDto extends BaseDto
 		public ProfileDto $profile,
 		public bool $isActive,
 		public int|null $userIdCreated,
+		public int|null $userIdUpdated,
+		public string|null $userCreatedName,
+		public string|null $userUpdatedName,
 		public UserDetailsDto $userDetails,
         public Carbon $createdAt,
         public Carbon $updatedAt) {}

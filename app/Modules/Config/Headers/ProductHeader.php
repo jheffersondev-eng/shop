@@ -25,4 +25,9 @@ class ProductHeader extends HeaderMenu
     {
         return false;
     }
+
+    public function getPermission(): string
+    {
+        return "ProductController@Index";
+    }
 }

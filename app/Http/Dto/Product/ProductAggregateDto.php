@@ -14,7 +14,7 @@ class ProductAggregateDto extends BaseDto
         public int $id,
 		public string $name,
         public string|null $description,
-        public string|UploadedFile $image,
+        public array $images,
         public CategoryDto $category,
         public UnitDto $unit,
         public string|null $barcode,
@@ -23,6 +23,8 @@ class ProductAggregateDto extends BaseDto
         public float $stockQuantity,
         public float $minQuantity,
         public bool $isActive,
+        public string|null $userCreatedName,
+        public string|null $userUpdatedName,
         public Carbon $createdAt,
         public Carbon $updatedAt
     ) {}

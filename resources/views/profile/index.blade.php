@@ -1,5 +1,8 @@
 @php
     use App\Helpers\ButtonHelper;
+    use App\Helpers\ButtonInformationHelper;
+    use App\Modules\Config\Configuration;
+    use App\Helpers\ModalHelper;
 @endphp
 @extends('components.app.app')
 @section('title', 'Perfis')
@@ -13,8 +16,8 @@
                 {!! 
                     ButtonHelper::make('Novo Perfil')
                         ->setLink(route('profile.create'))
-                        ->setSize(30)
-                        ->setClass('btn btn-sm btn-success')
+                        ->setSize('md')
+                        ->setClass('btn btn-success')
                         ->setIcon('bi bi-plus-lg')
                         ->render('link')
                 !!}
@@ -28,6 +31,7 @@
                         <tr>
                             <th>#</th>
                             <th>Nome</th>
+                            <th>Permissões</th>
                             <th>Criado em</th>
                             <th class="text-end">Ações</th>
                         </tr>
@@ -37,21 +41,52 @@
                         <tr>
                             <th scope="row">{{ $profile->id }}</th>
                             <td>{{ ucfirst(strtolower($profile->name)) }}</td>
+                            <td>
+                                @php
+                                    $permissions = Configuration::getPermissionNames($profile->permissions);
+                                    $permissionsText = implode(', ', $permissions);
+                                    $permissionsDisplay = strlen($permissionsText) > 113 ? 
+                                        substr($permissionsText, 0, 113) . '...' : 
+                                        $permissionsText;
+                                @endphp
+                                <span title="{{ $permissionsText }}">{{ $permissionsDisplay }}</span>
+                            </td>
                             <td class="text-muted small">{{ $profile->createdAt->format('d/m/Y') }}</td>
-                            <td class="text-end">    
+                            <td class="text-end">
+                                {!! 
+                                    ButtonInformationHelper::make()
+                                        ->setCreatedBy(ucwords(strtolower($profile->userCreatedName)))
+                                        ->setCreatedAt($profile->createdAt)
+                                        ->setUpdatedBy(ucwords(strtolower($profile->userUpdatedName)))
+                                        ->setUpdatedAt($profile->updatedAt)
+                                        ->render() 
+                                !!}    
+                                {!! 
+                                    ModalHelper::make()
+                                        ->setSize('md')
+                                        ->setTitle('#'. $profile->id . ' Perfil ' . ucfirst(strtolower($profile->name)) . ' - Permissões')
+                                        ->setIcon('bi bi-eye')
+                                        ->setButtonClass('btn btn-outline-warning btn-sm')
+                                        ->setBody('profile.permission-modal')
+                                        ->setData([
+                                            'permissions' => $permissions,
+                                            'description' => $profile->description,
+                                            ])
+                                        ->render()
+                                !!}                              
                                 {!!
                                     ButtonHelper::make('')
                                         ->setLink(route('profile.edit', $profile->id))
-                                        ->setSize(30)
-                                        ->setClass('btn btn-sm btn-outline-primary')
+                                        ->setSize('sm')
+                                        ->setClass('btn btn-outline-primary')
                                         ->setIcon('bi bi-pencil')
                                         ->render('link') 
                                 !!}
                                 {!!
                                     ButtonHelper::make('')
                                         ->setType('button')
-                                        ->setSize(8)
-                                        ->setClass('btn btn-sm btn-outline-danger btn-confirm')
+                                        ->setSize('sm')
+                                        ->setClass('btn btn-outline-danger btn-confirm')
                                         ->setTitle('Excluir')
                                         ->setDataMethod('DELETE')
                                         ->setDataAction(route('profile.destroy', $profile->id))
@@ -69,6 +104,7 @@
                         @endforelse
                     </tbody>
                 </table>
+                {{ $profiles->links() }}
             </div>
         </div>
     </div>

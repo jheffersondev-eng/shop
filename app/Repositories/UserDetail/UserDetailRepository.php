@@ -19,6 +19,11 @@ class UserDetailRepository extends BaseRepository implements IUserDetailReposito
         return $this->model->where('document', $document)->first();
     }
 
+    public function getUserDetailByUserId(int $userId): UserDetail|null
+    {
+        return $this->model->where('user_id', $userId)->first();
+    }
+
     public function create(UserDetailsDto $userDetailsDto): UserDetail
     {
         return $this->model->create($userDetailsDto->toArray());
@@ -50,6 +55,7 @@ class UserDetailRepository extends BaseRepository implements IUserDetailReposito
             'phone' => $userDetailsDto->phone,
             'address' => $userDetailsDto->address,
             'creditLimit' => $userDetailsDto->creditLimit,
+            'image' => $userDetailsDto->image,
         ];
         
         return $userDetail->update($data);

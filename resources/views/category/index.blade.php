@@ -1,5 +1,6 @@
 @php
     use App\Helpers\ButtonHelper;
+    use App\Helpers\ButtonInformationHelper;
 @endphp
 @extends('components.app.app')
 @section('title', 'Categorias')
@@ -13,8 +14,8 @@
                 {!! 
                     ButtonHelper::make('Nova Categoria')
                         ->setLink(route('category.create'))
-                        ->setSize(30)
-                        ->setClass('btn btn-sm btn-success')
+                        ->setSize('md')
+                        ->setClass('btn btn-success')
                         ->setIcon('bi bi-plus-lg')
                         ->render('link')
                 !!}
@@ -38,19 +39,27 @@
                             <td colspan="4">{{ ucfirst(strtolower($category->name)) }}</td>
                             <td colspan="5">{{ ucfirst(strtolower($category->description ?? '-')) }}</td>
                             <td colspan="2" class="text-end">    
+                                {!! 
+                                    ButtonInformationHelper::make()
+                                        ->setCreatedBy(ucwords(strtolower($category->userCreatedName)))
+                                        ->setCreatedAt($category->createdAt)
+                                        ->setUpdatedBy(ucwords(strtolower($category->userUpdatedName)))
+                                        ->setUpdatedAt($category->updatedAt)
+                                        ->render() 
+                                !!}   
                                 {!!
                                     ButtonHelper::make('')
                                         ->setLink(route('category.edit', $category->id))
-                                        ->setSize(30)
-                                        ->setClass('btn btn-sm btn-outline-primary')
+                                        ->setSize('sm')
+                                        ->setClass('btn btn-outline-primary')
                                         ->setIcon('bi bi-pencil')
                                         ->render('link') 
                                 !!}
                                 {!!
                                     ButtonHelper::make('')
                                         ->setType('button')
-                                        ->setSize(8)
-                                        ->setClass('btn btn-sm btn-outline-danger btn-confirm')
+                                        ->setSize('sm')
+                                        ->setClass('btn btn-outline-danger btn-confirm')
                                         ->setTitle('Excluir')
                                         ->setDataMethod('DELETE')
                                         ->setDataAction(route('category.destroy', $category->id))

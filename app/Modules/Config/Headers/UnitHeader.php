@@ -25,4 +25,9 @@ class UnitHeader extends HeaderMenu
     {
         return false;
     }
+
+    public function getPermission(): string
+    {
+        return "UnitController@Index";
+    }
 }

@@ -1,5 +1,6 @@
 @php
     use App\Helpers\ButtonHelper;
+    use App\Helpers\ButtonInformationHelper;
     use App\Enums\EIsActive;
 @endphp
 @extends('components.app.app')
@@ -14,8 +15,8 @@
                     <div class="d-flex gap-2 align-items-center">
                         {!! ButtonHelper::make('Novo Usuário')
                             ->setLink(route('user.create'))
-                            ->setSize(30)
-                            ->setClass('btn btn-sm btn-success')
+                            ->setSize('md')
+                            ->setClass('btn btn-success')
                             ->setIcon('bi bi-plus-lg')
                             ->render('link')
                         !!}
@@ -53,19 +54,27 @@
                                     <td class="text-muted small">{{ $user->createdAt->format('d/m/Y') }}
                                     </td>
                                     <td class="text-end">    
+                                        {!! 
+                                            ButtonInformationHelper::make()
+                                                ->setCreatedBy(ucwords(strtolower($user->userCreatedName)))
+                                                ->setCreatedAt($user->createdAt)
+                                                ->setUpdatedBy(ucwords(strtolower($user->userUpdatedName)))
+                                                ->setUpdatedAt($user->updatedAt)
+                                                ->render() 
+                                        !!}
                                         {!!
                                             ButtonHelper::make('')
                                                 ->setLink(route('user.edit', $user->id))
-                                                ->setSize(30)
-                                                ->setClass('btn btn-sm btn-outline-primary')
+                                                ->setSize('sm')
+                                                ->setClass('btn btn-outline-primary')
                                                 ->setIcon('bi bi-pencil')
                                                 ->render('link') 
                                         !!}
                                         {!!
                                             ButtonHelper::make('')
                                                 ->setType('button')
-                                                ->setSize(23)
-                                                ->setClass('btn btn-sm btn-outline-danger btn-confirm')
+                                                ->setSize('sm')
+                                                ->setClass('btn btn-outline-danger btn-confirm')
                                                 ->setTitle('Excluir')
                                                 ->setDataMethod('DELETE')
                                                 ->setDataAction(route('user.destroy', $user->id))
@@ -83,6 +92,7 @@
                             @endforelse
                         </tbody>
                     </table>
+                    {{ $users->links() }}
                 </div>
             </div>
         </div>

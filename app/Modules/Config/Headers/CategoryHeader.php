@@ -25,4 +25,9 @@ class CategoryHeader extends HeaderMenu
     {
         return false;
     }
+
+    public function getPermission(): string
+    {
+        return "CategoryController@Index";
+    }
 }

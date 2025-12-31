@@ -11,7 +11,7 @@ class UserDto extends BaseDto
 		public string $email,
 		public string|null $password,
 		public bool $isActive,
-		public int $profileId,
-		public int|null $userIdCreate,
-		public UserDetailsDto $userDetailsDto) {}
+		public int|null $profileId,
+		public UserDetailsDto $userDetailsDto,
+		public int|null $ownerId) {}
 }

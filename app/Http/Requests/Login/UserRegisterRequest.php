@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests\Login;
 
-use App\Enums\EProfile;
 use App\Helpers\DocumentHelper;
 use App\Helpers\PhoneHelper;
 use App\Http\Dto\User\UserDto;
@@ -16,7 +15,7 @@ class UserRegisterRequest extends BaseRequest
     {
         $rules = [
             'name' => ['required', 'string', 'max:200'],
-            'profile_id' => ['required', 'integer'],
+            'profile_id' => ['nullable', 'integer'],
             'email' => ['required', 'email', 'max:200'],
             'document' => ['required', 'string', 'max:20'],
             'phone' => ['required', 'string', 'max:20'],
@@ -33,7 +32,7 @@ class UserRegisterRequest extends BaseRequest
     protected function normalizeInputs(): void
     {
         $this->merge([
-            'profile_id' => EProfile::ADMIN->value,
+            'profile_id' => null,
             'email' => strtolower($this->input('email')),
             'document' => DocumentHelper::stripSpecialChars($this->input('document')),
             'phone' => PhoneHelper::normalize($this->input('phone')),
@@ -86,7 +85,6 @@ class UserRegisterRequest extends BaseRequest
             password: $this->input('password'),
             isActive: true,
             profileId: $this->input('profile_id'),
-            userIdCreate: null,
             userDetailsDto: new UserDetailsDto(
                 name: $this->input('name'),
                 document: $this->input('document'),
@@ -94,8 +92,10 @@ class UserRegisterRequest extends BaseRequest
                 phone: $this->input('phone'),
                 address: $this->input('address'),
                 creditLimit: 0.0,
+                image: null,
                 userId: null
-            )
+            ),
+            ownerId: null
         );
     }
 }

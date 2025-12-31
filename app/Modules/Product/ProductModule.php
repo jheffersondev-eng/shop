@@ -3,7 +3,9 @@
 namespace App\Modules\Product;
 
 use App\Http\Controllers\Product\ProductController;
+use App\Modules\Config\ActionModule;
 use App\Modules\Config\Module;
+use App\Modules\Config\PermissionBlockResource;
 use App\Modules\Config\RouteModule;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -38,7 +40,9 @@ class ProductModule extends Module
     {
     }
 
-    public function getActionsWeb()
+    public function getActionsWeb(): ActionModule
     {
+        $permissions = new PermissionBlockResource("Product", ProductController::class);
+        return new ActionModule('Produto', $permissions->toArray()['actions']);
     }
 }

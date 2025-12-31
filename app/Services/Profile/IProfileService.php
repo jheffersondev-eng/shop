@@ -16,4 +16,5 @@ interface IProfileService
     public function create(ProfileDto $profileDto): ServiceResult;
     public function update(ProfileDto $profileDto, int $id): ServiceResult;
     public function delete(int $id): ServiceResult;
+    public function getModulesPermissions(): array;
 }

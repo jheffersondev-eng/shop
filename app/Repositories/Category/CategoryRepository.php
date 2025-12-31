@@ -8,29 +8,41 @@ use App\Models\Category;
 use App\Repositories\BaseRepository;
 use Exception;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class CategoryRepository extends BaseRepository implements ICategoryRepository
 {
     const PAGINATION_SIZE = 10;
+    protected int $userLoggedId;
+    protected int $ownerId;
 
     public function __construct()
     {
         parent::__construct(new Category());
+        $this->userLoggedId = Auth::id();
+        $this->ownerId = Auth::user()->owner_id;
     }
 
     public function getCategories(): LengthAwarePaginator
     {
-        return $this->model->paginate(10);
+        return $this->model->where('user_id_created', '=', $this->userLoggedId)
+            ->paginate(self::PAGINATION_SIZE);
     }
 
     public function getCategoriesByFilter(FilterDto $filterDto): LengthAwarePaginator
     {
         $query = DB::table('categories as c')
+            ->leftJoin('users as uc', 'c.user_id_created', '=', 'uc.id')
+            ->leftJoin('users as uu', 'c.user_id_updated', '=', 'uu.id')
+            ->leftJoin('user_details as udc', 'uc.id', '=', 'udc.user_id')
+            ->leftJoin('user_details as udu', 'uu.id', '=', 'udu.user_id')
             ->select(
                     'c.id',
                     'c.name',
                     'c.description',
+                    'udc.name as user_created_name',
+                    'udu.name as user_updated_name',
                     'c.created_at',
                     'c.updated_at'
                 );
@@ -42,6 +54,14 @@ class CategoryRepository extends BaseRepository implements ICategoryRepository
 
     private function applyFilters($query, FilterDto $filterDto)
     {
+        $query->whereNull('c.deleted_at')
+            ->where(function($q) {
+                $q->where('c.user_id_created', '=', $this->userLoggedId)
+                    ->orWhere('c.owner_id', '=', $this->ownerId);
+            }); 
+        
+        $query->whereNull('c.deleted_at');
+
         if ($filterDto->id) {
             $query->where('id', $filterDto->id);
         }
@@ -51,11 +71,11 @@ class CategoryRepository extends BaseRepository implements ICategoryRepository
         }
 
         if ($filterDto->dateDe) {
-            $query->where('created_at', '>=', $filterDto->dateDe);
+            $query->whereDate('created_at', '>=', $filterDto->dateDe);
         }
 
         if ($filterDto->dateAte) {
-            $query->where('created_at', '<=', $filterDto->dateAte);
+            $query->whereDate('created_at', '<=', $filterDto->dateAte);
         }
 
         return $query;
@@ -77,6 +97,8 @@ class CategoryRepository extends BaseRepository implements ICategoryRepository
         $data = [
             'name' => $categoryDto->name,
             'description' => $categoryDto->description,
+            'user_id_created' => $this->userLoggedId,
+            'owner_id' => $this->ownerId,
         ];
 
         return $this->model->create($data);
@@ -93,6 +115,7 @@ class CategoryRepository extends BaseRepository implements ICategoryRepository
         $data = [
             'name' => $categoryDto->name,
             'description' => $categoryDto->description,
+            'user_id_updated' => $this->userLoggedId,
         ];
 
         return $category->update($data);
@@ -106,6 +129,9 @@ class CategoryRepository extends BaseRepository implements ICategoryRepository
             throw new Exception("Categoria não encontrada.");
         }
 
-        return $category->delete();
+        $category->user_id_deleted = $this->userLoggedId;
+        $category->deleted_at = now();
+        
+        return $category->save();
     }
 }

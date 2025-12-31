@@ -28,7 +28,7 @@ class LoginModule extends Module
         });
     }
 
-    public function getRoutesApi()//: RouteApiModule
+    public function getRoutesApi()
     {
     }
 
@@ -36,9 +36,8 @@ class LoginModule extends Module
     {
     }
 
-    public function getActionsWeb()//: ActionModule
-    {
-        //$permissoes[] = (new PermissionBlockResource("Login", LoginController::class))->toArray();
-        //return new ActionModule(self::NAME, $permissoes);
+    public function getActionsWeb(): ActionModule
+    {    
+        return new ActionModule('Login', []);
     }
 }

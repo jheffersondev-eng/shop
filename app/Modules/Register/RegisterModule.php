@@ -3,6 +3,7 @@
 namespace App\Modules\Register;
 
 use App\Http\Controllers\Register\RegisterController;
+use App\Modules\Config\ActionModule;
 use App\Modules\Config\Module;
 use App\Modules\Config\RouteModule;
 use Illuminate\Contracts\Foundation\Application;
@@ -34,9 +35,8 @@ class RegisterModule extends Module
     {
     }
 
-    public function getActionsWeb()//: ActionModule
-    {
-        //$permissoes[] = (new PermissionBlockResource("Login", LoginController::class))->toArray();
-        //return new ActionModule(self::NAME, $permissoes);
+    public function getActionsWeb(): ActionModule
+    {    
+        return new ActionModule('Register', []);
     }
 }

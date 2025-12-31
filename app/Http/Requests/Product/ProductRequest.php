@@ -13,7 +13,9 @@ class ProductRequest extends BaseRequest
     {
         $rules = [
             'name' => 'required|string|max:255',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'images' => 'nullable|array',
+            'images.*' => 'image|mimes:jpeg,png,jpg|max:2048',
+            'removed_images' => 'nullable|string',
             'description' => 'nullable|string',
             'category_id' => 'required|exists:categories,id',
             'unit_id' => 'required|exists:units,id',
@@ -73,9 +75,10 @@ class ProductRequest extends BaseRequest
             'min_quantity.numeric' => 'O campo quantidade mínima deve ser um número.',
             'min_quantity.min' => 'O campo quantidade mínima não pode ser negativo.',
 
-            'image.image' => 'O arquivo enviado deve ser uma imagem.',
-            'image.mimes' => 'A imagem deve ser do tipo: jpeg, png, jpg.',
-            'image.max' => 'A imagem não pode exceder 2MB.',
+            'images.array' => 'As imagens devem ser um array.',
+            'images.*.image' => 'O arquivo enviado deve ser uma imagem.',
+            'images.*.mimes' => 'A imagem deve ser do tipo: jpeg, png, jpg.',
+            'images.*.max' => 'A imagem não pode exceder 2MB.',
         ];
     }
 
@@ -83,7 +86,8 @@ class ProductRequest extends BaseRequest
     {
         return new ProductDto(
             name: (string) $this->input('name'),
-            image: $this->file('image'),
+            images: $this->file('images') ?? [],
+            removedImages: (string) $this->input('removed_images', '[]'),
             description:  (string) $this->input('description'),
             categoryId: (int) $this->input('category_id'),
             unitId: (int) $this->input('unit_id'),

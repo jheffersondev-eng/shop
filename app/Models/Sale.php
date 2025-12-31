@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\HasOwner;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -9,7 +10,7 @@ use App\Models\UserDetail;
 
 class Sale extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, HasOwner;
 
     protected $fillable = [
         'client_id',
@@ -17,6 +18,7 @@ class Sale extends Model
         'total',
         'discount',
         'status',
+        'owner_id',
         'user_id_created',
         'user_id_updated',
         'user_id_deleted',

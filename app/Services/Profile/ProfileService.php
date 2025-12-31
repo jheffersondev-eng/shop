@@ -6,6 +6,7 @@ use App\Http\Dto\Profile\FilterDto;
 use App\Http\Dto\Profile\ProfileDto;
 use App\Mapper\ProfileAggregateMapper;
 use App\Models\Profile;
+use App\Modules\Config\Configuration;
 use App\Repositories\Profile\IProfileRepository;
 use App\Services\ServiceResult;
 use Illuminate\Support\Facades\Log;
@@ -99,6 +100,18 @@ class ProfileService implements IProfileService
         } catch (Throwable $e) {
             Log::error('Erro ao remover perfil: '.$e->getMessage());
             return ServiceResult::fail('Erro ao remover perfil');
+        }
+    }
+
+    public function getModulesPermissions(): array
+    {
+        try {
+            $modulesPermissions = Configuration::getModules();
+            return $modulesPermissions;
+
+        } catch (Throwable $e) {
+            Log::error('Erro ao obter módulos e permissões: '.$e->getMessage());
+            throw $e;
         }
     }
 }

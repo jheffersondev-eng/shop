@@ -1,5 +1,6 @@
 @php
     use App\Modules\Config\Configuration;
+    use Illuminate\Support\Facades\Auth;
     $modules = Configuration::getMenu();
 @endphp
 
@@ -9,6 +10,9 @@
     </div>
     <nav class="sidebar-nav">
         @foreach ($modules as $module)
+            @if($module->getPermission() && !Auth::user()->hasPermission($module->getPermission()))
+                @continue
+            @endif
             @if (!$module->hasSubMenu())
                 <a href="{{ $module->getLink() }}" class="nav-link sidebar-item" title="{{ $module->getName() }}">
                     <span class="sidebar-icon"><i class="{{ $module->getIcon() }}"></i></span>
@@ -24,6 +28,9 @@
                         <span class="sidebar-chevron"><i class="bi bi-chevron-down ms-auto"></i></span>
                     </button>
                     @foreach ($module->getSubMenu() as $subMenu)
+                        @if($subMenu->getPermission() && !Auth::user()->hasPermission($subMenu->getPermission()))
+                            @continue
+                        @endif
                         @if ($subMenu->getLink() === route('logout'))
                             <div class="sidebar-submenu">
                                 <form method="POST" action="{{ $subMenu->getLink() }}" style="display:inline">

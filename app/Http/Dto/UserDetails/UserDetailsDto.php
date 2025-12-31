@@ -3,6 +3,7 @@
 namespace App\Http\Dto\UserDetails;
 
 use App\Http\Dto\BaseDto;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Carbon;
 
 class UserDetailsDto extends BaseDto
@@ -14,12 +15,7 @@ class UserDetailsDto extends BaseDto
         public string $phone,
         public string $address,
         public float $creditLimit,
-        public ?int $userId = null) {}
-
-    public function withUserId(int $id): self
-    {
-        $clone = clone $this;
-        $clone->userId = $id;
-        return $clone;
-    }
+        public string|UploadedFile|null $image,
+        public int|null $userId,
+    ) {}
 }

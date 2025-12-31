@@ -3,7 +3,9 @@
 namespace App\Modules\Unit;
 
 use App\Http\Controllers\Unit\UnitController;
+use App\Modules\Config\ActionModule;
 use App\Modules\Config\Module;
+use App\Modules\Config\PermissionBlock;
 use App\Modules\Config\RouteModule;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -38,7 +40,15 @@ class UnitModule extends Module
     {
     }
 
-    public function getActionsWeb()
+    public function getActionsWeb(): ActionModule
     {
+        $permissions = new PermissionBlock("Unit", UnitController::class);
+        
+        $permissions->addAction('Consultar', 'Index')
+            ->addAction("Cadastrar", "store")
+            ->addAction("Atualizar", "update")
+            ->addAction("Remover", "destroy");
+        
+        return new ActionModule('Unidade', $permissions->toArray()['actions']);
     }
 }

@@ -14,11 +14,13 @@ class ProfileRequest extends BaseRequest
 
     public function rules(): array
     {
-        $this->normalizeInputs();
-
         $rules = [
             'name' => 'required|string|max:50',
+            'description' => 'nullable|string|max:255',
+            'permissions' => 'required|string',
         ];
+
+        $this->normalizeInputs();
 
         return $rules;
     }
@@ -27,6 +29,7 @@ class ProfileRequest extends BaseRequest
     {
         $this->merge([
             'name' => strtoupper($this->input('name')),
+            'permissions' => implode(',', $this->input('permissions')),
         ]);
     }
 
@@ -36,6 +39,10 @@ class ProfileRequest extends BaseRequest
             'name.required' => 'O campo Nome é obrigatório.',
             'name.string' => 'O campo Nome deve ser um texto.',
             'name.max' => 'O campo Nome deve ter no máximo 50 caracteres.',
+            'description.string' => 'O campo Descrição deve ser um texto.',
+            'description.max' => 'O campo Descrição deve ter no máximo 255 caracteres.',
+            'permissions.required' => 'O campo Permissões é obrigatório.',
+            'permissions.string' => 'O campo Permissões deve ser um texto.',
         ];
     }
 
@@ -43,6 +50,8 @@ class ProfileRequest extends BaseRequest
     {
         return new ProfileDto(
             $this->input('name'),
+            $this->input('description', null),
+            $this->input('permissions'),
         );
     }
 }

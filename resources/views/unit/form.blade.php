@@ -9,7 +9,7 @@
                 id="name" 
                 name="name" 
                 placeholder="Nome da unidade" 
-                value="{{ old('name', isset($unit) ? $unit->name : '') }}" required>
+                value="{{ $unit?->name ?? old('name') }}" required>
         </div>
     </div>
     <div class="col-md-3">
@@ -22,7 +22,7 @@
                 id="abbreviation" 
                 name="abbreviation" 
                 placeholder="ex: kg" 
-                value="{{ old('abbreviation', isset($unit) ? $unit->abbreviation : '') }}">
+                value="{{ $unit?->abbreviation ?? old('abbreviation') }}">
         </div>
     </div>
     <div class="col-md-3">
@@ -37,4 +37,5 @@
         </div>
     </div>
 </div>
+<br>
 @yield('actions')

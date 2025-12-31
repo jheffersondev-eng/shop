@@ -6,7 +6,6 @@ use App\Enums\EIsActive;
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\Profile\FilterRequest;
 use App\Http\Requests\Profile\ProfileRequest;
-use Illuminate\Http\Request;
 use App\Services\Profile\IProfileService;
 use Illuminate\Http\RedirectResponse;
 
@@ -20,7 +19,7 @@ class ProfileController extends BaseController
     }
 
     public function Index(FilterRequest $filterRequest)
-    {
+    {      
         $profiles = $this->profileService->getProfilesByFilter($filterRequest->getDto());
         $isActive = EIsActive::toArrayOptions();
 
@@ -34,18 +33,23 @@ class ProfileController extends BaseController
 
     public function Create()
     {
+        $modulesPermissions = $this->profileService->getModulesPermissions();        
+
         return view('profile.create', [
             'url' => route('profile.index'),
+            'modulesPermissions' => $modulesPermissions,
         ]);
     }
 
     public function Edit(int $id)
     {
         $profile = $this->profileService->getProfileById($id);
+        $modulesPermissions = $this->profileService->getModulesPermissions();        
 
         return view('profile.edit')->with([
             'url' => route('profile.index'),
             'profile' => $profile,
+            'modulesPermissions' => $modulesPermissions,
         ]);
     }
 
@@ -71,7 +75,7 @@ class ProfileController extends BaseController
         );
     }
 
-    public function Destroy(Request $request, int $id)
+    public function Destroy(int $id)
     {
         return $this->execute(
             callback: fn() => $this->profileService->delete($id),

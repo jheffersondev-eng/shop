@@ -18,7 +18,7 @@
 							ButtonHelper::make('Atualizar')
 								->setLink(route('unit.update', $unit->id))
 								->setType('submit')
-								->setSize(100)
+								->setSize('lg')
 								->setClass('btn btn-primary')
 								->render('button') 
 						!!}

@@ -3,13 +3,14 @@
 namespace App\Models;
 
 use App\Enums\EIsActive;
+use App\Traits\HasOwner;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, HasOwner;
 
     protected $fillable = [
         'name',
@@ -22,7 +23,7 @@ class Product extends Model
         'stock_quantity',
         'min_quantity',
         'is_active',
-        'image',
+        'owner_id',
         'user_id_created',
         'user_id_updated',
         'user_id_deleted',
@@ -47,6 +48,11 @@ class Product extends Model
     public function unit()
     {
         return $this->belongsTo(Unit::class);
+    }
+
+    public function images()
+    {
+        return $this->hasMany(ProductImage::class);
     }
 }
 

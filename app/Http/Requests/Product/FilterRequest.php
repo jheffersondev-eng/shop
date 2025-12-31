@@ -4,7 +4,7 @@ namespace App\Http\Requests\Product;
 
 use App\Http\Dto\Product\FilterDto;
 use App\Http\Requests\BaseRequest;
-use Carbon\Carbon;
+use Illuminate\Support\Carbon;
 
 class FilterRequest extends BaseRequest
 {

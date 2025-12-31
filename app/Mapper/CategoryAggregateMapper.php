@@ -15,6 +15,8 @@ class CategoryAggregateMapper
                 id: $category->id,
                 name: $category->name,
                 description: $category->description,
+                userCreatedName: $category->user_created_name,
+                userUpdatedName: $category->user_updated_name,
                 createdAt: Carbon::parse($category->created_at),
                 updatedAt: Carbon::parse($category->updated_at)
             );

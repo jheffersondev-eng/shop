@@ -2,7 +2,9 @@
 
 namespace App\Services\UnitService;
 
+use App\Http\Dto\Unit\FilterDto;
 use App\Http\Dto\Unit\UnitDto;
+use App\Mapper\UnitAggregateMapper;
 use App\Models\Unit;
 use App\Repositories\Unit\IUnitRepository;
 use App\Services\ServiceResult;
@@ -27,6 +29,19 @@ class UnitService implements IUnitService
 
         } catch (Throwable $e) {
             Log::error('Erro ao listar unidades: '.$e->getMessage());
+            throw $e;
+        }
+    }
+
+    public function getUnitsByFilter(FilterDto $filterDto): LengthAwarePaginator
+    {
+        try {
+            $units = $this->unitRepository->getUnitsByFilter($filterDto);
+            $unitsAggregate = UnitAggregateMapper::map($units);
+            
+            return $unitsAggregate;
+        } catch (Throwable $e) {
+            Log::error('Erro ao filtrar usuários: '.$e->getMessage());
             throw $e;
         }
     }

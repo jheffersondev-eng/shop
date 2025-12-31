@@ -25,4 +25,9 @@ class ProfileHeader extends HeaderMenu
     {
         return false;
     }
+
+    public function getPermission(): string
+    {
+        return "ProfileController@Index";
+    }
 }

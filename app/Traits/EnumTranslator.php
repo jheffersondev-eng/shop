@@ -2,7 +2,6 @@
 
 namespace App\Traits;
 
-use App\Enums\EProfile;
 use App\Enums\EUnitFormat;
 use App\Enums\EIsActive;
 
@@ -13,10 +12,6 @@ class EnumTranslator
      * Formato: EnumClass::class => ['CASE_NAME' => 'Tradução']
      */
     private static array $translations = [
-        EProfile::class => [
-            'ADMIN' => 'Administrador',
-            'SELLER' => 'Vendedor',
-        ],
         EUnitFormat::class => [
             'DECIMAL' => 'Decimal',
             'INTEGER' => 'Inteiro',

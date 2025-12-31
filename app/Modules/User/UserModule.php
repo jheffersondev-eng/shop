@@ -3,8 +3,9 @@
 namespace App\Modules\User;
 
 use App\Http\Controllers\User\UserController;
-use App\Http\Controllers\User\UserProfileController;
+use App\Modules\Config\ActionModule;
 use App\Modules\Config\Module;
+use App\Modules\Config\PermissionBlock;
 use App\Modules\Config\RouteModule;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -28,9 +29,6 @@ class UserModule extends Module
             Route::get('/{user}/edit', [UserController::class, 'Edit'])->name('user.edit');
             Route::put('/{user}', [UserController::class, 'Update'])->name('user.update');
             Route::delete('/{user}', [UserController::class, 'Destroy'])->name('user.destroy');
-
-            Route::get('/profile/{user}/edit', [UserProfileController::class, 'Edit'])->name('userProfile.edit');
-            Route::put('/profile/{user}', [UserProfileController::class, 'Update'])->name('userProfile.update');
         });
     }
 
@@ -42,9 +40,15 @@ class UserModule extends Module
     {
     }
 
-    public function getActionsWeb()//: ActionModule
+    public function getActionsWeb(): ActionModule
     {
-        //$permissoes[] = (new PermissionBlockResource("User", UserController::class))->toArray();
-        //return new ActionModule(self::NAME, $permissoes);
+        $permissions = new PermissionBlock("User", UserController::class);
+        
+        $permissions->addAction('Consultar', 'Index')
+            ->addAction("Cadastrar", "store")
+            ->addAction("Atualizar", "update")
+            ->addAction("Remover", "destroy");
+        
+        return new ActionModule('Usuário', $permissions->toArray()['actions']);
     }
 }

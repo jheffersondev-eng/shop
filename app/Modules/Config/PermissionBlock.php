@@ -19,9 +19,10 @@ class PermissionBlock
 
     public function addAction(string $name, string $action): PermissionBlock
     {
+        $controllerName = class_basename($this->controller);
         $this->actions[] = [
             "name" => $name,
-            "action" => $this->controller . "@" . $action
+            "action" => $controllerName . "@" . $action
         ];
 
         return $this;
