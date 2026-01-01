@@ -40,7 +40,7 @@ class UserProfileModule extends Module
     {
         $permissions = new PermissionBlock("UserProfile", UserProfileController::class);
         
-        $permissions->addAction('Editar', 'Edit')
+        $permissions->addAction('Ver Perfil', 'Edit')
             ->addAction("Atualizar", "update");
         
         return new ActionModule('Meu Perfil', $permissions->toArray()['actions']);
