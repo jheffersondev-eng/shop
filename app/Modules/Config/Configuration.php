@@ -15,6 +15,7 @@ use App\Modules\Product\ProductModule;
 use App\Modules\User\UserModule;
 use App\Modules\Profile\ProfileModule;
 use App\Modules\Category\CategoryModule;
+use App\Modules\Profile\UserProfileModule;
 use App\Modules\Unit\UnitModule;
 use Illuminate\Support\Collection;
 use RuntimeException;
@@ -30,6 +31,7 @@ class Configuration
             new ProfileModule(),
             new CategoryModule(),
             new UnitModule(),
+            new UserProfileModule(),
         ];
     }
 

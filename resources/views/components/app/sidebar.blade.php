@@ -3,7 +3,6 @@
     use Illuminate\Support\Facades\Auth;
     $modules = Configuration::getMenu();
 @endphp
-
 <div class="sidebar">
     <div class="logo">
         <img src="{{ asset('assets/img/branding/porto-shop-branding.png') }}" alt="Logo" width="38" height="38">

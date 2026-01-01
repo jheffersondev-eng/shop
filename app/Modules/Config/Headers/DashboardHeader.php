@@ -28,6 +28,6 @@ class DashboardHeader extends HeaderMenu
 
     public function getPermission(): string
     {
-        return "DashboardController@Index";
+        return "dashboardcontroller@index";
     }
 }

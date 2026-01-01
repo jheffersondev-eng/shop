@@ -19,7 +19,7 @@ class UserProfileLink extends LinkMenu
 
     public function getPermission(): String
     {
-        return "UserProfileController@Edit";
+        return "userprofilecontroller@edit";
     }
 
     public function getLink(): String

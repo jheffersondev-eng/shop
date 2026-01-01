@@ -1,6 +1,7 @@
 $(document).ready(function() {
     maskPhone();
     maskDocument();
+    maskDecimal();
 });
 
 // ==================== DEFINIR MÁSCARAS ====================
@@ -21,6 +22,44 @@ function maskDocument() {
         maxLength: 14
     };
     applyMask(config);
+}
+
+function maskDecimal() {
+    $(document).on('input', '.decimal-mask', function() {
+        let value = $(this).val().replace(/\D/g, '');
+        
+        if (!value) {
+            $(this).val('');
+            return;
+        }
+
+        // Garantir que tenha no mínimo 3 dígitos para poder separar em 2 casas decimais
+        const padded = String(value).padStart(3, '0');
+        const inteiros = padded.slice(0, -2);
+        const decimais = padded.slice(-2);
+        
+        // Remove zeros à esquerda da parte inteira
+        const cleanInteiros = inteiros.replace(/^0+/, '') || '0';
+        
+        $(this).val(cleanInteiros + ',' + decimais);
+    });
+
+    // Aplicar máscara em valores já preenchidos no carregamento
+    $('.decimal-mask').each(function() {
+        const currentValue = $(this).val();
+        if (currentValue && currentValue !== '') {
+            let value = currentValue.replace(/\D/g, '');
+            
+            if (value) {
+                const padded = String(value).padStart(3, '0');
+                const inteiros = padded.slice(0, -2);
+                const decimais = padded.slice(-2);
+                
+                const cleanInteiros = inteiros.replace(/^0+/, '') || '0';
+                $(this).val(cleanInteiros + ',' + decimais);
+            }
+        }
+    });
 }
 
 // ==================== FUNÇÃO GENÉRICA DE MÁSCARA ====================

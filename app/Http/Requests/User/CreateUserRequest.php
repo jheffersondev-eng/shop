@@ -19,6 +19,7 @@ class CreateUserRequest extends CommonRulesUserRequest
         return array_merge(
             $this->commonRules(),
             [
+                'profile_id' => ['required', 'integer'],
                 'password' => ['required', 'confirmed', 'min:6'],
             ]
         );

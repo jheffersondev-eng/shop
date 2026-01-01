@@ -29,7 +29,7 @@ class ProfileRequest extends BaseRequest
     {
         $this->merge([
             'name' => strtoupper($this->input('name')),
-            'permissions' => implode(',', $this->input('permissions')),
+            'permissions' => strtolower(implode(',', $this->input('permissions'))),
         ]);
     }
 

@@ -70,7 +70,6 @@ class UserController extends BaseController
     public function Store(CreateUserRequest $createUserRequest): RedirectResponse
     {
         $dto = $createUserRequest->getDto();
-
         return $this->execute(
             callback: fn() => $this->userService->create($dto),
             defaultSuccessMessage: 'Usuário criado com sucesso',

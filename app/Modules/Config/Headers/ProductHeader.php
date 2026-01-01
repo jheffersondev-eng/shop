@@ -28,6 +28,6 @@ class ProductHeader extends HeaderMenu
 
     public function getPermission(): string
     {
-        return "ProductController@Index";
+        return "productcontroller@index";
     }
 }

@@ -42,7 +42,10 @@ $(document).ready(function () {
         const integerPart = padded.slice(0, -2);
         const decimalPart = padded.slice(-2);
         
-        return `${integerPart}.${decimalPart}`;
+        // Remove zeros à esquerda da parte inteira
+        const cleanIntegerPart = integerPart.replace(/^0+/, '') || '0';
+        
+        return `${cleanIntegerPart}.${decimalPart}`;
     }
 
     /**
@@ -86,14 +89,20 @@ $(document).ready(function () {
      * Configura eventos para um input de quantidade
      */
     function setupQuantityInput($input) {
-        // Ao digitar, apenas permite números
-        $input.on('keypress', function (e) {
-            if (!/[0-9]/.test(String.fromCharCode(e.which))) {
-                e.preventDefault();
-            }
+        // Ao digitar, apenas permite números e formata em tempo real
+        $input.on('input', function (e) {
+            const $this = $(this);
+            const currentValue = $this.val();
+            
+            // Extrair apenas dígitos
+            const digits = extractDigits(currentValue);
+            
+            // Formatar e atualizar em tempo real
+            const formatted = formatValue(digits);
+            $this.val(formatted);
         });
 
-        // Ao sair do campo, formata automaticamente
+        // Ao sair do campo, garante a formatação correta
         $input.on('blur', function () {
             formatAndUpdateInput($(this));
         });

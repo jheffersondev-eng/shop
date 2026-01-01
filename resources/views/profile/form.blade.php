@@ -25,7 +25,7 @@
     <div class="col-md-12">
         <label for="description" class="form-label">Descrição</label>
         <div class="input-group">
-            <span class="input-group-text"><i class="bi bi-card"></i></span>
+            <span class="input-group-text"><i class="bi bi-fonts"></i></span>
             <input type="text" 
                 class="form-control" 
                 id="description" 
@@ -79,7 +79,7 @@
                                     @if(!empty($actions))
                                         @foreach($actions as $action)
                                             @php
-                                                $isChecked = in_array($action['action'], $profilePermissions);
+                                                $isChecked = in_array(strtolower($action['action']), $profilePermissions);
                                             @endphp
                                             <div class="col-md-6">
                                                 <div class="form-check">

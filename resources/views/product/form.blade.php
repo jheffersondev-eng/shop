@@ -79,7 +79,7 @@
                 @foreach ($units as $unit)
                     <option value="{{ $unit->id }}" data-rule="{{ $unit->format }}"
                         {{ ( $product?->unit_id ?? old('unit_id')) == $unit->id ? 'selected' : '' }}>
-                        {{ $unit->name }}
+                        {{ ucfirst($unit->name) }}
                     </option>
                 @endforeach
             </select>
@@ -101,9 +101,8 @@
         <label for="price" class="form-label">Preço (venda)</label>
         <div class="input-group">
             <span class="input-group-text"><i class="bi bi-cash-stack"></i></span>
-            <input type="number" 
-                step="0.01" 
-                class="form-control" 
+            <input type="text" 
+                class="form-control decimal-mask" 
                 id="price" 
                 name="price" 
                 placeholder="0.00"
@@ -114,9 +113,8 @@
         <label for="cost_price" class="form-label">Preço (custo)</label>
         <div class="input-group">
             <span class="input-group-text"><i class="bi bi-cash-stack"></i></span>
-            <input type="number" 
-                step="0.01" 
-                class="form-control" 
+            <input type="text" 
+                class="form-control decimal-mask" 
                 id="cost_price" 
                 name="cost_price" 
                 placeholder="0.00"
@@ -174,6 +172,7 @@
 <br>
 @yield('actions')
 @section('scripts-after')
+    <script src="{{ asset('assets/js/mask/mask.js') }}"></script>
     <script src="{{ asset('assets/js/product/quantityFormat.js') }}"></script>
     <script src="{{ asset('assets/js/product/productImageInput.js') }}"></script>
 @endsection

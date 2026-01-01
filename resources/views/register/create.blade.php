@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link rel="stylesheet" href="{{ asset('assets/css/home/login.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/home/register.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light" aria-label="Menu principal">
@@ -67,14 +68,14 @@
                         <label for="document" class="form-label">Documento</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="bi bi-person-badge"></i></span>
-                            <input type="text" class="form-control" id="document" name="document" placeholder="CPF/CNPJ" value="{{ old('document') }}" required>
+                            <input type="text" class="form-control document-mask" id="document" name="document" placeholder="CPF/CNPJ" value="{{ old('document') }}" required>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <label for="phone" class="form-label">Telefone</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="bi bi-phone"></i></span>
-                            <input type="text" class="form-control" id="phone" name="phone" placeholder="(00) 00000-0000" value="{{ old('phone') }}">
+                            <input type="text" class="form-control phone-mask" id="phone" name="phone" placeholder="(00) 00000-0000" value="{{ old('phone') }}">
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -122,5 +123,6 @@
         &copy; <?=date('Y')?> Porto Shop &mdash; Todos os direitos reservados.
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ asset('assets/js/mask/mask.js') }}"></script>
 </body>
 </html>

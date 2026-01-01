@@ -49,7 +49,7 @@ class UserRepository extends BaseRepository implements IUserRepository
     public function getUsersByFilter($filterDto): LengthAwarePaginator
     {
         $query = DB::table('users as u')
-            ->join('user_details as ud', 'ud.user_id', '=', 'u.id')
+            ->leftJoin('user_details as ud', 'ud.user_id', '=', 'u.id')
             ->join('profiles as p', 'u.profile_id', '=', 'p.id')
             ->leftJoin('users as uc', 'u.user_id_created', '=', 'uc.id')
             ->leftJoin('user_details as udc', 'uc.id', '=', 'udc.user_id')

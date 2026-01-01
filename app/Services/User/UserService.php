@@ -91,7 +91,7 @@ class UserService implements IUserService
             }
             
             $user = $this->userRepository->create($userDto);
-            $user->owner_id =  $userDto->ownerId ?? $user->id;
+            $user->owner_id = $userDto->ownerId ?? $user->id;
             $this->userRepository->save($user);
             $userDto->userDetailsDto->userId = $user->id;
             $this->userDetailRepository->create($userDto->userDetailsDto);

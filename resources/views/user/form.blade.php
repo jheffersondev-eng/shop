@@ -108,7 +108,7 @@
                 <div class="input-group">
                     <span class="input-group-text"><i class="bi bi-person-badge"></i></span>
                     <input type="text" 
-                        class="form-control" 
+                        class="form-control document-mask" 
                         id="document" 
                         name="document" 
                         placeholder="CPF/CNPJ"
@@ -131,7 +131,7 @@
                 <div class="input-group">
                     <span class="input-group-text"><i class="bi bi-phone"></i></span>
                     <input type="text" 
-                        class="form-control" 
+                        class="form-control phone-mask" 
                         id="phone" 
                         name="phone"
                         placeholder="(00) 00000-0000" 
@@ -155,3 +155,6 @@
 </div>
 <br>
 @yield('actions')
+@section('scripts-after')
+    <script src="{{ asset('assets/js/mask/mask.js') }}"></script>
+@endsection
