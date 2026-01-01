@@ -44,7 +44,16 @@ class ProductRequest extends BaseRequest
             $rules['min_quantity'] = 'nullable|numeric|min:0';
         }
 
+        $this->normalizeInputs($rules);
         return $rules;
+    }
+
+    protected function normalizeInputs(): void
+    {
+        $this->merge([
+            'price' =>  str_replace(',', '.', $this->input('price')),
+            'cost_price' =>  str_replace(',', '.', $this->input('cost_price')),
+        ]);
     }
 
     public function messages(): array
