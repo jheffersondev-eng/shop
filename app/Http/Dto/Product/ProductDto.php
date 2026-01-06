@@ -10,7 +10,7 @@ class ProductDto extends BaseDto
 		public string $name,
         public array $images,
         public string $removedImages,
-        public string $description,
+        public string|null $description,
         public int $categoryId,
         public int $unitId,
         public string $barcode,

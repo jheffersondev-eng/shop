@@ -22,7 +22,6 @@ class ProductAggregateMapper
     {
         $products->getCollection()->transform(function ($product) {
             
-            // Buscar as imagens do produto através do serviço
             $imagesCollection = $this->productImageService->getProductImages($product->id);
             $images = $imagesCollection->pluck('image')->toArray();
 

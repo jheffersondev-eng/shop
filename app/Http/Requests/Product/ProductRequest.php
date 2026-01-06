@@ -51,6 +51,7 @@ class ProductRequest extends BaseRequest
     protected function normalizeInputs(): void
     {
         $this->merge([
+            'name' => strtoupper($this->input('name')),
             'price' =>  str_replace(',', '.', $this->input('price')),
             'cost_price' =>  str_replace(',', '.', $this->input('cost_price')),
         ]);
