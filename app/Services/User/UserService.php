@@ -4,6 +4,7 @@ namespace App\Services\User;
 
 use App\Http\Dto\User\FilterDto;
 use App\Http\Dto\User\UserDto;
+use App\Mail\VerifyEmailMail;
 use App\Mapper\UserAggregateMapper;
 use App\Models\User;
 use App\Repositories\User\IUserRepository;
@@ -13,6 +14,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Throwable;
 
@@ -92,9 +94,24 @@ class UserService implements IUserService
             
             $user = $this->userRepository->create($userDto);
             $user->owner_id = $userDto->ownerId ?? $user->id;
+            
+            // Gerar código de verificação de email (6 dígitos)
+            $verificationCode = rand(100000, 999999);
+            $user->verification_code = $verificationCode;
+            $user->verification_expires_at = now()->addMinutes(30); // Válido por 30 minutos
+            
             $this->userRepository->save($user);
             $userDto->userDetailsDto->userId = $user->id;
             $this->userDetailRepository->create($userDto->userDetailsDto);
+
+            // Enviar email de verificação
+            try {
+                Mail::to($user->email)->send(new VerifyEmailMail($user, $verificationCode));
+                Log::info("Email de verificação enviado para: {$user->email}");
+            } catch (Throwable $mailException) {
+                Log::error("Erro ao enviar email de verificação: {$mailException->getMessage()}");
+                // Continua mesmo se o email falhar, pois o usuário pode tentar verificar depois
+            }
 
             return ServiceResult::ok(
                 data: $user,
