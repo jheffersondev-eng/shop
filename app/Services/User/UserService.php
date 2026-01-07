@@ -4,7 +4,7 @@ namespace App\Services\User;
 
 use App\Http\Dto\User\FilterDto;
 use App\Http\Dto\User\UserDto;
-use App\Mail\VerifyEmailMail;
+use App\Mail\SendMail;
 use App\Mapper\UserAggregateMapper;
 use App\Models\User;
 use App\Repositories\User\IUserRepository;
@@ -14,7 +14,6 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Throwable;
 
@@ -76,7 +75,7 @@ class UserService implements IUserService
     public function create(UserDto $userDto): ServiceResult
     {
         try {
-            $userDto->ownerId = Auth::id();
+            $userDto->ownerId = Auth::id() ?? null;
 
             $email = $this->userRepository->findByEmail($userDto->email);
             if ($email) {
@@ -93,9 +92,11 @@ class UserService implements IUserService
             }
             
             $user = $this->userRepository->create($userDto);
-            $user->owner_id = $userDto->ownerId ?? $user->id;
+                        
+            if (!$user->owner_id) {
+                $user->owner_id = $user->id;
+            }
             
-            // Gerar código de verificação de email (6 dígitos)
             $verificationCode = rand(100000, 999999);
             $user->verification_code = $verificationCode;
             $user->verification_expires_at = now()->addMinutes(30); // Válido por 30 minutos
@@ -104,22 +105,17 @@ class UserService implements IUserService
             $userDto->userDetailsDto->userId = $user->id;
             $this->userDetailRepository->create($userDto->userDetailsDto);
 
-            // Enviar email de verificação
-            try {
-                Mail::to($user->email)->send(new VerifyEmailMail($user, $verificationCode));
-                Log::info("Email de verificação enviado para: {$user->email}");
-            } catch (Throwable $mailException) {
-                Log::error("Erro ao enviar email de verificação: {$mailException->getMessage()}");
-                // Continua mesmo se o email falhar, pois o usuário pode tentar verificar depois
-            }
+            SendMail::send($user->email, $user, $verificationCode);
 
             return ServiceResult::ok(
                 data: $user,
-                message: 'Usuário criado com sucesso'
+                message: 'Usuário criado com sucesso',
+                route: route('register.verify-email-view', ['user_id' => $user->id, 'email' => $user->email])
             );
 
         } catch (Throwable $e) {
             Log::error('Erro ao criar usuário: '.$e->getMessage());
+            Log::error('Stack trace: '.$e->getTraceAsString());
             return ServiceResult::fail('Ocorreu um erro ao criar usuário');
         }
     }
@@ -160,6 +156,38 @@ class UserService implements IUserService
         } catch (Throwable $e) {
             Log::error('Erro ao remover usuário: '.$e->getMessage());
             return ServiceResult::fail('Erro ao remover usuário');
+        }
+    }
+
+    public function verifyEmail(int $userId, $verificationCode): ServiceResult
+    {
+        try {
+            $user = $this->userRepository->getUserById($userId);
+
+            if (!$user) {
+                return ServiceResult::fail('Usuário não encontrado');
+            }
+
+            if (!$user || $user->verification_code !== $verificationCode) {
+                return ServiceResult::fail('Código de verificação inválido');
+            }
+
+            if ($user->verification_expires_at < now()) {
+                return ServiceResult::fail('Código de verificação expirado');
+            }
+
+            $user->email_verified_at = now();
+            $user->verification_code = null;
+            $user->verification_expires_at = null;
+
+            $this->userRepository->save($user);
+
+            return ServiceResult::ok(
+                message: 'Email verificado com sucesso'
+            );
+        } catch (Throwable $e) {
+            Log::error('Erro ao verificar email: '.$e->getMessage());
+            return ServiceResult::fail('Ocorreu um erro ao verificar o email');
         }
     }
 }
