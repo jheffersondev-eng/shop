@@ -25,6 +25,9 @@ class User extends Authenticatable
         'user_id_created',
         'user_id_updated',
         'user_id_deleted',
+        'verification_code',
+        'verification_expires_at',
+        'email_verified_at',
     ];
 
     protected $hidden = [
@@ -38,6 +41,8 @@ class User extends Authenticatable
         'updated_at' => 'datetime',
         'deleted_at' => 'datetime',
         'created_at' => 'datetime',
+        'email_verified_at' => 'datetime',
+        'verification_expires_at' => 'datetime',
     ];
 
     public function profile()
