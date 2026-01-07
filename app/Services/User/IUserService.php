@@ -16,4 +16,5 @@ interface IUserService
     public function create(UserDto $userDto): ServiceResult;
     public function update(UserDto $userDto, int $id): ServiceResult;
     public function delete(int $id): ServiceResult;
+    public function verifyEmail(int $userId, $verificationCode): ServiceResult;
 }

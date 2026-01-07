@@ -92,7 +92,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::3OcVa0ycUiXvizgW',
+            '_route' => 'generated::6ljaMnVxiGZI35hf',
           ),
           1 => NULL,
           2 => 
@@ -112,7 +112,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::wTEgD2M9qg4li6LI',
+            '_route' => 'generated::pVG5KbHtZVmeI5Pw',
           ),
           1 => NULL,
           2 => 
@@ -208,6 +208,42 @@ app('router')->setCompiledRoutes(
           0 => 
           array (
             '_route' => 'register.store',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'POST' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/register/verify-email' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'register.verify-email-view',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+        1 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'register.verify-email',
           ),
           1 => NULL,
           2 => 
@@ -1203,7 +1239,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::3OcVa0ycUiXvizgW' => 
+    'generated::6ljaMnVxiGZI35hf' => 
     array (
       'methods' => 
       array (
@@ -1231,8 +1267,8 @@ app('router')->setCompiledRoutes(
                     return response(\\Illuminate\\Support\\Facades\\View::file(\'C:\\\\xampp\\\\htdocs\\\\www\\\\shop\\\\vendor\\\\laravel\\\\framework\\\\src\\\\Illuminate\\\\Foundation\\\\Configuration\'.\'/../resources/health-up.blade.php\', [
                         \'exception\' => $exception,
                     ]), status: $exception ? 500 : 200);
-                }";s:5:"scope";s:54:"Illuminate\\Foundation\\Configuration\\ApplicationBuilder";s:4:"this";N;s:4:"self";s:32:"00000000000005660000000000000000";}}',
-        'as' => 'generated::3OcVa0ycUiXvizgW',
+                }";s:5:"scope";s:54:"Illuminate\\Foundation\\Configuration\\ApplicationBuilder";s:4:"this";N;s:4:"self";s:32:"000000000000056b0000000000000000";}}',
+        'as' => 'generated::6ljaMnVxiGZI35hf',
       ),
       'fallback' => false,
       'defaults' => 
@@ -1248,7 +1284,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::wTEgD2M9qg4li6LI' => 
+    'generated::pVG5KbHtZVmeI5Pw' => 
     array (
       'methods' => 
       array (
@@ -1264,13 +1300,13 @@ app('router')->setCompiledRoutes(
         ),
         'uses' => 'O:55:"Laravel\\SerializableClosure\\UnsignedSerializableClosure":1:{s:12:"serializable";O:46:"Laravel\\SerializableClosure\\Serializers\\Native":5:{s:3:"use";a:0:{}s:8:"function";s:47:"function () {
     return \\view(\'home.index\');
-}";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"000000000000056a0000000000000000";}}',
+}";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"000000000000056f0000000000000000";}}',
         'namespace' => NULL,
         'prefix' => '',
         'where' => 
         array (
         ),
-        'as' => 'generated::wTEgD2M9qg4li6LI',
+        'as' => 'generated::pVG5KbHtZVmeI5Pw',
       ),
       'fallback' => false,
       'defaults' => 
@@ -1299,6 +1335,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
+          1 => 'App\\Http\\Middleware\\RedirectIfAuthenticated',
         ),
         'uses' => 'App\\Http\\Controllers\\Login\\LoginController@Index',
         'controller' => 'App\\Http\\Controllers\\Login\\LoginController@Index',
@@ -1335,6 +1372,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
+          1 => 'App\\Http\\Middleware\\RedirectIfAuthenticated',
         ),
         'uses' => 'App\\Http\\Controllers\\Login\\LoginController@Login',
         'controller' => 'App\\Http\\Controllers\\Login\\LoginController@Login',
@@ -1371,6 +1409,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
+          1 => 'App\\Http\\Middleware\\RedirectIfAuthenticated',
         ),
         'uses' => 'App\\Http\\Controllers\\Login\\LoginController@Logout',
         'controller' => 'App\\Http\\Controllers\\Login\\LoginController@Logout',
@@ -1408,6 +1447,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
+          1 => 'App\\Http\\Middleware\\RedirectIfAuthenticated',
         ),
         'uses' => 'App\\Http\\Controllers\\Register\\RegisterController@SignUp',
         'controller' => 'App\\Http\\Controllers\\Register\\RegisterController@SignUp',
@@ -1444,6 +1484,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
+          1 => 'App\\Http\\Middleware\\RedirectIfAuthenticated',
         ),
         'uses' => 'App\\Http\\Controllers\\Register\\RegisterController@Register',
         'controller' => 'App\\Http\\Controllers\\Register\\RegisterController@Register',
@@ -1453,6 +1494,81 @@ app('router')->setCompiledRoutes(
         array (
         ),
         'as' => 'register.store',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'register.verify-email-view' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'register/verify-email',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'App\\Http\\Middleware\\RedirectIfAuthenticated',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Register\\RegisterController@verifyEmailView',
+        'controller' => 'App\\Http\\Controllers\\Register\\RegisterController@verifyEmailView',
+        'namespace' => NULL,
+        'prefix' => '/register',
+        'where' => 
+        array (
+        ),
+        'as' => 'register.verify-email-view',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'register.verify-email' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'register/verify-email',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'App\\Http\\Middleware\\RedirectIfAuthenticated',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Register\\RegisterController@verifyEmail',
+        'controller' => 'App\\Http\\Controllers\\Register\\RegisterController@verifyEmail',
+        'namespace' => NULL,
+        'prefix' => '/register',
+        'where' => 
+        array (
+        ),
+        'as' => 'register.verify-email',
       ),
       'fallback' => false,
       'defaults' => 
@@ -1481,7 +1597,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
-          1 => 'auth',
+          1 => 'App\\Http\\Middleware\\Authenticate',
           2 => 'App\\Http\\Middleware\\CheckPermission',
         ),
         'uses' => 'App\\Http\\Controllers\\Dashboard\\DashboardController@Index',
@@ -1520,7 +1636,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
-          1 => 'auth',
+          1 => 'App\\Http\\Middleware\\Authenticate',
           2 => 'App\\Http\\Middleware\\CheckPermission',
         ),
         'uses' => 'App\\Http\\Controllers\\Product\\ProductController@Index',
@@ -1559,7 +1675,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
-          1 => 'auth',
+          1 => 'App\\Http\\Middleware\\Authenticate',
           2 => 'App\\Http\\Middleware\\CheckPermission',
         ),
         'uses' => 'App\\Http\\Controllers\\Product\\ProductController@Create',
@@ -1597,7 +1713,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
-          1 => 'auth',
+          1 => 'App\\Http\\Middleware\\Authenticate',
           2 => 'App\\Http\\Middleware\\CheckPermission',
         ),
         'uses' => 'App\\Http\\Controllers\\Product\\ProductController@Store',
@@ -1636,7 +1752,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
-          1 => 'auth',
+          1 => 'App\\Http\\Middleware\\Authenticate',
           2 => 'App\\Http\\Middleware\\CheckPermission',
         ),
         'uses' => 'App\\Http\\Controllers\\Product\\ProductController@Edit',
@@ -1674,7 +1790,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
-          1 => 'auth',
+          1 => 'App\\Http\\Middleware\\Authenticate',
           2 => 'App\\Http\\Middleware\\CheckPermission',
         ),
         'uses' => 'App\\Http\\Controllers\\Product\\ProductController@Update',
@@ -1712,7 +1828,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
-          1 => 'auth',
+          1 => 'App\\Http\\Middleware\\Authenticate',
           2 => 'App\\Http\\Middleware\\CheckPermission',
         ),
         'uses' => 'App\\Http\\Controllers\\Product\\ProductController@Destroy',
@@ -1751,7 +1867,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
-          1 => 'auth',
+          1 => 'App\\Http\\Middleware\\Authenticate',
           2 => 'App\\Http\\Middleware\\CheckPermission',
         ),
         'uses' => 'App\\Http\\Controllers\\User\\UserController@Index',
@@ -1790,7 +1906,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
-          1 => 'auth',
+          1 => 'App\\Http\\Middleware\\Authenticate',
           2 => 'App\\Http\\Middleware\\CheckPermission',
         ),
         'uses' => 'App\\Http\\Controllers\\User\\UserController@Create',
@@ -1828,7 +1944,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
-          1 => 'auth',
+          1 => 'App\\Http\\Middleware\\Authenticate',
           2 => 'App\\Http\\Middleware\\CheckPermission',
         ),
         'uses' => 'App\\Http\\Controllers\\User\\UserController@Store',
@@ -1867,7 +1983,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
-          1 => 'auth',
+          1 => 'App\\Http\\Middleware\\Authenticate',
           2 => 'App\\Http\\Middleware\\CheckPermission',
         ),
         'uses' => 'App\\Http\\Controllers\\User\\UserController@Edit',
@@ -1905,7 +2021,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
-          1 => 'auth',
+          1 => 'App\\Http\\Middleware\\Authenticate',
           2 => 'App\\Http\\Middleware\\CheckPermission',
         ),
         'uses' => 'App\\Http\\Controllers\\User\\UserController@Update',
@@ -1943,7 +2059,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
-          1 => 'auth',
+          1 => 'App\\Http\\Middleware\\Authenticate',
           2 => 'App\\Http\\Middleware\\CheckPermission',
         ),
         'uses' => 'App\\Http\\Controllers\\User\\UserController@Destroy',
@@ -1982,7 +2098,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
-          1 => 'auth',
+          1 => 'App\\Http\\Middleware\\Authenticate',
           2 => 'App\\Http\\Middleware\\CheckPermission',
         ),
         'uses' => 'App\\Http\\Controllers\\Profile\\ProfileController@Index',
@@ -2021,7 +2137,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
-          1 => 'auth',
+          1 => 'App\\Http\\Middleware\\Authenticate',
           2 => 'App\\Http\\Middleware\\CheckPermission',
         ),
         'uses' => 'App\\Http\\Controllers\\Profile\\ProfileController@Create',
@@ -2059,7 +2175,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
-          1 => 'auth',
+          1 => 'App\\Http\\Middleware\\Authenticate',
           2 => 'App\\Http\\Middleware\\CheckPermission',
         ),
         'uses' => 'App\\Http\\Controllers\\Profile\\ProfileController@Store',
@@ -2098,7 +2214,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
-          1 => 'auth',
+          1 => 'App\\Http\\Middleware\\Authenticate',
           2 => 'App\\Http\\Middleware\\CheckPermission',
         ),
         'uses' => 'App\\Http\\Controllers\\Profile\\ProfileController@Edit',
@@ -2136,7 +2252,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
-          1 => 'auth',
+          1 => 'App\\Http\\Middleware\\Authenticate',
           2 => 'App\\Http\\Middleware\\CheckPermission',
         ),
         'uses' => 'App\\Http\\Controllers\\Profile\\ProfileController@Update',
@@ -2174,7 +2290,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
-          1 => 'auth',
+          1 => 'App\\Http\\Middleware\\Authenticate',
           2 => 'App\\Http\\Middleware\\CheckPermission',
         ),
         'uses' => 'App\\Http\\Controllers\\Profile\\ProfileController@Destroy',
@@ -2213,7 +2329,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
-          1 => 'auth',
+          1 => 'App\\Http\\Middleware\\Authenticate',
           2 => 'App\\Http\\Middleware\\CheckPermission',
         ),
         'uses' => 'App\\Http\\Controllers\\Category\\CategoryController@Index',
@@ -2252,7 +2368,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
-          1 => 'auth',
+          1 => 'App\\Http\\Middleware\\Authenticate',
           2 => 'App\\Http\\Middleware\\CheckPermission',
         ),
         'uses' => 'App\\Http\\Controllers\\Category\\CategoryController@Create',
@@ -2290,7 +2406,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
-          1 => 'auth',
+          1 => 'App\\Http\\Middleware\\Authenticate',
           2 => 'App\\Http\\Middleware\\CheckPermission',
         ),
         'uses' => 'App\\Http\\Controllers\\Category\\CategoryController@Store',
@@ -2329,7 +2445,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
-          1 => 'auth',
+          1 => 'App\\Http\\Middleware\\Authenticate',
           2 => 'App\\Http\\Middleware\\CheckPermission',
         ),
         'uses' => 'App\\Http\\Controllers\\Category\\CategoryController@Edit',
@@ -2367,7 +2483,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
-          1 => 'auth',
+          1 => 'App\\Http\\Middleware\\Authenticate',
           2 => 'App\\Http\\Middleware\\CheckPermission',
         ),
         'uses' => 'App\\Http\\Controllers\\Category\\CategoryController@Update',
@@ -2405,7 +2521,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
-          1 => 'auth',
+          1 => 'App\\Http\\Middleware\\Authenticate',
           2 => 'App\\Http\\Middleware\\CheckPermission',
         ),
         'uses' => 'App\\Http\\Controllers\\Category\\CategoryController@Destroy',
@@ -2444,7 +2560,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
-          1 => 'auth',
+          1 => 'App\\Http\\Middleware\\Authenticate',
           2 => 'App\\Http\\Middleware\\CheckPermission',
         ),
         'uses' => 'App\\Http\\Controllers\\Unit\\UnitController@Index',
@@ -2483,7 +2599,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
-          1 => 'auth',
+          1 => 'App\\Http\\Middleware\\Authenticate',
           2 => 'App\\Http\\Middleware\\CheckPermission',
         ),
         'uses' => 'App\\Http\\Controllers\\Unit\\UnitController@Create',
@@ -2521,7 +2637,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
-          1 => 'auth',
+          1 => 'App\\Http\\Middleware\\Authenticate',
           2 => 'App\\Http\\Middleware\\CheckPermission',
         ),
         'uses' => 'App\\Http\\Controllers\\Unit\\UnitController@Store',
@@ -2560,7 +2676,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
-          1 => 'auth',
+          1 => 'App\\Http\\Middleware\\Authenticate',
           2 => 'App\\Http\\Middleware\\CheckPermission',
         ),
         'uses' => 'App\\Http\\Controllers\\Unit\\UnitController@Edit',
@@ -2598,7 +2714,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
-          1 => 'auth',
+          1 => 'App\\Http\\Middleware\\Authenticate',
           2 => 'App\\Http\\Middleware\\CheckPermission',
         ),
         'uses' => 'App\\Http\\Controllers\\Unit\\UnitController@Update',
@@ -2636,7 +2752,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
-          1 => 'auth',
+          1 => 'App\\Http\\Middleware\\Authenticate',
           2 => 'App\\Http\\Middleware\\CheckPermission',
         ),
         'uses' => 'App\\Http\\Controllers\\Unit\\UnitController@Destroy',
@@ -2675,7 +2791,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
-          1 => 'auth',
+          1 => 'App\\Http\\Middleware\\Authenticate',
           2 => 'App\\Http\\Middleware\\CheckPermission',
         ),
         'uses' => 'App\\Http\\Controllers\\User\\UserProfileController@Edit',
@@ -2713,7 +2829,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
-          1 => 'auth',
+          1 => 'App\\Http\\Middleware\\Authenticate',
           2 => 'App\\Http\\Middleware\\CheckPermission',
         ),
         'uses' => 'App\\Http\\Controllers\\User\\UserProfileController@Update',
@@ -2755,7 +2871,7 @@ app('router')->setCompiledRoutes(
                         $config,
                         $isProduction
                     ))($request, $path);
-                }";s:5:"scope";s:47:"Illuminate\\Filesystem\\FilesystemServiceProvider";s:4:"this";N;s:4:"self";s:32:"000000000000056c0000000000000000";}}',
+                }";s:5:"scope";s:47:"Illuminate\\Filesystem\\FilesystemServiceProvider";s:4:"this";N;s:4:"self";s:32:"00000000000005710000000000000000";}}',
         'as' => 'storage.local',
       ),
       'fallback' => false,

@@ -79,8 +79,10 @@ abstract class BaseController extends Controller
 
             DB::commit();
 
+            $redirect = $result->route ?? $successRedirect;
+
             return redirect()
-                ->to($successRedirect ?? url()->previous())
+                ->to($redirect ?? url()->previous())
                 ->with('success', $result->message ?? $defaultSuccessMessage);
 
         } catch (Throwable $e) {

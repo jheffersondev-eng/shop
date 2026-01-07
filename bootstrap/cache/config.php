@@ -115,7 +115,7 @@
   ),
   'app' => 
   array (
-    'name' => 'Laravel',
+    'name' => 'Porto Shop',
     'env' => 'local',
     'debug' => true,
     'url' => 'http://localhost',
@@ -318,7 +318,7 @@
         'driver' => 'octane',
       ),
     ),
-    'prefix' => 'laravel-cache-',
+    'prefix' => 'porto-shop-cache-',
   ),
   'database' => 
   array (
@@ -416,7 +416,7 @@
       'options' => 
       array (
         'cluster' => 'redis',
-        'prefix' => 'laravel-database-',
+        'prefix' => 'porto-shop-database-',
         'persistent' => false,
       ),
       'default' => 
@@ -616,7 +616,7 @@
   ),
   'mail' => 
   array (
-    'default' => 'log',
+    'default' => 'smtp',
     'mailers' => 
     array (
       'smtp' => 
@@ -624,10 +624,10 @@
         'transport' => 'smtp',
         'scheme' => NULL,
         'url' => NULL,
-        'host' => '127.0.0.1',
-        'port' => '2525',
-        'username' => NULL,
-        'password' => NULL,
+        'host' => 'smtp.hostinger.com',
+        'port' => '465',
+        'username' => 'no-reply@jhefferson-api.com',
+        'password' => 'Jhefinho@432145',
         'timeout' => NULL,
         'local_domain' => 'localhost',
       ),
@@ -680,8 +680,8 @@
     ),
     'from' => 
     array (
-      'address' => 'hello@example.com',
-      'name' => 'Laravel',
+      'address' => 'no-reply@jhefferson-api.com',
+      'name' => 'Porto Shop',
     ),
     'markdown' => 
     array (
@@ -792,7 +792,7 @@
       0 => 2,
       1 => 100,
     ),
-    'cookie' => 'laravel-session',
+    'cookie' => 'porto-shop-session',
     'path' => '/',
     'domain' => NULL,
     'secure' => NULL,
