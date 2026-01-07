@@ -5,13 +5,15 @@ use App\Modules\Login\LoginModule;
 use App\Modules\Register\RegisterModule;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\CheckPermission;
+use App\Http\Middleware\RedirectIfAuthenticated;
+use App\Http\Middleware\Authenticate;
 
 Route::get('/', function () {
     return view('home.index');
 });
 
-// Rotas públicas (sem autenticação)
-Route::middleware([])->group(function () {
+// Rotas públicas (sem autenticação, mas redireciona se autenticado)
+Route::middleware([RedirectIfAuthenticated::class])->group(function () {
     $modules = [
         new LoginModule(),
         new RegisterModule(),
@@ -34,7 +36,7 @@ Route::middleware([])->group(function () {
 });
 
 // Rotas protegidas (com autenticação E verificação de permissões)
-Route::middleware(['auth', CheckPermission::class])->group(function () {
+Route::middleware([Authenticate::class, CheckPermission::class])->group(function () {
     $modules = Configuration::getModules();
 
     foreach ($modules as $module) {
@@ -52,4 +54,3 @@ Route::middleware(['auth', CheckPermission::class])->group(function () {
         $route->group($routesWeb->getRoutes());
     }
 });
-
