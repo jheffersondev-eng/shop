@@ -15,7 +15,7 @@ class DashboardController extends BaseController
         $this->dashboardService = $dashboardService;
     }
 
-    public function Index(Request $request)
+    public function index(Request $request)
     {
         $statistics = $this->dashboardService->getStatistics();
 

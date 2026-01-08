@@ -18,7 +18,7 @@ class UnitController extends BaseController
         $this->unitService = $unitService;
     }
 
-    public function Index(FilterRequest $filterRequest)
+    public function index(FilterRequest $filterRequest)
     {
         $units = $this->unitService->getUnitsByFilter($filterRequest->getDto());
 
@@ -29,7 +29,7 @@ class UnitController extends BaseController
         ]);
     }
 
-    public function Create()
+    public function create()
     {
         $unitFormats = EUnitFormat::toArray();
 
@@ -39,7 +39,7 @@ class UnitController extends BaseController
         ]);
     }
 
-    public function Edit(int $id)
+    public function edit(int $id)
     {
         $unit = $this->unitService->getUnitById($id);
         $unitFormats = EUnitFormat::toArray();
@@ -51,7 +51,7 @@ class UnitController extends BaseController
         ]);
     }
 
-    public function Store(UnitRequest $request)
+    public function store(UnitRequest $request)
     {
         $dto = $request->getDto();
 
@@ -62,7 +62,7 @@ class UnitController extends BaseController
         );
     }
 
-    public function Update(UnitRequest $request, int $id)
+    public function update(UnitRequest $request, int $id)
     {
         $dto = $request->getDto();
 
@@ -73,7 +73,7 @@ class UnitController extends BaseController
         );
     }
 
-    public function Destroy(int $id)
+    public function destroy(int $id)
     {
         return $this->execute(
             callback: fn() => $this->unitService->delete($id),

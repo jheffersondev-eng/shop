@@ -18,7 +18,7 @@ class CategoryController extends BaseController
         $this->categoryService = $categoryService;
     }
 
-    public function Index(FilterRequest $filterRequest): View
+    public function index(FilterRequest $filterRequest): View
     {
         $categories = $this->categoryService->getCategoriesByFilter($filterRequest->getDto());
 
@@ -29,14 +29,14 @@ class CategoryController extends BaseController
         ]);
     }
 
-    public function Create(): View
+    public function create(): View
     {
         return view('category.create', [
             'url' => route('category.index'),
         ]);
     }
 
-    public function Edit(int $id): View
+    public function edit(int $id): View
     {
         $category = $this->categoryService->getCategoryById($id);
 
@@ -46,7 +46,7 @@ class CategoryController extends BaseController
         ]);
     }
 
-    public function Store(CategoryRequest $categoryRequest): RedirectResponse
+    public function store(CategoryRequest $categoryRequest): RedirectResponse
     {
         $dto = $categoryRequest->getDto();
 
@@ -57,7 +57,7 @@ class CategoryController extends BaseController
         );
     }
 
-    public function Update(CategoryRequest $categoryRequest, int $id): RedirectResponse
+    public function update(CategoryRequest $categoryRequest, int $id): RedirectResponse
     {
         $dto = $categoryRequest->getDto();
 
@@ -68,7 +68,7 @@ class CategoryController extends BaseController
         );
     }
 
-    public function Destroy(int $id): RedirectResponse
+    public function destroy(int $id): RedirectResponse
     {
         return $this->execute(
             callback: fn() => $this->categoryService->delete($id),

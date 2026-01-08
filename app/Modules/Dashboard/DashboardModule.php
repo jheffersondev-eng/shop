@@ -23,7 +23,7 @@ class DashboardModule extends Module
     public function getRoutesWeb()
     {
         return new RouteModule("dashboard", function () {
-            Route::get('/', [DashboardController::class, 'Index'])->name('dashboard');
+            Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
         });
     }
 

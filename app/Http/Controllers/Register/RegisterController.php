@@ -21,7 +21,7 @@ class RegisterController extends BaseController
         $this->userService = $userService;
     }
 
-    public function SignUp(): View
+    public function signUp(): View
     {
         return view('register.create', [
             'url' => route('register.create'),
@@ -29,7 +29,7 @@ class RegisterController extends BaseController
         ]);
     }
 
-    public function Register(UserRegisterRequest $userRegisterRequest): RedirectResponse
+    public function register(UserRegisterRequest $userRegisterRequest): RedirectResponse
     {
         $dto = $userRegisterRequest->getDto();
 

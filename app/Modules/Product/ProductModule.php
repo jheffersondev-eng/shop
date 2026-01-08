@@ -23,12 +23,12 @@ class ProductModule extends Module
     public function getRoutesWeb()
     {
         return new RouteModule('product', function () {
-            Route::get('/', [ProductController::class, 'Index'])->name('product.index');
-            Route::get('/create', [ProductController::class, 'Create'])->name('product.create');
-            Route::post('/', [ProductController::class, 'Store'])->name('product.store');
-            Route::get('/{id}/edit', [ProductController::class, 'Edit'])->name('product.edit');
-            Route::put('/{id}', [ProductController::class, 'Update'])->name('product.update');
-            Route::delete('/{id}', [ProductController::class, 'Destroy'])->name('product.destroy');
+            Route::get('/', [ProductController::class, 'index'])->name('product.index');
+            Route::get('/create', [ProductController::class, 'create'])->name('product.create');
+            Route::post('/', [ProductController::class, 'store'])->name('product.store');
+            Route::get('/{id}/edit', [ProductController::class, 'edit'])->name('product.edit');
+            Route::put('/{id}', [ProductController::class, 'update'])->name('product.update');
+            Route::delete('/{id}', [ProductController::class, 'destroy'])->name('product.destroy');
         });
     }
 

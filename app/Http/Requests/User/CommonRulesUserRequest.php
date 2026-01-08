@@ -14,7 +14,11 @@ class CommonRulesUserRequest extends BaseRequest
         return [
             'name' => ['required', 'string', 'max:200'],
             'email' => ['required', 'email', 'max:200'],
-            'document' => ['required', 'string', 'max:20'],
+            'document' => ['required', 'string', 'max:20', function ($attribute, $value, $fail) {
+                if (DocumentHelper::validateDocument($value) === false) {
+                    $fail('O campo Documento é inválido.');
+                }
+            }],
             'phone' => ['required', 'string', 'max:20'],
             'birth_date' => ['required', 'date'],
             'address' => ['required', 'string', 'max:255'],

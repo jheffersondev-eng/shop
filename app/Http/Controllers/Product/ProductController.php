@@ -28,7 +28,7 @@ class ProductController extends BaseController
         $this->unitService = $unitService;
     }
 
-    public function Index(FilterRequest $filterRequest): View
+    public function index(FilterRequest $filterRequest): View
     {
         $products = $this->productService->getProductsByFilter($filterRequest->getDto());
         $categories = $this->categoryService->getCategories();
@@ -45,7 +45,7 @@ class ProductController extends BaseController
         ]);
     }
 
-    public function Create(): View
+    public function create(): View
     {
         $categories = $this->categoryService->getCategories();
         $units = $this->unitService->getUnits();
@@ -59,7 +59,7 @@ class ProductController extends BaseController
         ]);
     }
 
-    public function Edit(int $id): View
+    public function edit(int $id): View
     {
         $product = $this->productService->getProductById($id);
         $categories = $this->categoryService->getCategories();
@@ -75,7 +75,7 @@ class ProductController extends BaseController
         ]);
     }
 
-    public function Store(ProductRequest $productRequest): RedirectResponse
+    public function store(ProductRequest $productRequest): RedirectResponse
     {
         $dto = $productRequest->getDto();
 
@@ -86,7 +86,7 @@ class ProductController extends BaseController
         );
     }
 
-    public function Update(ProductRequest $productRequest, int $id): RedirectResponse
+    public function update(ProductRequest $productRequest, int $id): RedirectResponse
     {
         $dto = $productRequest->getDto();
 
@@ -97,7 +97,7 @@ class ProductController extends BaseController
         );
     }
 
-    public function Destroy(int $id): RedirectResponse
+    public function destroy(int $id): RedirectResponse
     {
         return $this->execute(
             callback: fn() => $this->productService->delete($id),

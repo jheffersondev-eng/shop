@@ -23,12 +23,12 @@ class UserModule extends Module
     public function getRoutesWeb(): RouteModule
     {
         return new RouteModule("user", function () {
-            Route::get('/', [UserController::class, 'Index'])->name('user.index');
-            Route::get('/create', [UserController::class, 'Create'])->name('user.create');
-            Route::post('/create', [UserController::class, 'Store'])->name('user.store');
-            Route::get('/{user}/edit', [UserController::class, 'Edit'])->name('user.edit');
-            Route::put('/{user}', [UserController::class, 'Update'])->name('user.update');
-            Route::delete('/{user}', [UserController::class, 'Destroy'])->name('user.destroy');
+            Route::get('/', [UserController::class, 'index'])->name('user.index');
+            Route::get('/create', [UserController::class, 'create'])->name('user.create');
+            Route::post('/create', [UserController::class, 'store'])->name('user.store');
+            Route::get('/{user}/edit', [UserController::class, 'edit'])->name('user.edit');
+            Route::put('/{user}', [UserController::class, 'update'])->name('user.update');
+            Route::delete('/{user}', [UserController::class, 'destroy'])->name('user.destroy');
         });
     }
 

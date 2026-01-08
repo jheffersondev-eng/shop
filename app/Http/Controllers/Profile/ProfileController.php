@@ -18,7 +18,7 @@ class ProfileController extends BaseController
         $this->profileService = $profileService;
     }
 
-    public function Index(FilterRequest $filterRequest)
+    public function index(FilterRequest $filterRequest)
     {      
         $profiles = $this->profileService->getProfilesByFilter($filterRequest->getDto());
         $isActive = EIsActive::toArrayOptions();
@@ -31,7 +31,7 @@ class ProfileController extends BaseController
         ]);
     }
 
-    public function Create()
+    public function create()
     {
         $modulesPermissions = $this->profileService->getModulesPermissions();        
 
@@ -41,7 +41,7 @@ class ProfileController extends BaseController
         ]);
     }
 
-    public function Edit(int $id)
+    public function edit(int $id)
     {
         $profile = $this->profileService->getProfileById($id);
         $modulesPermissions = $this->profileService->getModulesPermissions();        
@@ -53,7 +53,7 @@ class ProfileController extends BaseController
         ]);
     }
 
-    public function Store(ProfileRequest $profileRequest): RedirectResponse
+    public function store(ProfileRequest $profileRequest): RedirectResponse
     {
         $dto = $profileRequest->getDto();
 
@@ -64,7 +64,7 @@ class ProfileController extends BaseController
         );
     }
 
-    public function Update(ProfileRequest $profileRequest, int $id)
+    public function update(ProfileRequest $profileRequest, int $id)
     {
         $dto = $profileRequest->getDto();
 
@@ -75,7 +75,7 @@ class ProfileController extends BaseController
         );
     }
 
-    public function Destroy(int $id)
+    public function destroy(int $id)
     {
         return $this->execute(
             callback: fn() => $this->profileService->delete($id),
