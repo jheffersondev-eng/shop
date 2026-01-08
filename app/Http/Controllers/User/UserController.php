@@ -26,7 +26,7 @@ class UserController extends BaseController
         $this->profileService = $profileService;
     }
 
-    public function Index(FilterRequest $filterRequest): View
+    public function index(FilterRequest $filterRequest): View
     {
         $users = $this->userService->getUsersByFilter($filterRequest->getDto());
         $profiles = $this->profileService->getProfiles();
@@ -41,7 +41,7 @@ class UserController extends BaseController
         ]);
     }
 
-    public function Create(): View
+    public function create(): View
     {
         $profiles = $this->profileService->getProfiles();
         $isActive = EIsActive::toArrayOptions();
@@ -53,7 +53,7 @@ class UserController extends BaseController
         ]);
     }
 
-    public function Edit(int $id): View
+    public function edit(int $id): View
     {
         $user = $this->userService->getUserById($id);
         $profiles = $this->profileService->getProfiles();
@@ -67,7 +67,7 @@ class UserController extends BaseController
         ]);
     }
 
-    public function Store(CreateUserRequest $createUserRequest): RedirectResponse
+    public function store(CreateUserRequest $createUserRequest): RedirectResponse
     {
         $dto = $createUserRequest->getDto();
         return $this->execute(
@@ -77,7 +77,7 @@ class UserController extends BaseController
         );
     }
 
-    public function Update(UpdateUserRequest $updateUserRequest, int $id): RedirectResponse
+    public function update(UpdateUserRequest $updateUserRequest, int $id): RedirectResponse
     {
         $dto = $updateUserRequest->getDto();
 
@@ -88,7 +88,7 @@ class UserController extends BaseController
         );
     }
 
-    public function Destroy(int $id): RedirectResponse
+    public function destroy(int $id): RedirectResponse
     {
         return $this->execute(
             callback: fn() => $this->userService->delete($id),

@@ -23,12 +23,12 @@ class CategoryModule extends Module
     public function getRoutesWeb()
     {
         return new RouteModule('category', function () {
-            Route::get('/', [CategoryController::class, 'Index'])->name('category.index');
-            Route::get('/create', [CategoryController::class, 'Create'])->name('category.create');
-            Route::post('/', [CategoryController::class, 'Store'])->name('category.store');
-            Route::get('/{id}/edit', [CategoryController::class, 'Edit'])->name('category.edit');
-            Route::put('/{id}', [CategoryController::class, 'Update'])->name('category.update');
-            Route::delete('/{id}', [CategoryController::class, 'Destroy'])->name('category.destroy');
+            Route::get('/', [CategoryController::class, 'index'])->name('category.index');
+            Route::get('/create', [CategoryController::class, 'create'])->name('category.create');
+            Route::post('/', [CategoryController::class, 'store'])->name('category.store');
+            Route::get('/{id}/edit', [CategoryController::class, 'edit'])->name('category.edit');
+            Route::put('/{id}', [CategoryController::class, 'update'])->name('category.update');
+            Route::delete('/{id}', [CategoryController::class, 'destroy'])->name('category.destroy');
         });
     }
 

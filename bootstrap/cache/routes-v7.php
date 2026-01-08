@@ -92,7 +92,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::6ljaMnVxiGZI35hf',
+            '_route' => 'generated::FIIVdITZlTrLQRfx',
           ),
           1 => NULL,
           2 => 
@@ -112,7 +112,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::pVG5KbHtZVmeI5Pw',
+            '_route' => 'generated::X9DEmfaYqwNIpVf1',
           ),
           1 => NULL,
           2 => 
@@ -1239,7 +1239,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::6ljaMnVxiGZI35hf' => 
+    'generated::FIIVdITZlTrLQRfx' => 
     array (
       'methods' => 
       array (
@@ -1268,7 +1268,7 @@ app('router')->setCompiledRoutes(
                         \'exception\' => $exception,
                     ]), status: $exception ? 500 : 200);
                 }";s:5:"scope";s:54:"Illuminate\\Foundation\\Configuration\\ApplicationBuilder";s:4:"this";N;s:4:"self";s:32:"000000000000056b0000000000000000";}}',
-        'as' => 'generated::6ljaMnVxiGZI35hf',
+        'as' => 'generated::FIIVdITZlTrLQRfx',
       ),
       'fallback' => false,
       'defaults' => 
@@ -1284,7 +1284,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::pVG5KbHtZVmeI5Pw' => 
+    'generated::X9DEmfaYqwNIpVf1' => 
     array (
       'methods' => 
       array (
@@ -1306,7 +1306,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::pVG5KbHtZVmeI5Pw',
+        'as' => 'generated::X9DEmfaYqwNIpVf1',
       ),
       'fallback' => false,
       'defaults' => 
@@ -1337,8 +1337,8 @@ app('router')->setCompiledRoutes(
           0 => 'web',
           1 => 'App\\Http\\Middleware\\RedirectIfAuthenticated',
         ),
-        'uses' => 'App\\Http\\Controllers\\Login\\LoginController@Index',
-        'controller' => 'App\\Http\\Controllers\\Login\\LoginController@Index',
+        'uses' => 'App\\Http\\Controllers\\Login\\LoginController@index',
+        'controller' => 'App\\Http\\Controllers\\Login\\LoginController@index',
         'namespace' => NULL,
         'prefix' => '/login',
         'where' => 
@@ -1374,8 +1374,8 @@ app('router')->setCompiledRoutes(
           0 => 'web',
           1 => 'App\\Http\\Middleware\\RedirectIfAuthenticated',
         ),
-        'uses' => 'App\\Http\\Controllers\\Login\\LoginController@Login',
-        'controller' => 'App\\Http\\Controllers\\Login\\LoginController@Login',
+        'uses' => 'App\\Http\\Controllers\\Login\\LoginController@login',
+        'controller' => 'App\\Http\\Controllers\\Login\\LoginController@login',
         'namespace' => NULL,
         'prefix' => '/login',
         'where' => 
@@ -1411,8 +1411,8 @@ app('router')->setCompiledRoutes(
           0 => 'web',
           1 => 'App\\Http\\Middleware\\RedirectIfAuthenticated',
         ),
-        'uses' => 'App\\Http\\Controllers\\Login\\LoginController@Logout',
-        'controller' => 'App\\Http\\Controllers\\Login\\LoginController@Logout',
+        'uses' => 'App\\Http\\Controllers\\Login\\LoginController@logout',
+        'controller' => 'App\\Http\\Controllers\\Login\\LoginController@logout',
         'namespace' => NULL,
         'prefix' => '/login',
         'where' => 
@@ -1449,8 +1449,8 @@ app('router')->setCompiledRoutes(
           0 => 'web',
           1 => 'App\\Http\\Middleware\\RedirectIfAuthenticated',
         ),
-        'uses' => 'App\\Http\\Controllers\\Register\\RegisterController@SignUp',
-        'controller' => 'App\\Http\\Controllers\\Register\\RegisterController@SignUp',
+        'uses' => 'App\\Http\\Controllers\\Register\\RegisterController@signUp',
+        'controller' => 'App\\Http\\Controllers\\Register\\RegisterController@signUp',
         'namespace' => NULL,
         'prefix' => '/register',
         'where' => 
@@ -1486,8 +1486,8 @@ app('router')->setCompiledRoutes(
           0 => 'web',
           1 => 'App\\Http\\Middleware\\RedirectIfAuthenticated',
         ),
-        'uses' => 'App\\Http\\Controllers\\Register\\RegisterController@Register',
-        'controller' => 'App\\Http\\Controllers\\Register\\RegisterController@Register',
+        'uses' => 'App\\Http\\Controllers\\Register\\RegisterController@register',
+        'controller' => 'App\\Http\\Controllers\\Register\\RegisterController@register',
         'namespace' => NULL,
         'prefix' => '/register',
         'where' => 
@@ -1600,8 +1600,8 @@ app('router')->setCompiledRoutes(
           1 => 'App\\Http\\Middleware\\Authenticate',
           2 => 'App\\Http\\Middleware\\CheckPermission',
         ),
-        'uses' => 'App\\Http\\Controllers\\Dashboard\\DashboardController@Index',
-        'controller' => 'App\\Http\\Controllers\\Dashboard\\DashboardController@Index',
+        'uses' => 'App\\Http\\Controllers\\Dashboard\\DashboardController@index',
+        'controller' => 'App\\Http\\Controllers\\Dashboard\\DashboardController@index',
         'namespace' => NULL,
         'prefix' => '/dashboard',
         'where' => 
@@ -1639,8 +1639,8 @@ app('router')->setCompiledRoutes(
           1 => 'App\\Http\\Middleware\\Authenticate',
           2 => 'App\\Http\\Middleware\\CheckPermission',
         ),
-        'uses' => 'App\\Http\\Controllers\\Product\\ProductController@Index',
-        'controller' => 'App\\Http\\Controllers\\Product\\ProductController@Index',
+        'uses' => 'App\\Http\\Controllers\\Product\\ProductController@index',
+        'controller' => 'App\\Http\\Controllers\\Product\\ProductController@index',
         'namespace' => NULL,
         'prefix' => '/product',
         'where' => 
@@ -1678,8 +1678,8 @@ app('router')->setCompiledRoutes(
           1 => 'App\\Http\\Middleware\\Authenticate',
           2 => 'App\\Http\\Middleware\\CheckPermission',
         ),
-        'uses' => 'App\\Http\\Controllers\\Product\\ProductController@Create',
-        'controller' => 'App\\Http\\Controllers\\Product\\ProductController@Create',
+        'uses' => 'App\\Http\\Controllers\\Product\\ProductController@create',
+        'controller' => 'App\\Http\\Controllers\\Product\\ProductController@create',
         'namespace' => NULL,
         'prefix' => '/product',
         'where' => 
@@ -1716,8 +1716,8 @@ app('router')->setCompiledRoutes(
           1 => 'App\\Http\\Middleware\\Authenticate',
           2 => 'App\\Http\\Middleware\\CheckPermission',
         ),
-        'uses' => 'App\\Http\\Controllers\\Product\\ProductController@Store',
-        'controller' => 'App\\Http\\Controllers\\Product\\ProductController@Store',
+        'uses' => 'App\\Http\\Controllers\\Product\\ProductController@store',
+        'controller' => 'App\\Http\\Controllers\\Product\\ProductController@store',
         'namespace' => NULL,
         'prefix' => '/product',
         'where' => 
@@ -1755,8 +1755,8 @@ app('router')->setCompiledRoutes(
           1 => 'App\\Http\\Middleware\\Authenticate',
           2 => 'App\\Http\\Middleware\\CheckPermission',
         ),
-        'uses' => 'App\\Http\\Controllers\\Product\\ProductController@Edit',
-        'controller' => 'App\\Http\\Controllers\\Product\\ProductController@Edit',
+        'uses' => 'App\\Http\\Controllers\\Product\\ProductController@edit',
+        'controller' => 'App\\Http\\Controllers\\Product\\ProductController@edit',
         'namespace' => NULL,
         'prefix' => '/product',
         'where' => 
@@ -1793,8 +1793,8 @@ app('router')->setCompiledRoutes(
           1 => 'App\\Http\\Middleware\\Authenticate',
           2 => 'App\\Http\\Middleware\\CheckPermission',
         ),
-        'uses' => 'App\\Http\\Controllers\\Product\\ProductController@Update',
-        'controller' => 'App\\Http\\Controllers\\Product\\ProductController@Update',
+        'uses' => 'App\\Http\\Controllers\\Product\\ProductController@update',
+        'controller' => 'App\\Http\\Controllers\\Product\\ProductController@update',
         'namespace' => NULL,
         'prefix' => '/product',
         'where' => 
@@ -1831,8 +1831,8 @@ app('router')->setCompiledRoutes(
           1 => 'App\\Http\\Middleware\\Authenticate',
           2 => 'App\\Http\\Middleware\\CheckPermission',
         ),
-        'uses' => 'App\\Http\\Controllers\\Product\\ProductController@Destroy',
-        'controller' => 'App\\Http\\Controllers\\Product\\ProductController@Destroy',
+        'uses' => 'App\\Http\\Controllers\\Product\\ProductController@destroy',
+        'controller' => 'App\\Http\\Controllers\\Product\\ProductController@destroy',
         'namespace' => NULL,
         'prefix' => '/product',
         'where' => 
@@ -1870,8 +1870,8 @@ app('router')->setCompiledRoutes(
           1 => 'App\\Http\\Middleware\\Authenticate',
           2 => 'App\\Http\\Middleware\\CheckPermission',
         ),
-        'uses' => 'App\\Http\\Controllers\\User\\UserController@Index',
-        'controller' => 'App\\Http\\Controllers\\User\\UserController@Index',
+        'uses' => 'App\\Http\\Controllers\\User\\UserController@index',
+        'controller' => 'App\\Http\\Controllers\\User\\UserController@index',
         'namespace' => NULL,
         'prefix' => '/user',
         'where' => 
@@ -1909,8 +1909,8 @@ app('router')->setCompiledRoutes(
           1 => 'App\\Http\\Middleware\\Authenticate',
           2 => 'App\\Http\\Middleware\\CheckPermission',
         ),
-        'uses' => 'App\\Http\\Controllers\\User\\UserController@Create',
-        'controller' => 'App\\Http\\Controllers\\User\\UserController@Create',
+        'uses' => 'App\\Http\\Controllers\\User\\UserController@create',
+        'controller' => 'App\\Http\\Controllers\\User\\UserController@create',
         'namespace' => NULL,
         'prefix' => '/user',
         'where' => 
@@ -1947,8 +1947,8 @@ app('router')->setCompiledRoutes(
           1 => 'App\\Http\\Middleware\\Authenticate',
           2 => 'App\\Http\\Middleware\\CheckPermission',
         ),
-        'uses' => 'App\\Http\\Controllers\\User\\UserController@Store',
-        'controller' => 'App\\Http\\Controllers\\User\\UserController@Store',
+        'uses' => 'App\\Http\\Controllers\\User\\UserController@store',
+        'controller' => 'App\\Http\\Controllers\\User\\UserController@store',
         'namespace' => NULL,
         'prefix' => '/user',
         'where' => 
@@ -1986,8 +1986,8 @@ app('router')->setCompiledRoutes(
           1 => 'App\\Http\\Middleware\\Authenticate',
           2 => 'App\\Http\\Middleware\\CheckPermission',
         ),
-        'uses' => 'App\\Http\\Controllers\\User\\UserController@Edit',
-        'controller' => 'App\\Http\\Controllers\\User\\UserController@Edit',
+        'uses' => 'App\\Http\\Controllers\\User\\UserController@edit',
+        'controller' => 'App\\Http\\Controllers\\User\\UserController@edit',
         'namespace' => NULL,
         'prefix' => '/user',
         'where' => 
@@ -2024,8 +2024,8 @@ app('router')->setCompiledRoutes(
           1 => 'App\\Http\\Middleware\\Authenticate',
           2 => 'App\\Http\\Middleware\\CheckPermission',
         ),
-        'uses' => 'App\\Http\\Controllers\\User\\UserController@Update',
-        'controller' => 'App\\Http\\Controllers\\User\\UserController@Update',
+        'uses' => 'App\\Http\\Controllers\\User\\UserController@update',
+        'controller' => 'App\\Http\\Controllers\\User\\UserController@update',
         'namespace' => NULL,
         'prefix' => '/user',
         'where' => 
@@ -2062,8 +2062,8 @@ app('router')->setCompiledRoutes(
           1 => 'App\\Http\\Middleware\\Authenticate',
           2 => 'App\\Http\\Middleware\\CheckPermission',
         ),
-        'uses' => 'App\\Http\\Controllers\\User\\UserController@Destroy',
-        'controller' => 'App\\Http\\Controllers\\User\\UserController@Destroy',
+        'uses' => 'App\\Http\\Controllers\\User\\UserController@destroy',
+        'controller' => 'App\\Http\\Controllers\\User\\UserController@destroy',
         'namespace' => NULL,
         'prefix' => '/user',
         'where' => 
@@ -2101,8 +2101,8 @@ app('router')->setCompiledRoutes(
           1 => 'App\\Http\\Middleware\\Authenticate',
           2 => 'App\\Http\\Middleware\\CheckPermission',
         ),
-        'uses' => 'App\\Http\\Controllers\\Profile\\ProfileController@Index',
-        'controller' => 'App\\Http\\Controllers\\Profile\\ProfileController@Index',
+        'uses' => 'App\\Http\\Controllers\\Profile\\ProfileController@index',
+        'controller' => 'App\\Http\\Controllers\\Profile\\ProfileController@index',
         'namespace' => NULL,
         'prefix' => '/profile',
         'where' => 
@@ -2140,8 +2140,8 @@ app('router')->setCompiledRoutes(
           1 => 'App\\Http\\Middleware\\Authenticate',
           2 => 'App\\Http\\Middleware\\CheckPermission',
         ),
-        'uses' => 'App\\Http\\Controllers\\Profile\\ProfileController@Create',
-        'controller' => 'App\\Http\\Controllers\\Profile\\ProfileController@Create',
+        'uses' => 'App\\Http\\Controllers\\Profile\\ProfileController@create',
+        'controller' => 'App\\Http\\Controllers\\Profile\\ProfileController@create',
         'namespace' => NULL,
         'prefix' => '/profile',
         'where' => 
@@ -2178,8 +2178,8 @@ app('router')->setCompiledRoutes(
           1 => 'App\\Http\\Middleware\\Authenticate',
           2 => 'App\\Http\\Middleware\\CheckPermission',
         ),
-        'uses' => 'App\\Http\\Controllers\\Profile\\ProfileController@Store',
-        'controller' => 'App\\Http\\Controllers\\Profile\\ProfileController@Store',
+        'uses' => 'App\\Http\\Controllers\\Profile\\ProfileController@store',
+        'controller' => 'App\\Http\\Controllers\\Profile\\ProfileController@store',
         'namespace' => NULL,
         'prefix' => '/profile',
         'where' => 
@@ -2217,8 +2217,8 @@ app('router')->setCompiledRoutes(
           1 => 'App\\Http\\Middleware\\Authenticate',
           2 => 'App\\Http\\Middleware\\CheckPermission',
         ),
-        'uses' => 'App\\Http\\Controllers\\Profile\\ProfileController@Edit',
-        'controller' => 'App\\Http\\Controllers\\Profile\\ProfileController@Edit',
+        'uses' => 'App\\Http\\Controllers\\Profile\\ProfileController@edit',
+        'controller' => 'App\\Http\\Controllers\\Profile\\ProfileController@edit',
         'namespace' => NULL,
         'prefix' => '/profile',
         'where' => 
@@ -2255,8 +2255,8 @@ app('router')->setCompiledRoutes(
           1 => 'App\\Http\\Middleware\\Authenticate',
           2 => 'App\\Http\\Middleware\\CheckPermission',
         ),
-        'uses' => 'App\\Http\\Controllers\\Profile\\ProfileController@Update',
-        'controller' => 'App\\Http\\Controllers\\Profile\\ProfileController@Update',
+        'uses' => 'App\\Http\\Controllers\\Profile\\ProfileController@update',
+        'controller' => 'App\\Http\\Controllers\\Profile\\ProfileController@update',
         'namespace' => NULL,
         'prefix' => '/profile',
         'where' => 
@@ -2293,8 +2293,8 @@ app('router')->setCompiledRoutes(
           1 => 'App\\Http\\Middleware\\Authenticate',
           2 => 'App\\Http\\Middleware\\CheckPermission',
         ),
-        'uses' => 'App\\Http\\Controllers\\Profile\\ProfileController@Destroy',
-        'controller' => 'App\\Http\\Controllers\\Profile\\ProfileController@Destroy',
+        'uses' => 'App\\Http\\Controllers\\Profile\\ProfileController@destroy',
+        'controller' => 'App\\Http\\Controllers\\Profile\\ProfileController@destroy',
         'namespace' => NULL,
         'prefix' => '/profile',
         'where' => 
@@ -2332,8 +2332,8 @@ app('router')->setCompiledRoutes(
           1 => 'App\\Http\\Middleware\\Authenticate',
           2 => 'App\\Http\\Middleware\\CheckPermission',
         ),
-        'uses' => 'App\\Http\\Controllers\\Category\\CategoryController@Index',
-        'controller' => 'App\\Http\\Controllers\\Category\\CategoryController@Index',
+        'uses' => 'App\\Http\\Controllers\\Category\\CategoryController@index',
+        'controller' => 'App\\Http\\Controllers\\Category\\CategoryController@index',
         'namespace' => NULL,
         'prefix' => '/category',
         'where' => 
@@ -2371,8 +2371,8 @@ app('router')->setCompiledRoutes(
           1 => 'App\\Http\\Middleware\\Authenticate',
           2 => 'App\\Http\\Middleware\\CheckPermission',
         ),
-        'uses' => 'App\\Http\\Controllers\\Category\\CategoryController@Create',
-        'controller' => 'App\\Http\\Controllers\\Category\\CategoryController@Create',
+        'uses' => 'App\\Http\\Controllers\\Category\\CategoryController@create',
+        'controller' => 'App\\Http\\Controllers\\Category\\CategoryController@create',
         'namespace' => NULL,
         'prefix' => '/category',
         'where' => 
@@ -2409,8 +2409,8 @@ app('router')->setCompiledRoutes(
           1 => 'App\\Http\\Middleware\\Authenticate',
           2 => 'App\\Http\\Middleware\\CheckPermission',
         ),
-        'uses' => 'App\\Http\\Controllers\\Category\\CategoryController@Store',
-        'controller' => 'App\\Http\\Controllers\\Category\\CategoryController@Store',
+        'uses' => 'App\\Http\\Controllers\\Category\\CategoryController@store',
+        'controller' => 'App\\Http\\Controllers\\Category\\CategoryController@store',
         'namespace' => NULL,
         'prefix' => '/category',
         'where' => 
@@ -2448,8 +2448,8 @@ app('router')->setCompiledRoutes(
           1 => 'App\\Http\\Middleware\\Authenticate',
           2 => 'App\\Http\\Middleware\\CheckPermission',
         ),
-        'uses' => 'App\\Http\\Controllers\\Category\\CategoryController@Edit',
-        'controller' => 'App\\Http\\Controllers\\Category\\CategoryController@Edit',
+        'uses' => 'App\\Http\\Controllers\\Category\\CategoryController@edit',
+        'controller' => 'App\\Http\\Controllers\\Category\\CategoryController@edit',
         'namespace' => NULL,
         'prefix' => '/category',
         'where' => 
@@ -2486,8 +2486,8 @@ app('router')->setCompiledRoutes(
           1 => 'App\\Http\\Middleware\\Authenticate',
           2 => 'App\\Http\\Middleware\\CheckPermission',
         ),
-        'uses' => 'App\\Http\\Controllers\\Category\\CategoryController@Update',
-        'controller' => 'App\\Http\\Controllers\\Category\\CategoryController@Update',
+        'uses' => 'App\\Http\\Controllers\\Category\\CategoryController@update',
+        'controller' => 'App\\Http\\Controllers\\Category\\CategoryController@update',
         'namespace' => NULL,
         'prefix' => '/category',
         'where' => 
@@ -2524,8 +2524,8 @@ app('router')->setCompiledRoutes(
           1 => 'App\\Http\\Middleware\\Authenticate',
           2 => 'App\\Http\\Middleware\\CheckPermission',
         ),
-        'uses' => 'App\\Http\\Controllers\\Category\\CategoryController@Destroy',
-        'controller' => 'App\\Http\\Controllers\\Category\\CategoryController@Destroy',
+        'uses' => 'App\\Http\\Controllers\\Category\\CategoryController@destroy',
+        'controller' => 'App\\Http\\Controllers\\Category\\CategoryController@destroy',
         'namespace' => NULL,
         'prefix' => '/category',
         'where' => 
@@ -2563,8 +2563,8 @@ app('router')->setCompiledRoutes(
           1 => 'App\\Http\\Middleware\\Authenticate',
           2 => 'App\\Http\\Middleware\\CheckPermission',
         ),
-        'uses' => 'App\\Http\\Controllers\\Unit\\UnitController@Index',
-        'controller' => 'App\\Http\\Controllers\\Unit\\UnitController@Index',
+        'uses' => 'App\\Http\\Controllers\\Unit\\UnitController@index',
+        'controller' => 'App\\Http\\Controllers\\Unit\\UnitController@index',
         'namespace' => NULL,
         'prefix' => '/unit',
         'where' => 
@@ -2602,8 +2602,8 @@ app('router')->setCompiledRoutes(
           1 => 'App\\Http\\Middleware\\Authenticate',
           2 => 'App\\Http\\Middleware\\CheckPermission',
         ),
-        'uses' => 'App\\Http\\Controllers\\Unit\\UnitController@Create',
-        'controller' => 'App\\Http\\Controllers\\Unit\\UnitController@Create',
+        'uses' => 'App\\Http\\Controllers\\Unit\\UnitController@create',
+        'controller' => 'App\\Http\\Controllers\\Unit\\UnitController@create',
         'namespace' => NULL,
         'prefix' => '/unit',
         'where' => 
@@ -2640,8 +2640,8 @@ app('router')->setCompiledRoutes(
           1 => 'App\\Http\\Middleware\\Authenticate',
           2 => 'App\\Http\\Middleware\\CheckPermission',
         ),
-        'uses' => 'App\\Http\\Controllers\\Unit\\UnitController@Store',
-        'controller' => 'App\\Http\\Controllers\\Unit\\UnitController@Store',
+        'uses' => 'App\\Http\\Controllers\\Unit\\UnitController@store',
+        'controller' => 'App\\Http\\Controllers\\Unit\\UnitController@store',
         'namespace' => NULL,
         'prefix' => '/unit',
         'where' => 
@@ -2679,8 +2679,8 @@ app('router')->setCompiledRoutes(
           1 => 'App\\Http\\Middleware\\Authenticate',
           2 => 'App\\Http\\Middleware\\CheckPermission',
         ),
-        'uses' => 'App\\Http\\Controllers\\Unit\\UnitController@Edit',
-        'controller' => 'App\\Http\\Controllers\\Unit\\UnitController@Edit',
+        'uses' => 'App\\Http\\Controllers\\Unit\\UnitController@edit',
+        'controller' => 'App\\Http\\Controllers\\Unit\\UnitController@edit',
         'namespace' => NULL,
         'prefix' => '/unit',
         'where' => 
@@ -2717,8 +2717,8 @@ app('router')->setCompiledRoutes(
           1 => 'App\\Http\\Middleware\\Authenticate',
           2 => 'App\\Http\\Middleware\\CheckPermission',
         ),
-        'uses' => 'App\\Http\\Controllers\\Unit\\UnitController@Update',
-        'controller' => 'App\\Http\\Controllers\\Unit\\UnitController@Update',
+        'uses' => 'App\\Http\\Controllers\\Unit\\UnitController@update',
+        'controller' => 'App\\Http\\Controllers\\Unit\\UnitController@update',
         'namespace' => NULL,
         'prefix' => '/unit',
         'where' => 
@@ -2755,8 +2755,8 @@ app('router')->setCompiledRoutes(
           1 => 'App\\Http\\Middleware\\Authenticate',
           2 => 'App\\Http\\Middleware\\CheckPermission',
         ),
-        'uses' => 'App\\Http\\Controllers\\Unit\\UnitController@Destroy',
-        'controller' => 'App\\Http\\Controllers\\Unit\\UnitController@Destroy',
+        'uses' => 'App\\Http\\Controllers\\Unit\\UnitController@destroy',
+        'controller' => 'App\\Http\\Controllers\\Unit\\UnitController@destroy',
         'namespace' => NULL,
         'prefix' => '/unit',
         'where' => 
@@ -2794,8 +2794,8 @@ app('router')->setCompiledRoutes(
           1 => 'App\\Http\\Middleware\\Authenticate',
           2 => 'App\\Http\\Middleware\\CheckPermission',
         ),
-        'uses' => 'App\\Http\\Controllers\\User\\UserProfileController@Edit',
-        'controller' => 'App\\Http\\Controllers\\User\\UserProfileController@Edit',
+        'uses' => 'App\\Http\\Controllers\\User\\UserProfileController@edit',
+        'controller' => 'App\\Http\\Controllers\\User\\UserProfileController@edit',
         'namespace' => NULL,
         'prefix' => '/my-profile',
         'where' => 
@@ -2832,8 +2832,8 @@ app('router')->setCompiledRoutes(
           1 => 'App\\Http\\Middleware\\Authenticate',
           2 => 'App\\Http\\Middleware\\CheckPermission',
         ),
-        'uses' => 'App\\Http\\Controllers\\User\\UserProfileController@Update',
-        'controller' => 'App\\Http\\Controllers\\User\\UserProfileController@Update',
+        'uses' => 'App\\Http\\Controllers\\User\\UserProfileController@update',
+        'controller' => 'App\\Http\\Controllers\\User\\UserProfileController@update',
         'namespace' => NULL,
         'prefix' => '/my-profile',
         'where' => 

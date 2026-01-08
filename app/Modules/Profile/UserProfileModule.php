@@ -23,8 +23,8 @@ class UserProfileModule extends Module
     public function getRoutesWeb()
     {
         return new RouteModule('my-profile', function () {
-            Route::get('/{user}/edit', [UserProfileController::class, 'Edit'])->name('userProfile.edit');
-            Route::put('/{user}', [UserProfileController::class, 'Update'])->name('userProfile.update');
+            Route::get('/{user}/edit', [UserProfileController::class, 'edit'])->name('userProfile.edit');
+            Route::put('/{user}', [UserProfileController::class, 'update'])->name('userProfile.update');
         });
     }
 

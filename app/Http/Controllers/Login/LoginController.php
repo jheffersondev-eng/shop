@@ -35,7 +35,7 @@ class LoginController extends BaseController
         return "Login";
     }
 
-    public function Index(): View
+    public function index(): View
     {
         return view( $this->getFolderView(). ".index", [
             'url' => $this->getUrl(),
@@ -43,7 +43,7 @@ class LoginController extends BaseController
         ]);
     }
 
-    public function Login(UserLoginRequest $request): RedirectResponse
+    public function login(UserLoginRequest $request): RedirectResponse
     {
         return $this->execute(
             callback: fn() => $this->loginService->handler($request),
@@ -52,7 +52,7 @@ class LoginController extends BaseController
         );
     }
 
-    public function Logout(Request $request): RedirectResponse
+    public function logout(Request $request): RedirectResponse
     {
         Auth::logout();
         $request->session()->invalidate();

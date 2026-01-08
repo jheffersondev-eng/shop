@@ -23,12 +23,12 @@ class ProfileModule extends Module
     public function getRoutesWeb()
     {
         return new RouteModule('profile', function () {
-            Route::get('/', [ProfileController::class, 'Index'])->name('profile.index');
-            Route::get('/create', [ProfileController::class, 'Create'])->name('profile.create');
-            Route::post('/', [ProfileController::class, 'Store'])->name('profile.store');
-            Route::get('/{id}/edit', [ProfileController::class, 'Edit'])->name('profile.edit');
-            Route::put('/{id}', [ProfileController::class, 'Update'])->name('profile.update');
-            Route::delete('/{id}', [ProfileController::class, 'Destroy'])->name('profile.destroy');
+            Route::get('/', [ProfileController::class, 'index'])->name('profile.index');
+            Route::get('/create', [ProfileController::class, 'create'])->name('profile.create');
+            Route::post('/', [ProfileController::class, 'store'])->name('profile.store');
+            Route::get('/{id}/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+            Route::put('/{id}', [ProfileController::class, 'update'])->name('profile.update');
+            Route::delete('/{id}', [ProfileController::class, 'destroy'])->name('profile.destroy');
         });
     }
 

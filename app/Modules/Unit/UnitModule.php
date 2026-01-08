@@ -23,12 +23,12 @@ class UnitModule extends Module
     public function getRoutesWeb()
     {
         return new RouteModule('unit', function () {
-            Route::get('/', [UnitController::class, 'Index'])->name('unit.index');
-            Route::get('/create', [UnitController::class, 'Create'])->name('unit.create');
-            Route::post('/', [UnitController::class, 'Store'])->name('unit.store');
-            Route::get('/{id}/edit', [UnitController::class, 'Edit'])->name('unit.edit');
-            Route::put('/{id}', [UnitController::class, 'Update'])->name('unit.update');
-            Route::delete('/{id}', [UnitController::class, 'Destroy'])->name('unit.destroy');
+            Route::get('/', [UnitController::class, 'index'])->name('unit.index');
+            Route::get('/create', [UnitController::class, 'create'])->name('unit.create');
+            Route::post('/', [UnitController::class, 'store'])->name('unit.store');
+            Route::get('/{id}/edit', [UnitController::class, 'edit'])->name('unit.edit');
+            Route::put('/{id}', [UnitController::class, 'update'])->name('unit.update');
+            Route::delete('/{id}', [UnitController::class, 'destroy'])->name('unit.destroy');
         });
     }
 

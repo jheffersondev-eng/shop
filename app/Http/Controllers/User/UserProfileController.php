@@ -23,7 +23,7 @@ class UserProfileController extends BaseController
         $this->profileService = $profileService;
     }
 
-    public function Edit(int $id): View
+    public function edit(int $id): View
     {
         $user = $this->userService->getUserById($id);
         $profiles = $this->profileService->getProfiles();
@@ -35,7 +35,7 @@ class UserProfileController extends BaseController
         ]);
     }
 
-    public function Update(UpdateUserProfileRequest $updateUserRequest, int $id): RedirectResponse
+    public function update(UpdateUserProfileRequest $updateUserRequest, int $id): RedirectResponse
     {
         $dto = $updateUserRequest->getDto();
 
