@@ -24,7 +24,6 @@ class LoginModule extends Module
         return new RouteModule("login", function () {
             Route::get('/', [LoginController::class, 'index'])->name('login');
             Route::post('/', [LoginController::class, 'login'])->name('login.post');
-            Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
         });
     }
 

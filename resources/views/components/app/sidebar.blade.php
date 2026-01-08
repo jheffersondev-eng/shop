@@ -30,19 +30,6 @@
                         @if($subMenu->getPermission() && !Auth::user()->hasPermission($subMenu->getPermission()))
                             @continue
                         @endif
-                        @if ($subMenu->getLink() === route('logout'))
-                            <div class="sidebar-submenu">
-                                <form method="POST" action="{{ $subMenu->getLink() }}" style="display:inline">
-                                    @csrf
-                                    <button type="submit" class="nav-link sidebar-subitem btn btn-link p-0"
-                                        title="{{ $subMenu->getName() }}">
-                                        <span class="sidebar-icon"><i class="{{ $subMenu->getIcon() }}"></i></span>
-                                        <span class="sidebar-label">{{ $subMenu->getName() }}</span>
-                                    </button>
-                                </form>
-                            </div>
-                            @continue
-                        @endif
                         <div class="sidebar-submenu">
                             <a href="{{ $subMenu->getLink() }}" class="nav-link sidebar-subitem"
                                 title="{{ $subMenu->getName() }}">

@@ -2,7 +2,7 @@
 
 namespace App\Modules\Home;
 
-use App\Http\Controllers\Login\HomeController;
+use App\Http\Controllers\Home\HomeController;
 use App\Modules\Config\ActionModule;
 use App\Modules\Config\Module;
 use App\Modules\Config\RouteModule;
@@ -23,6 +23,7 @@ class HomeModule extends Module
     {
         return new RouteModule("", function () {
             Route::get('/about', [HomeController::class, 'about'])->name('about');
+            Route::post('/about/send-mail', [HomeController::class, 'sendMail'])->name('about.sendMail');
         });
     }
 

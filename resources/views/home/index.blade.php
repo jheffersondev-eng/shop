@@ -25,10 +25,12 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item"><a class="nav-link" href="#">Contato</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Produtos</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://wa.me/5579996416903?text=Olá%20Jhefferson,%20estou%20entrando%20em%20contato%20para%20conversar%20sobre%20uma%20oportunidade." target="_blank" rel="noopener noreferrer">Contato</a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('shortly') }}">Produtos</a></li>
                 </ul>
-                <a class="btn-feedback ms-lg-3 mt-2 mt-lg-0" href="#">Ofertas</a>
+                <a class="btn-feedback ms-lg-3 mt-2 mt-lg-0" href="{{ route('about') }}">Sobre Mim </a>
             </div>
         </div>
     </nav>
@@ -37,7 +39,7 @@
             <div class="hero-text">
                 <div class="hero-title">Compre com facilidade e segurança na <span>Porto Shop</span></div>
                 <div class="hero-desc">
-                    Produtos de qualidade, entrega rápida e ofertas exclusivas.<br>
+                    Projeto desenvolvido para demonstrar habilidades técnicas, arquitetura e boas práticas no desenvolvimento web.<br>
                 </div>
                 <div class="hero-actions">
                     <a class="btn btn-info" href="{{ route('login') }}" tabindex="0">Entrar</a>
