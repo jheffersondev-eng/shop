@@ -77,7 +77,7 @@ Tenho experiência em ambientes ágeis, integração com MySQL e SQL Server, uso
                             <div class="shape shape-3"></div>
                         </div>
                         <img src="{{ asset('assets/img/application/jhefferson.png') }}" 
-                             alt="João Silva" class="profile-image" loading="lazy">
+                             alt="jhefferson" class="profile-image" loading="lazy">
                         <div class="image-badge">
                             <span class="badge-text">5+ Anos de Exp.</span>
                         </div>
@@ -101,7 +101,7 @@ Tenho experiência em ambientes ágeis, integração com MySQL e SQL Server, uso
                 <div class="col-lg-6" data-aos="fade-right" data-aos-duration="1000">
                     <div class="story-image-wrapper">
                         <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=600&h=400&fit=crop" 
-                             alt="João trabalhando" class="story-image" loading="lazy">
+                             alt="Jhefferson trabalhando" class="story-image" loading="lazy">
                         <div class="story-card">
                             <h3>Desde 2017</h3>
                             <p class="hero-description-custom">Desenvolvendo soluções web de impacto</p>
