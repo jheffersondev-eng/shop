@@ -16,6 +16,8 @@ use App\Repositories\Product\ProductRepository;
 use App\Repositories\ProductImage\IProductImageRepository;
 use App\Repositories\Unit\IUnitRepository;
 use App\Repositories\Unit\UnitRepository;
+use App\Services\About\AboutService;
+use App\Services\About\IAboutService;
 use App\Services\Category\CategoryService;
 use App\Services\Category\ICategoryService;
 use App\Services\Dashboard\DashboardService;
@@ -56,5 +58,6 @@ class AppDependencyInjection
         $app->bind(IProductService::class, ProductService::class);
         $app->bind(IProductImageService::class, ProductImageService::class);
         $app->bind(IDashboardService::class, DashboardService::class);
+        $app->bind(IAboutService::class, AboutService::class);
     }
 }

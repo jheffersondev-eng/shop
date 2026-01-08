@@ -1,0 +1,544 @@
+/* ============================================================================
+   SOBRE PAGE - MEDIA QUERIES EXTRAS E OTIMIZAÇÕES
+   ============================================================================ */
+
+/* ============================================================================
+   DARK MODE SUPPORT (OPCIONAL)
+   ============================================================================ */
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #0f172a;
+        color: #e2e8f0;
+    }
+
+    .navbar-about {
+        background: rgba(15, 23, 42, 0.95);
+    }
+
+    .job-card,
+    .skill-category,
+    .contact-item,
+    .contact-form,
+    .story-card {
+        background: #1e293b;
+        border-color: #334155;
+    }
+
+    .form-control {
+        color: #e2e8f0;
+        border-bottom-color: #475569;
+    }
+
+    .form-control::placeholder {
+        color: #94a3b8;
+    }
+
+    .hero-about {
+        background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%);
+    }
+
+    .section-title-wrapper {
+        color: #e2e8f0;
+    }
+}
+
+/* ============================================================================
+   ANIMATION PERFORMANCE
+   ============================================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+
+/* ============================================================================
+   TOUCH DEVICE OPTIMIZATIONS
+   ============================================================================ */
+
+@media (hover: none) and (pointer: coarse) {
+    .social-btn {
+        width: 55px;
+        height: 55px;
+    }
+
+    .skill-category:hover {
+        transform: none;
+    }
+
+    .job-card:hover {
+        transform: none;
+    }
+
+    .btn-cta {
+        padding: 1rem 2rem;
+        font-size: 1.0625rem;
+    }
+
+    .contact-item:hover {
+        transform: none;
+    }
+}
+
+/* ============================================================================
+   PRINT STYLES
+   ============================================================================ */
+
+@media print {
+    .navbar-about,
+    .scroll-indicator,
+    .btn-submit {
+        display: none;
+    }
+
+    .hero-about {
+        background: white;
+        min-height: auto;
+        page-break-after: always;
+    }
+
+    .section-title-wrapper {
+        page-break-inside: avoid;
+    }
+
+    .job-card {
+        page-break-inside: avoid;
+    }
+}
+
+/* ============================================================================
+   FOCUS STYLES (ACESSIBILIDADE)
+   ============================================================================ */
+
+button:focus,
+a:focus,
+input:focus,
+textarea:focus {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+.btn:focus {
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25);
+}
+
+/* ============================================================================
+   HIGH CONTRAST MODE
+   ============================================================================ */
+
+@media (prefers-contrast: more) {
+    .hero-name {
+        font-weight: 900;
+    }
+
+    .section-title {
+        font-weight: 900;
+    }
+
+    .social-btn,
+    .btn-primary {
+        border: 2px solid currentColor;
+    }
+
+    .skill-category {
+        border: 2px solid var(--primary);
+    }
+
+    .job-card {
+        border: 2px solid var(--primary);
+    }
+}
+
+/* ============================================================================
+   TRANSITIONS SUAVES
+   ============================================================================ */
+
+.transition-fast {
+    transition: all 0.15s ease-in-out;
+}
+
+.transition-base {
+    transition: all 0.3s ease-in-out;
+}
+
+.transition-slow {
+    transition: all 0.5s ease-in-out;
+}
+
+/* ============================================================================
+   CUSTOM SCROLLBAR
+   ============================================================================ */
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #2563eb 0%, #8b5cf6 100%);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, #1e40af 0%, #7c3aed 100%);
+}
+
+/* ============================================================================
+   LOADING ANIMATION
+   ============================================================================ */
+
+@keyframes shimmer {
+    0% {
+        background-position: -1000px 0;
+    }
+    100% {
+        background-position: 1000px 0;
+    }
+}
+
+.shimmer {
+    animation: shimmer 2s infinite;
+    background: linear-gradient(
+        90deg,
+        #f0f0f0 25%,
+        #e0e0e0 50%,
+        #f0f0f0 75%
+    );
+    background-size: 1000px 100%;
+}
+
+/* ============================================================================
+   GLASS MORPHISM EFFECTS
+   ============================================================================ */
+
+.glass {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: var(--radius-lg);
+}
+
+/* ============================================================================
+   GRADIENT ANIMATIONS
+   ============================================================================ */
+
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.gradient-animated {
+    background-size: 200% 200%;
+    animation: gradientShift 3s ease infinite;
+}
+
+/* ============================================================================
+   RESPONSIVE TYPOGRAPHY
+   ============================================================================ */
+
+@media (max-width: 1400px) {
+    .hero-name {
+        font-size: 3rem;
+    }
+
+    .section-title {
+        font-size: 2.5rem;
+    }
+}
+
+@media (max-width: 1024px) {
+    .hero-name {
+        font-size: 2.5rem;
+    }
+
+    .hero-title {
+        font-size: 1.25rem;
+    }
+
+    .section-title {
+        font-size: 2.25rem;
+    }
+
+    .skill-category {
+        padding: var(--spacing-lg);
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-name {
+        font-size: 2rem;
+    }
+
+    .hero-title {
+        font-size: 1.125rem;
+    }
+
+    .hero-description {
+        font-size: 1rem;
+    }
+
+    .section-title {
+        font-size: 1.75rem;
+    }
+
+    .job-title {
+        font-size: 1.25rem;
+    }
+
+    .company-name {
+        font-size: 1rem;
+    }
+
+    .contact-subtitle {
+        font-size: 1rem;
+    }
+
+    .story-paragraph {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero-name {
+        font-size: 1.75rem;
+        line-height: 1.2;
+    }
+
+    .hero-title {
+        font-size: 1rem;
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+    }
+
+    .job-title {
+        font-size: 1.125rem;
+    }
+
+    .company-name {
+        font-size: 0.9375rem;
+    }
+
+    .story-paragraph {
+        font-size: 0.9375rem;
+    }
+
+    h1, h2, h3 {
+        word-break: break-word;
+    }
+}
+
+/* ============================================================================
+   SPACING ADJUSTMENTS
+   ============================================================================ */
+
+@media (max-width: 768px) {
+    .hero-about {
+        padding: var(--spacing-lg) 0;
+    }
+
+    .about-story,
+    .skills-section,
+    .experience-section,
+    .contact-section {
+        padding: var(--spacing-2xl) 0;
+    }
+
+    .section-title-wrapper {
+        margin-bottom: var(--spacing-2xl);
+    }
+
+    .story-content {
+        gap: var(--spacing-lg);
+    }
+
+    .contact-content {
+        gap: var(--spacing-2xl);
+    }
+}
+
+/* ============================================================================
+   BUTTON STATES
+   ============================================================================ */
+
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+button:active:not(:disabled) {
+    transform: scale(0.98);
+}
+
+a:visited {
+    color: var(--primary-dark);
+}
+
+/* ============================================================================
+   IMAGE OPTIMIZATIONS
+   ============================================================================ */
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+.profile-image,
+.story-image,
+.job-image {
+    object-fit: cover;
+    object-position: center;
+}
+
+/* ============================================================================
+   FORM OPTIMIZATIONS
+   ============================================================================ */
+
+input[type="text"],
+input[type="email"],
+textarea {
+    font-size: 1rem; /* Previne zoom em iOS */
+}
+
+textarea {
+    font-family: inherit;
+    resize: vertical;
+    max-height: 300px;
+}
+
+/* ============================================================================
+   CARD HOVER EFFECTS
+   ============================================================================ */
+
+.skill-category,
+.job-card,
+.contact-item {
+    position: relative;
+    overflow: hidden;
+}
+
+.skill-category::after,
+.job-card::after,
+.contact-item::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+    transition: left 0.5s ease;
+    pointer-events: none;
+}
+
+.skill-category:hover::after,
+.job-card:hover::after,
+.contact-item:hover::after {
+    left: 100%;
+}
+
+/* ============================================================================
+   BREADCRUMB (SE NECESSÁRIO)
+   ============================================================================ */
+
+.breadcrumb {
+    background: transparent;
+    padding: 0;
+}
+
+.breadcrumb-item {
+    color: var(--text-light);
+}
+
+.breadcrumb-item.active {
+    color: var(--text-dark);
+    font-weight: 600;
+}
+
+/* ============================================================================
+   UTILITY CLASSES
+   ============================================================================ */
+
+.text-gradient {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.shadow-lift {
+    box-shadow: var(--shadow-2xl);
+}
+
+.rounded-soft {
+    border-radius: var(--radius-xl);
+}
+
+.border-soft {
+    border: 1px solid var(--border);
+}
+
+.blur-bg {
+    backdrop-filter: blur(10px);
+}
+
+/* ============================================================================
+   CONTAINER QUERIES (EXPERIMENTAL)
+   ============================================================================ */
+
+@supports (container-type: inline-size) {
+    .skill-category {
+        container-type: inline-size;
+    }
+
+    @container (max-width: 300px) {
+        .skill-header {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .skill-header i {
+            font-size: 1.5rem;
+        }
+    }
+}
+
+/* ============================================================================
+   CUSTOM PROPERTIES PARA TEMAS
+   ============================================================================ */
+
+.theme-ocean {
+    --primary: #0077b6;
+    --secondary: #00b4d8;
+    --accent: #00d9ff;
+    --gradient-primary: linear-gradient(135deg, #0077b6 0%, #00b4d8 100%);
+}
+
+.theme-sunset {
+    --primary: #ff6b6b;
+    --secondary: #feca57;
+    --accent: #ff9ff3;
+    --gradient-primary: linear-gradient(135deg, #ff6b6b 0%, #feca57 100%);
+}
+
+.theme-forest {
+    --primary: #1dd1a1;
+    --secondary: #10ac84;
+    --accent: #00d2d3;
+    --gradient-primary: linear-gradient(135deg, #1dd1a1 0%, #10ac84 100%);
+}
