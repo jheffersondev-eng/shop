@@ -21,6 +21,8 @@
 /storage/pail
 /vendor
 /bootstrap/cache/*.php
+bootstrap/cache/config.php
+bootstrap/cache/routes-v7.php
 Homestead.json
 Homestead.yaml
 Thumbs.db
