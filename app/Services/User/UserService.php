@@ -2,8 +2,11 @@
 
 namespace App\Services\User;
 
+use App\Helpers\TimeHelper;
 use App\Http\Dto\User\FilterDto;
+use App\Http\Dto\User\ResendVerifyEmailDto;
 use App\Http\Dto\User\UserDto;
+use App\Http\Dto\User\VerifyEmailDto;
 use App\Mail\SendMail;
 use App\Mapper\UserAggregateMapper;
 use App\Models\User;
@@ -97,9 +100,9 @@ class UserService implements IUserService
                 $user->owner_id = $user->id;
             }
             
-            $verificationCode = rand(100000, 999999);
+            $verificationCode = $this->generateVerificationCode();
             $user->verification_code = $verificationCode;
-            $user->verification_expires_at = now()->addMinutes(30); // Válido por 30 minutos
+            $user->verification_expires_at = now()->addMinutes(30);
             
             $this->userRepository->save($user);
             $userDto->userDetailsDto->userId = $user->id;
@@ -159,16 +162,16 @@ class UserService implements IUserService
         }
     }
 
-    public function verifyEmail(int $userId, $verificationCode): ServiceResult
+    public function verifyEmail(VerifyEmailDto $verifyEmailDto): ServiceResult
     {
         try {
-            $user = $this->userRepository->getUserById($userId);
+            $user = $this->userRepository->getUserById($verifyEmailDto->userId);
 
             if (!$user) {
                 return ServiceResult::fail('Usuário não encontrado');
             }
 
-            if (!$user || $user->verification_code !== $verificationCode) {
+            if (!$user || $user->verification_code !== $verifyEmailDto->verificationCode) {
                 return ServiceResult::fail('Código de verificação inválido');
             }
 
@@ -189,5 +192,52 @@ class UserService implements IUserService
             Log::error('Erro ao verificar email: '.$e->getMessage());
             return ServiceResult::fail('Ocorreu um erro ao verificar o email');
         }
+    }
+
+    public function resendVerificationEmail(ResendVerifyEmailDto $resendVerifyEmailDto): ServiceResult
+    {
+        try {
+            $user = $this->userRepository->getUserById($resendVerifyEmailDto->userId);
+
+            if (!$user) {
+                return ServiceResult::fail('Usuário não encontrado');
+            }
+
+            if($user->email_verified_at !== null) {
+                return ServiceResult::fail('Email já verificado');
+            }
+            
+            // Verifica se já se passaram 5 minutos desde o último envio
+            $lastSend = $user->verification_expires_at->subMinutes(30);
+            $currentTime = $lastSend->diffInMinutes(now());
+            $minutesRemaining = 5 - $currentTime;
+
+            if($currentTime < 5) {
+                $timeFormatted = TimeHelper::formatMinutesAndSeconds($minutesRemaining);
+                return ServiceResult::fail("Aguarde {$timeFormatted} antes de reenviar o código de verificação");
+            }
+
+            $verificationCode = $this->generateVerificationCode();
+            $user->verification_code = $verificationCode;
+            $user->verification_expires_at = now()->addMinutes(30);
+
+            $this->userRepository->save($user);
+
+            SendMail::send($user->email, $user, $verificationCode);
+
+            return ServiceResult::ok(
+                data: null,
+                message: 'Email de verificação reenviado com sucesso',
+                route: route('register.verify-email-view', ['user_id' => $user->id, 'email' => $user->email])
+            );
+        } catch (Throwable $e) {
+            Log::error('Erro ao reenviar email de verificação: '.$e->getMessage());
+            return ServiceResult::fail('Ocorreu um erro ao reenviar o email de verificação');
+        }
+    }
+
+    private function generateVerificationCode(): int
+    {
+        return rand(100000, 999999);
     }
 }

@@ -3,44 +3,42 @@
 namespace App\Services\Login;
 
 use App\Http\Requests\Login\UserLoginRequest;
-use App\Models\User;    
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Exception;
 use App\Services\ServiceResult;
+use Throwable;
 
 class LoginService implements ILoginService
 {
-    public function handler(UserLoginRequest $userLoginRequest)
+    public function handler(UserLoginRequest $userLoginRequest): ServiceResult
     {
-        $credentials = [
-            'email' => $userLoginRequest->email,
-            'password' => $userLoginRequest->password
-        ];
-        
-        if (!Auth::attempt($credentials)) {
-            return ServiceResult::fail('E-mail ou senha incorretos');
-        }
+        try {
+            $credentials = [
+                'email' => $userLoginRequest->email,
+                'password' => $userLoginRequest->password
+            ];
+            
+            if (!Auth::attempt($credentials)) {
+                return ServiceResult::fail('E-mail ou senha incorretos');
+            }
 
-        return ServiceResult::ok(null, 'Login realizado com sucesso');
-    }
+            // Verifica se o email foi verificado
+            $user = Auth::user();
+            if ($user->email_verified_at === null) {
+                Auth::logout();
+                return ServiceResult::ok(
+                    data: $user,
+                    message: 'Por favor, verifique seu email antes de fazer login. Verifique o código de confirmação que foi enviado para seu email.',
+                    route: route('register.verify-email-view', ['user_id' => $user->id, 'email' => $user->email])
+                );
+            }
 
-    private function validEmail(string $email): void
-    {
-        $user = User::where('email', $email)->first();
-
-        if ($user === null) {
-            throw new \Exception("Email não encontrado: $email");
-        }
-    }
-
-    private function validPassword(UserLoginRequest $userLoginRequest): void
-    {
-        $user = User::where('email', $userLoginRequest->email)
-                    ->first();
-        
-        if (!Hash::check($userLoginRequest->password, $user->password)) {
-            throw new \Exception("E-mail ou Senha incorreta.");
+            return ServiceResult::ok(
+                data: null, 
+                message: 'Login realizado com sucesso',
+                route: route('dashboard')
+            );
+        } catch (Throwable $e) {
+            return ServiceResult::fail('Erro ao realizar login: ' . $e->getMessage());
         }
     }
 }
