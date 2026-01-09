@@ -39,7 +39,7 @@
             <div class="login-logo">
                 <img src="{{ asset('assets/img/branding/porto-shop-branding.png') }}" alt="Logo Porto Shop">
             </div>
-            <div class="login-title">Faça Login - teste deploy</div>
+            <div class="login-title">Faça Login</div>
             @include('components.message')
             <form method="POST" action="/login">
                 @csrf
