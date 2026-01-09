@@ -16,9 +16,9 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}
           script: |
             cd /home/u427543033/domains/jhefferson.com/public_html
-
             php artisan config:clear
             php artisan cache:clear
             php artisan view:clear
