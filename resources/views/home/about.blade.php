@@ -49,7 +49,7 @@
                     <h1 class="hero-name"><span class="name-white">Jhefferson</span> <span class="gradient-text">Matheus</span></h1>
                     <h2 class="hero-title">Desenvolvedor Full Stack</h2>
                     <p class="hero-description hero-description-custom">
-                        Sou desenvolvedor full-stack com atuação desde 2017, formado em Análise e Desenvolvimento de Sistemas e com base técnica pelo SENAI. Trabalho no desenvolvimento de sistemas e APIs escaláveis utilizando PHP (Laravel) e C# (.NET), aplicando princípios como SOLID, Clean Code e arquiteturas bem definidas.
+                        teste aqui Sou desenvolvedor full-stack com atuação desde 2017, formado em Análise e Desenvolvimento de Sistemas e com base técnica pelo SENAI. Trabalho no desenvolvimento de sistemas e APIs escaláveis utilizando PHP (Laravel) e C# (.NET), aplicando princípios como SOLID, Clean Code e arquiteturas bem definidas.
 
 Tenho experiência em ambientes ágeis, integração com MySQL e SQL Server, uso de Docker e AWS, além do desenvolvimento de interfaces modernas com React. Meu foco é criar soluções bem estruturadas, fáceis de manter e preparadas para crescer.
                     </p>
