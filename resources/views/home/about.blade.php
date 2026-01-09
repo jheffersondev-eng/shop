@@ -100,7 +100,7 @@ Tenho experiência em ambientes ágeis, integração com MySQL e SQL Server, uso
             <div class="row align-items-center story-content">
                 <div class="col-lg-6" data-aos="fade-right" data-aos-duration="1000">
                     <div class="story-image-wrapper">
-                        <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=600&h=400&fit=crop" 
+                        <img src="{{ asset('assets/img/application/jhefferson-senai.png') }}" 
                              alt="Jhefferson trabalhando" class="story-image" loading="lazy">
                         <div class="story-card">
                             <h3>Desde 2017</h3>
