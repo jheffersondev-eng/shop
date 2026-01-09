@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd /home/u427543033//domains/jhefferson.com/public_html
+cd /home/u427543033/domains/jhefferson.com/public_html
 
 php artisan config:clear;
 php artisan cache:clear;
