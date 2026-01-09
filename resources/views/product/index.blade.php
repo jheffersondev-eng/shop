@@ -30,7 +30,7 @@
                     <table class="table table-hover align-middle">
                         <thead class="table-light text-muted small">
                             <tr>
-                                <th scope="col">#</th>
+                                <th >#</th>
                                 <th scope="col">Imagem</th>
                                 <th scope="col">Nome</th>
                                 <th scope="col">Descrição</th>
@@ -55,7 +55,12 @@
                                         @endif
                                     </td>
                                     <td>{{ ucfirst(strtolower($product->name)) }}</td>
-                                    <td>{{ ucfirst(strtolower($product->description)) }}</td>
+                                    @php
+                                        $description = strlen($product->description) > 113 ? 
+                                        substr($product->description, 0, 113) . '...' : 
+                                        $product->description;
+                                    @endphp
+                                    <td>{{ ucfirst(strtolower($description)) }}</td>
                                     <td>{{ ucfirst(strtolower($product->category->name)) }}</td>
                                     <td>
                                         {{ NumberHelper::simple($product->stockQuantity) }} 
