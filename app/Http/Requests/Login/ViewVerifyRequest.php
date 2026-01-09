@@ -5,7 +5,7 @@ namespace App\Http\Requests\Login;
 use App\Http\Dto\User\VerifyDto;
 use App\Http\Requests\BaseRequest;
 
-class viewVerifyRequest extends BaseRequest
+class ViewVerifyRequest extends BaseRequest
 {
     public function rules(): array
     {

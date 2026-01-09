@@ -6,7 +6,7 @@ use App\Http\Controllers\BaseController;
 use App\Http\Requests\Login\ResendVerifyEmailRequest;
 use App\Http\Requests\Login\UserRegisterRequest;
 use App\Http\Requests\Login\VerifyEmailRequest;
-use App\Http\Requests\Login\viewVerifyRequest;
+use App\Http\Requests\Login\ViewVerifyRequest;
 use App\Services\User\IUserService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -41,7 +41,7 @@ class RegisterController extends BaseController
         );
     }
 
-    public function verifyEmailView(viewVerifyRequest $request): View
+    public function verifyEmailView(ViewVerifyRequest $request): View
     {
         $dto = $request->getDto();
 
