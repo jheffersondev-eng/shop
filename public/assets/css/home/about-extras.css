@@ -3,44 +3,42 @@
    ============================================================================ */
 
 /* ============================================================================
-   DARK MODE SUPPORT (OPCIONAL)
+   DARK MODE - FORÇADO (SEM MEDIA QUERY)
    ============================================================================ */
 
-@media (prefers-color-scheme: dark) {
-    body {
-        background-color: #0f172a;
-        color: #e2e8f0;
-    }
+body {
+    background-color: #0f172a;
+    color: #e2e8f0;
+}
 
-    .navbar-about {
-        background: rgba(15, 23, 42, 0.95);
-    }
+.navbar-about {
+    background: rgba(15, 23, 42, 0.95);
+}
 
-    .job-card,
-    .skill-category,
-    .contact-item,
-    .contact-form,
-    .story-card {
-        background: #1e293b;
-        border-color: #334155;
-    }
+.job-card,
+.skill-category,
+.contact-item,
+.contact-form,
+.story-card {
+    background: #1e293b;
+    border-color: #334155;
+}
 
-    .form-control {
-        color: #e2e8f0;
-        border-bottom-color: #475569;
-    }
+.form-control {
+    color: #e2e8f0;
+    border-bottom-color: #475569;
+}
 
-    .form-control::placeholder {
-        color: #94a3b8;
-    }
+.form-control::placeholder {
+    color: #94a3b8;
+}
 
-    .hero-about {
-        background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%);
-    }
+.hero-about {
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%);
+}
 
-    .section-title-wrapper {
-        color: #e2e8f0;
-    }
+.section-title-wrapper {
+    color: #e2e8f0;
 }
 
 /* ============================================================================

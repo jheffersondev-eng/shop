@@ -15,7 +15,7 @@
     <!-- AOS - Animate On Scroll -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
-<body>
+<body data-bs-theme="dark">
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark navbar-about" aria-label="Menu principal">
         <div class="container">

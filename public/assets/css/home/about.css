@@ -75,6 +75,14 @@ body {
     background-color: var(--bg-white);
     line-height: 1.6;
     overflow-x: hidden;
+    color-scheme: dark;
+}
+
+/* Force Dark Theme - Ignorar preferência do Sistema */
+@media (prefers-color-scheme: light) {
+    :root {
+        color-scheme: dark !important;
+    }
 }
 
 /* AOS Override - Garantir visibilidade */
@@ -842,7 +850,8 @@ body {
     z-index: 1;
 }
 
-.prof-tag {linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+.prof-tag {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
     color: white;
     padding: 0.6rem 1.2rem;
     border-radius: var(--radius-full);
