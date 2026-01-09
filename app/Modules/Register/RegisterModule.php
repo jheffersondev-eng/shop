@@ -26,6 +26,7 @@ class RegisterModule extends Module
             Route::post('/', [RegisterController::class, 'register'])->name('register.store');
             Route::get('/verify-email', [RegisterController::class, 'verifyEmailView'])->name('register.verify-email-view');
             Route::post('/verify-email', [RegisterController::class, 'verifyEmail'])->name('register.verify-email');
+            Route::post('/resend-email', [RegisterController::class, 'resendEmail'])->name('register.resend-email');
         });
     }
 

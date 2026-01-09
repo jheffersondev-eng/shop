@@ -20,26 +20,11 @@ class LoginController extends BaseController
         $this->loginService = $loginService;
     }
 
-    protected function getFolderView(): string
-    {
-        return "login";
-    }
-
-    protected function getUrl(): string
-    {
-        return "login";
-    }
-
-    protected function getName(): string
-    {
-        return "Login";
-    }
-
     public function index(): View
     {
-        return view( $this->getFolderView(). ".index", [
-            'url' => $this->getUrl(),
-            'title' => $this->getName()
+        return view("login.index", [
+            'url' => route('login'),
+            'title' => 'Login',
         ]);
     }
 
@@ -48,7 +33,7 @@ class LoginController extends BaseController
         return $this->execute(
             callback: fn() => $this->loginService->handler($request),
             defaultSuccessMessage: 'Login realizado com sucesso',
-            successRedirect: route('dashboard'),
+            successRedirect: null,
         );
     }
 

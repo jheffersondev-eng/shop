@@ -3,7 +3,9 @@
 namespace App\Services\User;
 
 use App\Http\Dto\User\FilterDto;
+use App\Http\Dto\User\ResendVerifyEmailDto;
 use App\Http\Dto\User\UserDto;
+use App\Http\Dto\User\VerifyEmailDto;
 use App\Models\User;
 use App\Services\ServiceResult;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -16,5 +18,6 @@ interface IUserService
     public function create(UserDto $userDto): ServiceResult;
     public function update(UserDto $userDto, int $id): ServiceResult;
     public function delete(int $id): ServiceResult;
-    public function verifyEmail(int $userId, $verificationCode): ServiceResult;
+    public function verifyEmail(VerifyEmailDto $verifyEmailDto): ServiceResult;
+    public function resendVerificationEmail(ResendVerifyEmailDto $resendVerifyEmailDto): ServiceResult;
 }

@@ -165,8 +165,13 @@
                         ->render('button') 
                 !!}
             </form>
-
-            <a href="{{ route('register.create') }}" class="verify-link">Não recebeu o código? Cadastre-se novamente</a>
+            @php($route = route('register.resend-email', ['user_id' => $userId, 'email' => $email]))
+            <form method="POST" action="{{ $route }}" style="text-align: center;">
+                @csrf
+                <button type="submit" class="verify-link" style="background: none; border: none; cursor: pointer; padding: 0;">
+                    Não recebeu o código? Tente novamente
+                </button>
+            </form>
         </div>
     </main>
     <div class="footer">
