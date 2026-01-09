@@ -316,12 +316,6 @@ Tenho experiência em ambientes ágeis, integração com MySQL e SQL Server, uso
                             </div>
                         </div>
                         <div class="skill-tag">
-                            <span>Repository Pattern</span>
-                            <div class="skill-bar">
-                                <div class="skill-progress" style="width: 93%"></div>
-                            </div>
-                        </div>
-                        <div class="skill-tag">
                             <span>Clean Code</span>
                             <div class="skill-bar">
                                 <div class="skill-progress" style="width: 91%"></div>
@@ -643,7 +637,7 @@ Tenho experiência em ambientes ágeis, integração com MySQL e SQL Server, uso
                                 </div>
                                 <div class="job-tech-stack">
                                     <span class="tech-pill">PHP/Laravel</span>
-                                    <span class="tech-pill">MVC Architecture</span>
+                                    <span class="tech-pill">Clean Architecture</span>
                                     <span class="tech-pill">MySQL</span>
                                     <span class="tech-pill">Microsserviços</span>
                                     <span class="tech-pill">APIs</span>
