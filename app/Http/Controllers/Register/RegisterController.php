@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Register;
 
 use App\Http\Controllers\BaseController;
+use App\Http\Requests\Login\ResendVerifyEmailRequest;
 use App\Http\Requests\Login\UserRegisterRequest;
 use App\Http\Requests\Login\VerifyEmailRequest;
 use App\Http\Requests\Login\viewVerifyRequest;
@@ -55,9 +56,20 @@ class RegisterController extends BaseController
         $dto = $request->getDto();
 
         return $this->execute(
-            callback: fn() => $this->userService->verifyEmail($dto->userId, $dto->verificationCode),
+            callback: fn() => $this->userService->verifyEmail($dto),
             defaultSuccessMessage: 'Email verificado com sucesso!',
             successRedirect: route('user.index'),
+        );
+    }
+
+    public function resendEmail(ResendVerifyEmailRequest $request): RedirectResponse
+    {
+        $dto = $request->getDto();
+
+        return $this->execute(
+            callback: fn() => $this->userService->resendVerificationEmail($dto),
+            defaultSuccessMessage: 'Email de verificação reenviado com sucesso!',
+            successRedirect: null,
         );
     }
 }

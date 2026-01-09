@@ -92,7 +92,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::Hs3Cg6LXZBLTceg7',
+            '_route' => 'generated::z5DXaKHIR4eZoKXF',
           ),
           1 => NULL,
           2 => 
@@ -112,7 +112,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::2IyHOETh4jXh1btu',
+            '_route' => 'generated::vveMN7JwaJLLBAdS',
           ),
           1 => NULL,
           2 => 
@@ -265,6 +265,25 @@ app('router')->setCompiledRoutes(
           0 => 
           array (
             '_route' => 'register.verify-email',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'POST' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/register/resend-email' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'register.resend-email',
           ),
           1 => NULL,
           2 => 
@@ -1299,7 +1318,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::Hs3Cg6LXZBLTceg7' => 
+    'generated::z5DXaKHIR4eZoKXF' => 
     array (
       'methods' => 
       array (
@@ -1328,7 +1347,7 @@ app('router')->setCompiledRoutes(
                         \'exception\' => $exception,
                     ]), status: $exception ? 500 : 200);
                 }";s:5:"scope";s:54:"Illuminate\\Foundation\\Configuration\\ApplicationBuilder";s:4:"this";N;s:4:"self";s:32:"000000000000056e0000000000000000";}}',
-        'as' => 'generated::Hs3Cg6LXZBLTceg7',
+        'as' => 'generated::z5DXaKHIR4eZoKXF',
       ),
       'fallback' => false,
       'defaults' => 
@@ -1344,7 +1363,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::2IyHOETh4jXh1btu' => 
+    'generated::vveMN7JwaJLLBAdS' => 
     array (
       'methods' => 
       array (
@@ -1366,7 +1385,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::2IyHOETh4jXh1btu',
+        'as' => 'generated::vveMN7JwaJLLBAdS',
       ),
       'fallback' => false,
       'defaults' => 
@@ -1667,6 +1686,43 @@ app('router')->setCompiledRoutes(
         array (
         ),
         'as' => 'register.verify-email',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'register.resend-email' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'register/resend-email',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'App\\Http\\Middleware\\RedirectIfAuthenticated',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Register\\RegisterController@resendEmail',
+        'controller' => 'App\\Http\\Controllers\\Register\\RegisterController@resendEmail',
+        'namespace' => NULL,
+        'prefix' => '/register',
+        'where' => 
+        array (
+        ),
+        'as' => 'register.resend-email',
       ),
       'fallback' => false,
       'defaults' => 
