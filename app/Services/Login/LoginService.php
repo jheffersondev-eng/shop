@@ -2,6 +2,7 @@
 
 namespace App\Services\Login;
 
+use App\Enums\EIsActive;
 use App\Http\Requests\Login\UserLoginRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Services\ServiceResult;
@@ -21,8 +22,14 @@ class LoginService implements ILoginService
                 return ServiceResult::fail('E-mail ou senha incorretos');
             }
 
-            // Verifica se o email foi verificado
+            // Verifica se o email foi verificado ou está ativo
             $user = Auth::user();
+
+            if ($user->is_active == EIsActive::INACTIVE) {
+                Auth::logout();
+                return ServiceResult::fail('Sua conta está desativada. Por favor, entre em contato com o suporte.');
+            }
+
             if ($user->email_verified_at === null) {
                 Auth::logout();
                 return ServiceResult::ok(
