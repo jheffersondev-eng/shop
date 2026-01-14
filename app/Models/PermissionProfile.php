@@ -22,7 +22,5 @@ class PermissionProfile extends Model
         'updated_at' => 'datetime',
         'deleted_at' => 'datetime',
     ];
-
-    public $timestamps = false;
 }
 

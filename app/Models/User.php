@@ -74,10 +74,6 @@ class User extends Authenticatable
      * Sobrescreve o método can() do Laravel para suportar permissões customizadas
      * Se a permissão for no formato "ControllerName@method", usa hasPermission()
      * Senão, chama o método pai para usar o sistema padrão do Laravel
-     * 
-     * @param mixed $abilities
-     * @param mixed $arguments
-     * @return bool
      */
     public function can($abilities, $arguments = [])
     {

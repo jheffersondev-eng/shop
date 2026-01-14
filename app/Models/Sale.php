@@ -30,17 +30,5 @@ class Sale extends Model
         'created_at' => 'datetime',
         'deleted_at' => 'datetime',
     ];
-
-    public $timestamps = false;
-
-    public function client()
-    {
-        return $this->belongsTo(UserDetail::class, 'client_id');
-    }
-
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
 }
 
