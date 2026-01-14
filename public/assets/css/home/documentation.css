@@ -27,15 +27,66 @@ body{font-family: 'Roboto', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helve
 .docs-footer{margin-top:30px}
 
 /* Accordion styles */
-.accordion-routes .accordion-button{background:#fff; border:1px solid #e0e0e0; padding:14px 16px; font-weight:600; color:#334; transition:all 0.2s ease}
-.accordion-routes .accordion-button:not(.collapsed){background:#f3f6fb; color:var(--primary); box-shadow:none; border-color:#d0d8e0}
-.accordion-routes .accordion-button:focus{box-shadow:0 0 0 0.25rem rgba(13,110,253,0.1)}
-.accordion-routes .accordion-button::after{background-image:url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%230d6efd' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e"); width:1.2rem; height:1.2rem}
-.accordion-routes .accordion-item{border:1px solid #e0e0e0; margin-bottom:8px}
-.accordion-routes .accordion-body{padding:20px}
-.accordion-routes .route{margin-bottom:0}
-.accordion-routes .route hr{margin:18px 0}
-.accordion-routes .badge{font-size:0.8rem; padding:4px 8px}
+.accordion-routes .accordion-button {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  padding: 14px 16px;
+  font-weight: 600;
+  color: #334;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.accordion-routes .accordion-button.collapsed {
+  background: #fff;
+  color: #334;
+}
+
+.accordion-routes .accordion-button:not(.collapsed) {
+  background: #f3f6fb;
+  color: var(--primary);
+  border-color: #d0d8e0;
+}
+
+.accordion-routes .accordion-button:hover {
+  background: #f8f9fa;
+}
+
+.accordion-routes .accordion-button:focus {
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.1);
+  outline: none;
+}
+
+.accordion-routes .accordion-item {
+  border: 1px solid #e0e0e0;
+  margin-bottom: 8px;
+}
+
+.accordion-routes .accordion-body {
+  padding: 20px;
+}
+
+.accordion-routes .route {
+  margin-bottom: 0;
+}
+
+.accordion-routes .route hr {
+  margin: 18px 0;
+}
+
+.accordion-routes .badge {
+  font-size: 0.8rem;
+  padding: 4px 8px;
+}
+
+.accordion-routes .accordion-collapse {
+  overflow: hidden;
+  transition: height 0.35s ease;
+}
+
+.accordion-routes .accordion-collapse.show {
+  display: block !important;
+}
 
 @media (max-width: 991px){
   .docs-nav{display:flex; gap:8px; flex-wrap:wrap}

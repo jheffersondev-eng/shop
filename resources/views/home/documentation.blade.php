@@ -285,7 +285,7 @@
                         <!-- USUÁRIOS -->
                         <div class="accordion-item">
                             <h2 class="accordion-header">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                <button class="accordion-button collapsed" type="button"
                                     data-bs-target="#collapseUsuarios" aria-expanded="false"
                                     aria-controls="collapseUsuarios">
                                     <i class="bi bi-person-circle me-2 text-primary"></i>
@@ -293,8 +293,7 @@
                                     <span class="badge bg-secondary ms-auto me-2">4 rotas</span>
                                 </button>
                             </h2>
-                            <div id="collapseUsuarios" class="accordion-collapse collapse"
-                                data-bs-parent="#accordionRoutes">
+                            <div id="collapseUsuarios" class="accordion-collapse collapse">
                                 <div class="accordion-body">
                                     <section class="route">
                                         <h5>👥 Listar Usuários com Filtro <small class="text-muted">GET
@@ -544,7 +543,7 @@
                         <!-- PRODUTOS -->
                         <div class="accordion-item">
                             <h2 class="accordion-header">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                <button class="accordion-button collapsed" type="button"
                                     data-bs-target="#collapseProdutos" aria-expanded="false"
                                     aria-controls="collapseProdutos">
                                     <i class="bi bi-box me-2 text-primary"></i>
@@ -552,8 +551,7 @@
                                     <span class="badge bg-secondary ms-auto me-2">4 rotas</span>
                                 </button>
                             </h2>
-                            <div id="collapseProdutos" class="accordion-collapse collapse"
-                                data-bs-parent="#accordionRoutes">
+                            <div id="collapseProdutos" class="accordion-collapse collapse">
                                 <div class="accordion-body">
                                     <section class="route">
                                         <h5>📦 Listar Produtos com Filtro <small class="text-muted">GET
@@ -876,7 +874,7 @@ _method=PUT</code></pre>
                         <!-- CATEGORIAS -->
                         <div class="accordion-item">
                             <h2 class="accordion-header">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                <button class="accordion-button collapsed" type="button"
                                     data-bs-target="#collapseCategorias" aria-expanded="false"
                                     aria-controls="collapseCategorias">
                                     <i class="bi bi-folder me-2 text-primary"></i>
@@ -884,8 +882,7 @@ _method=PUT</code></pre>
                                     <span class="badge bg-secondary ms-auto me-2">4 rotas</span>
                                 </button>
                             </h2>
-                            <div id="collapseCategorias" class="accordion-collapse collapse"
-                                data-bs-parent="#accordionRoutes">
+                            <div id="collapseCategorias" class="accordion-collapse collapse">
                                 <div class="accordion-body">
                                     <section class="route">
                                         <h5>📂 Listar Categorias com Filtro <small class="text-muted">GET
@@ -1061,7 +1058,7 @@ _method=PUT</code></pre>
                         <!-- UNIDADES -->
                         <div class="accordion-item">
                             <h2 class="accordion-header">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                <button class="accordion-button collapsed" type="button"
                                     data-bs-target="#collapseUnidades" aria-expanded="false"
                                     aria-controls="collapseUnidades">
                                     <i class="bi bi-rulers me-2 text-primary"></i>
@@ -1069,8 +1066,7 @@ _method=PUT</code></pre>
                                     <span class="badge bg-secondary ms-auto me-2">4 rotas</span>
                                 </button>
                             </h2>
-                            <div id="collapseUnidades" class="accordion-collapse collapse"
-                                data-bs-parent="#accordionRoutes">
+                            <div id="collapseUnidades" class="accordion-collapse collapse">
                                 <div class="accordion-body">
                                     <section class="route">
                                         <h5>📏 Listar Unidades com Filtro <small class="text-muted">GET
@@ -1275,7 +1271,7 @@ _method=PUT</code></pre>
                         <!-- PERFIS -->
                         <div class="accordion-item">
                             <h2 class="accordion-header">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                <button class="accordion-button collapsed" type="button"
                                     data-bs-target="#collapsePerfis" aria-expanded="false"
                                     aria-controls="collapsePerfis">
                                     <i class="bi bi-people me-2 text-primary"></i>
@@ -1283,8 +1279,7 @@ _method=PUT</code></pre>
                                     <span class="badge bg-secondary ms-auto me-2">4 rotas</span>
                                 </button>
                             </h2>
-                            <div id="collapsePerfis" class="accordion-collapse collapse"
-                                data-bs-parent="#accordionRoutes">
+                            <div id="collapsePerfis" class="accordion-collapse collapse">
                                 <div class="accordion-body">
                                     <section class="route">
                                         <h5>👤 Listar Perfis com Filtro <small class="text-muted">GET
@@ -1496,7 +1491,6 @@ _method=PUT</code></pre>
         </div>
     </main>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         AOS.init({
@@ -1504,15 +1498,50 @@ _method=PUT</code></pre>
             once: true
         });
 
+        // Copy button functionality
         document.addEventListener('click', function(e) {
             const btn = e.target.closest('.btn-copy');
             if (!btn) return;
+            e.stopPropagation();
             const text = btn.getAttribute('data-copy') || '';
             navigator.clipboard.writeText(text).then(() => {
                 const icon = btn.querySelector('i');
                 const original = icon.className;
                 icon.className = 'bi bi-check2';
                 setTimeout(() => icon.className = original, 1200);
+            });
+        });
+
+        // Accordion toggle functionality
+        document.querySelectorAll('.accordion-routes .accordion-button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                if (e.target.closest('.btn-copy')) return;
+                
+                const collapseElement = document.querySelector(this.getAttribute('data-bs-target'));
+                if (!collapseElement) return;
+                
+                const isExpanded = this.getAttribute('aria-expanded') === 'true';
+                
+                // Close all other accordions in the same parent
+                const parent = this.closest('.accordion');
+                parent.querySelectorAll('.accordion-button').forEach(btn => {
+                    if (btn !== this) {
+                        btn.classList.add('collapsed');
+                        btn.setAttribute('aria-expanded', 'false');
+                        document.querySelector(btn.getAttribute('data-bs-target')).classList.remove('show');
+                    }
+                });
+                
+                // Toggle current accordion
+                if (isExpanded) {
+                    this.classList.add('collapsed');
+                    this.setAttribute('aria-expanded', 'false');
+                    collapseElement.classList.remove('show');
+                } else {
+                    this.classList.remove('collapsed');
+                    this.setAttribute('aria-expanded', 'true');
+                    collapseElement.classList.add('show');
+                }
             });
         });
     </script>
