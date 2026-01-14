@@ -24,6 +24,7 @@ class HomeModule extends Module
         return new RouteModule("", function () {
             Route::get('/about', [HomeController::class, 'about'])->name('about');
             Route::post('/about/send-mail', [HomeController::class, 'sendMail'])->name('about.sendMail');
+            Route::get('/documentation', [HomeController::class, 'documentation'])->name('documentation.index');
         });
     }
 

@@ -1,45 +1,28 @@
 @php
     use App\Helpers\ButtonHelper;
 @endphp
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <title>Cadastro - Porto Shop</title>
-    <link rel="icon" href="{{ asset('assets/img/branding/porto-shop-branding.png') }}" type="image/x-icon">
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@500&family=Roboto:wght@400;700&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+@extends('components.app.home-app')
+@section('menu')
+    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li class="nav-item"><a class="nav-link" href="/">Início</a></li>
+        <li class="nav-item">
+            <a class="nav-link"
+                href="https://wa.me/5579996416903?text=Olá%20Jhefferson,%20estou%20entrando%20em%20contato%20para%20conversar%20sobre%20uma%20oportunidade."
+                target="_blank" rel="noopener noreferrer">Contato</a>
+        </li>
+        <li class="nav-item"><a class="nav-link" href="{{ route('shortly') }}">Produtos</a></li>
+        <li class="nav-item"><a class="nav-link" target="_blank" href="{{ route('documentation.index') }}">Documentação</a>
+        </li>
+    </ul>
+    <a class="btn-feedback ms-lg-3 mt-2 mt-lg-0" href="{{ route('about') }}">Sobre Mim </a>
+@endsection
+@section('heads')    
     <link rel="stylesheet" href="{{ asset('assets/css/home/index.css') }}">
-    <!-- Bootstrap Icons CDN -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link rel="stylesheet" href="{{ asset('assets/css/home/login.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/home/register.css') }}">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-</head>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-light" aria-label="Menu principal">
-        <div class="container">
-            <a class="navbar-brand" href="/">
-                <img src="{{ asset('assets/img/branding/porto-shop-branding.png') }}" alt="Logo Porto Shop" width="38" height="38">
-                Porto Shop
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Abrir menu">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link" href="https://wa.me/5579996416903?text=Olá%20Jhefferson,%20estou%20entrando%20em%20contato%20para%20conversar%20sobre%20uma%20oportunidade." target="_blank" rel="noopener noreferrer">Contato</a>
-                    </li>
-                    <li class="nav-item"><a class="nav-link" href="/">Início</a></li>
-                </ul>
-                <a class="btn-feedback ms-lg-3 mt-2 mt-lg-0" href="{{ route('login') }}">Entrar</a>
-            </div>
-        </div>
-    </nav>
+@endsection
+@section('content')
     <main>
         <div class="register-card">
             <div class="register-title">
@@ -119,10 +102,6 @@
             <a href="{{ route('login') }}" class="register-link">Já tenho cadastro</a>
         </div>
     </main>
-    <div class="footer">
-        &copy; <?=date('Y')?> Porto Shop &mdash; Todos os direitos reservados.
-    </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ asset('assets/js/mask/mask.js') }}"></script>
-</body>
-</html>
+@endsection

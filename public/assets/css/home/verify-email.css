@@ -1,0 +1,72 @@
+.verify-card {
+    max-width: 400px;
+    margin: 80px auto;
+    padding: 40px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.verify-title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.verify-subtitle {
+    text-align: center;
+    color: #666;
+    margin-bottom: 30px;
+    font-size: 14px;
+}
+
+.code-input {
+    font-size: 18px;
+    letter-spacing: 5px;
+    text-align: center;
+    font-weight: 600;
+}
+
+.verify-link {
+    text-align: center;
+    display: block;
+    margin-top: 15px;
+    color: #007bff;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.verify-link:hover {
+    text-decoration: underline;
+}
+
+.alert-info {
+    background-color: #e7f3ff;
+    border-color: #b3d9ff;
+    color: #004085;
+    border-radius: 6px;
+    padding: 12px;
+    margin-bottom: 20px;
+    font-size: 13px;
+}
+
+.footer {
+    text-align: center;
+    padding: 20px 0;
+    color: #666;
+    font-size: 12px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: white;
+}
+
+body {
+    padding-bottom: 60px;
+}
