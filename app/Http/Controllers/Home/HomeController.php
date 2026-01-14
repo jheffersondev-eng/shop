@@ -24,6 +24,14 @@ class HomeController
         ]);
     }
 
+    public function documentation(): View
+    {
+        return view("home.documentation", [
+            'url' => route('documentation.index'),
+            'title' => "Documentation",
+        ]);
+    }
+
     public function sendMail(AboutRequest $request): RedirectResponse
     { 
         $dto = $request->getDto();

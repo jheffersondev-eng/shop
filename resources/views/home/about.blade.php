@@ -33,6 +33,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="https://wa.me/5579996416903?text=Olá%20Jhefferson,%20estou%20entrando%20em%20contato%20para%20conversar%20sobre%20uma%20oportunidade." target="_blank" rel="noopener noreferrer">Contato</a>
                     </li>
+                    <li class="nav-item"><a class="nav-link" target="_blank" href="{{ route('documentation.index') }}">Documentação</a></li>
                 </ul>
             </div>
         </div>

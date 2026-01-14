@@ -92,7 +92,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::z5DXaKHIR4eZoKXF',
+            '_route' => 'generated::3zYhypPeucYdY1VN',
           ),
           1 => NULL,
           2 => 
@@ -112,7 +112,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::vveMN7JwaJLLBAdS',
+            '_route' => 'generated::deaMShATpKy1H9DT',
           ),
           1 => NULL,
           2 => 
@@ -328,6 +328,26 @@ app('router')->setCompiledRoutes(
           2 => 
           array (
             'POST' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/documentation' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'documentation.index',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
           ),
           3 => NULL,
           4 => false,
@@ -1318,7 +1338,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::z5DXaKHIR4eZoKXF' => 
+    'generated::3zYhypPeucYdY1VN' => 
     array (
       'methods' => 
       array (
@@ -1347,7 +1367,7 @@ app('router')->setCompiledRoutes(
                         \'exception\' => $exception,
                     ]), status: $exception ? 500 : 200);
                 }";s:5:"scope";s:54:"Illuminate\\Foundation\\Configuration\\ApplicationBuilder";s:4:"this";N;s:4:"self";s:32:"000000000000056e0000000000000000";}}',
-        'as' => 'generated::z5DXaKHIR4eZoKXF',
+        'as' => 'generated::3zYhypPeucYdY1VN',
       ),
       'fallback' => false,
       'defaults' => 
@@ -1363,7 +1383,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::vveMN7JwaJLLBAdS' => 
+    'generated::deaMShATpKy1H9DT' => 
     array (
       'methods' => 
       array (
@@ -1385,7 +1405,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::vveMN7JwaJLLBAdS',
+        'as' => 'generated::deaMShATpKy1H9DT',
       ),
       'fallback' => false,
       'defaults' => 
@@ -1798,6 +1818,44 @@ app('router')->setCompiledRoutes(
         array (
         ),
         'as' => 'about.sendMail',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'documentation.index' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'documentation',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'App\\Http\\Middleware\\RedirectIfAuthenticated',
+        ),
+        'uses' => 'App\\Http\\Controllers\\Home\\HomeController@documentation',
+        'controller' => 'App\\Http\\Controllers\\Home\\HomeController@documentation',
+        'namespace' => NULL,
+        'prefix' => '/',
+        'where' => 
+        array (
+        ),
+        'as' => 'documentation.index',
       ),
       'fallback' => false,
       'defaults' => 
