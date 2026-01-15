@@ -35,4 +35,9 @@ return [
         ],
     ],
 
+    'chatbot' => [
+        'url' => env('CHATBOT_API_URL', 'https://shop-chatbot-with-ai.onrender.com'),
+        'api_key' => env('CHATBOT_API_KEY', 'shop-internal-key'),
+    ],
+
 ];
