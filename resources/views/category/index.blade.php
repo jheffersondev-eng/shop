@@ -36,9 +36,9 @@
                     @foreach($categories->items() as $category)
                         <tr>
                             <td colspan="1">{{ $category->id }}</td>
-                            <td colspan="4">{{ ucfirst(strtolower($category->name)) }}</td>
+                            <td colspan="4" width="20%">{{ ucfirst(strtolower($category->name)) }}</td>
                             <td colspan="5">{{ ucfirst(strtolower($category->description ?? '-')) }}</td>
-                            <td colspan="2" class="text-end">    
+                            <td colspan="2" class="text-end" width="15%">    
                                 {!! 
                                     ButtonInformationHelper::make()
                                         ->setCreatedBy(ucwords(strtolower($category->userCreatedName)))
