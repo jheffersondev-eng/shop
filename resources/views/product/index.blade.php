@@ -60,13 +60,13 @@
                                         substr($product->description, 0, 113) . '...' : 
                                         $product->description;
                                     @endphp
-                                    <td>{{ ucfirst(strtolower($description)) }}</td>
-                                    <td>{{ ucfirst(strtolower($product->category->name)) }}</td>
-                                    <td>
+                                    <td width="30%">{{ ucfirst(strtolower($description)) }}</td>
+                                    <td width="20%">{{ ucfirst(strtolower($product->category->name)) }}</td>
+                                    <td width="5%">
                                         {{ NumberHelper::simple($product->stockQuantity) }} 
                                         {{ $product->unit->abbreviation }}
                                     </td>
-                                    <td>{{ NumberHelper::currency($product->price) }}</td>
+                                    <td width="10%">{{ NumberHelper::currency($product->price) }}</td>
                                     <td>{{ $product->createdAt->format('d/m/Y') }}</td>
                                     <td class="text-end">    
                                         {!! 

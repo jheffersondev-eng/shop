@@ -52,7 +52,7 @@
                                 <span title="{{ $permissionsText }}">{{ $permissionsDisplay }}</span>
                             </td>
                             <td class="text-muted small">{{ $profile->createdAt->format('d/m/Y') }}</td>
-                            <td class="text-end">
+                            <td class="text-end" width="15%">
                                 {!! 
                                     ButtonInformationHelper::make()
                                         ->setCreatedBy(ucwords(strtolower($profile->userCreatedName)))
