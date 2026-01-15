@@ -6,6 +6,7 @@ use App\Http\Requests\About\AboutRequest;
 use App\Services\About\IAboutService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class HomeController 
 {
@@ -29,6 +30,14 @@ class HomeController
         return view("home.documentation", [
             'url' => route('documentation.index'),
             'title' => "Documentation",
+        ]);
+    }
+
+    public function downloadCurriculum(): BinaryFileResponse
+    {
+        $filePath = public_path('assets/document/Jhefferson-Curriculo-12012026.pdf');
+        return response()->download($filePath, 'Jhefferson-Curriculo-12012026.pdf', [
+            'Content-Type' => 'application/pdf',
         ]);
     }
 
