@@ -34,6 +34,8 @@ use App\Services\Profile\ProfileService;
 use App\Services\UnitService\IUnitService;
 use App\Services\UnitService\UnitService;
 use App\Services\User\UserService;
+use App\Services\Chatbot\IChatbotService;
+use App\Services\Chatbot\ChatbotService;
 use Illuminate\Contracts\Foundation\Application;
 
 class AppDependencyInjection
@@ -59,5 +61,6 @@ class AppDependencyInjection
         $app->bind(IProductImageService::class, ProductImageService::class);
         $app->bind(IDashboardService::class, DashboardService::class);
         $app->bind(IAboutService::class, AboutService::class);
+        $app->bind(IChatbotService::class, ChatbotService::class);
     }
 }

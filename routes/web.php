@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Login\LoginController;
+use App\Http\Controllers\Chatbot\ChatbotController;
 use App\Modules\Config\Configuration;
 use App\Modules\Login\LoginModule;
 use App\Modules\Register\RegisterModule;
@@ -10,6 +11,7 @@ use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Middleware\Authenticate;
 use App\Modules\Home\HomeModule;
 
+// Rota de logout (sem middleware de redirect)
 Route::get('/', function () {
     return view('home.index');
 });
@@ -18,8 +20,9 @@ Route::get('/shortly', function () {
     return view('home.shortly');
 })->name('shortly');
 
-// Rota de logout (sem middleware de redirect)
 Route::get('/login/logout', [LoginController::class, 'logout'])->name('logout');
+
+Route::post('/api/chatbot/send', [ChatbotController::class, 'send'])->name('chatbot.send');
 
 // Rotas públicas (sem autenticação, mas redireciona se autenticado)
 Route::middleware([RedirectIfAuthenticated::class])->group(function () {
@@ -47,6 +50,9 @@ Route::middleware([RedirectIfAuthenticated::class])->group(function () {
 
 // Rotas protegidas (com autenticação E verificação de permissões)
 Route::middleware([Authenticate::class, CheckPermission::class])->group(function () {
+    // Rota do chatbot
+    Route::post('/api/chatbot/send', [ChatbotController::class, 'send'])->name('chatbot.send');
+
     $modules = Configuration::getModules();
 
     foreach ($modules as $module) {

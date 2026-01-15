@@ -1,0 +1,84 @@
+<!-- Página de Teste - Markdown no Chatbot -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Teste de Markdown no Chat</title>
+    <style>
+        body {
+            font-family: Arial;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 { color: #667eea; }
+        code {
+            background: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+        .example {
+            background: #f9f9f9;
+            border-left: 4px solid #667eea;
+            padding: 12px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>✅ Markdown no Chatbot Ativado!</h1>
+        
+        <p>O chatbot agora renderiza Markdown corretamente. Você verá:</p>
+        
+        <div class="example">
+            <strong>Exemplos de formatação:</strong>
+            <ul>
+                <li><strong>Negrito:</strong> Usando <code>**texto**</code></li>
+                <li><strong>Itálico:</strong> Usando <code>*texto*</code></li>
+                <li><strong>Títulos:</strong> Usando <code>## Título</code></li>
+                <li><strong>Listas:</strong> Com <code>- item</code></li>
+                <li><strong>Código:</strong> Com <code>`código`</code></li>
+                <li><strong>Blocos de código:</strong> Com <code>```</code></li>
+            </ul>
+        </div>
+
+        <h2>Como Testar:</h2>
+        <ol>
+            <li>Abra seu site em <code>http://localhost:8000</code></li>
+            <li>Clique no botão 🤖 (canto direito)</li>
+            <li>Faça uma pergunta como:</li>
+            <ul>
+                <li>"Como criar um produto?"</li>
+                <li>"Qual é a sequência correta?"</li>
+                <li>"Quais são as permissões?"</li>
+            </ul>
+            <li>Veja o texto formatado com negrito, títulos, listas, etc!</li>
+        </ol>
+
+        <h2>Mudanças Realizadas:</h2>
+        <div class="example">
+            <strong>1. Adicionado Marked.js</strong><br>
+            Biblioteca JavaScript para renderizar Markdown
+            <br><br>
+            
+            <strong>2. Modificada função addMessage()</strong><br>
+            Agora renderiza HTML do Markdown para mensagens do bot
+            <br><br>
+            
+            <strong>3. Adicionado CSS para Markdown</strong><br>
+            Estilos para: títulos, negrito, listas, código, blockquotes, tabelas, etc
+        </div>
+
+        <p>✨ Tudo pronto! Seu chat ficou muito mais bonito e profissional!</p>
+    </div>
+</body>
+</html>
