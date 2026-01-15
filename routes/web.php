@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Login\LoginController;
 use App\Http\Controllers\Chatbot\ChatbotController;
+use App\Http\Controllers\Home\HomeController;
 use App\Modules\Config\Configuration;
 use App\Modules\Login\LoginModule;
 use App\Modules\Register\RegisterModule;
@@ -21,8 +22,9 @@ Route::get('/shortly', function () {
 })->name('shortly');
 
 Route::get('/login/logout', [LoginController::class, 'logout'])->name('logout');
-
+Route::get('/about', [HomeController::class, 'about'])->name('about');
 Route::post('/api/chatbot/send', [ChatbotController::class, 'send'])->name('chatbot.send');
+Route::get('/download-curriculum', [HomeController::class, 'downloadCurriculum'])->name('home.downloadCurriculum');
 
 // Rotas públicas (sem autenticação, mas redireciona se autenticado)
 Route::middleware([RedirectIfAuthenticated::class])->group(function () {

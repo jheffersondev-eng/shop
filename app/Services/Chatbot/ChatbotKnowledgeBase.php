@@ -9,6 +9,152 @@ namespace App\Services\Chatbot;
 class ChatbotKnowledgeBase
 {
     /**
+     * Obtém informações sobre Jhefferson Matheus como desenvolvedor
+     */
+    public static function getDeveloperInfo(): string
+    {
+        return <<<'DEVINFO'
+## 👨‍💻 Sobre o Desenvolvedor - Jhefferson Matheus
+
+**Nome Completo**: Jhefferson Matheus Silva  
+**Localização**: Sergipe, Brasil  
+**Experiência**: 5+ anos (desde 2017)  
+**Formação**: Análise e Desenvolvimento de Sistemas + Técnico em Informática pelo SENAI
+
+### ✨ Sobre Profissionalmente:
+Jhefferson é um desenvolvedor full-stack especializado em criar soluções bem estruturadas, escaláveis e preparadas para ambientes complexos. Ele está **aberto a novas oportunidades e colaborações**.
+
+### 🎯 Áreas de Especialidade:
+
+**Backend:**
+- PHP/Laravel (96%)
+- C#/ASP.NET Core (92%)
+- ASP.NET MVC (90%)
+- APIs RESTful (94%)
+- Injeção de Dependência (93%)
+- Task Scheduler (88%)
+
+**Frontend:**
+- HTML5 (95%)
+- CSS3/SCSS (93%)
+- JavaScript (94%)
+- TypeScript (85%)
+- React (90%)
+- Vue.js (88%)
+- Bootstrap (92%)
+- Responsive Design (95%)
+
+**Banco de Dados:**
+- MySQL (94%) - Otimização de queries
+- SQL Server (91%) - Procedure e otimização
+- Entity Framework Core (90%)
+- Query Optimization (89%)
+
+**Arquitetura & Padrões:**
+- SOLID Principles (92%)
+- Clean Architecture (90%)
+- MVC Architecture (94%)
+- Clean Code (91%)
+- Design Patterns (88%)
+
+**DevOps & Cloud:**
+- Docker (89%)
+- AWS (Lambda, S3) (85%)
+- Git/GitHub (95%)
+- CI/CD Pipelines (86%)
+- Linux/Windows (90%)
+
+**Metodologias:**
+- Scrum (92%)
+- Kanban (90%)
+- Agile (91%)
+- RBAC - Controle de Acesso (90%)
+
+**Conhecimentos Adicionais:**
+- Lógica de Programação (95%)
+- Multi-tenant (88%)
+- Internet Banking (85%)
+- Setor Financeiro (87%)
+- B2B Systems (89%)
+- E-commerce (91%)
+- Controle de Estoque (86%)
+- JWT Authentication (89%)
+- Microsserviços (85%)
+- API Integration (92%)
+- Arduino (78%)
+- C++ (82%)
+
+### 💼 Experiência Profissional:
+
+**1. DEL TECH LTDA (Julho 2024 - Setembro 2025)**
+- Desenvolvedor Full-Stack
+- Sistemas B2B em ASP.NET MVC com Clean Architecture
+- Interfaces dinâmicas com React
+- Integração com SQL Server e Entity Framework Core
+- APIs RESTful em ASP.NET Core
+- Integração AWS (Lambda, S3) com Docker
+- Node.js/Express.js
+
+**2. JAV Industria De Alimentos LTDA (Fevereiro 2022 - Junho 2024)**
+- Desenvolvedor Full-Stack
+- PHP/Laravel com SOLID e Clean Code
+- Otimização de queries MySQL
+- Interfaces, relatórios e microsserviços
+- Domínios: alimentação, controle de acessos, gestão agropecuária, e-commerce, construção civil
+- Task Scheduler em Linux
+- Ambientes Windows e Linux
+
+**3. MRC Solucoes em TI e Desenvolvimento (Agosto 2019 - Fevereiro 2022)**
+- Instrutor de Tecnologia
+- Aulas: Informática, Lógica, Low-Code, Arduino, C++
+- Técnico de Robótica
+- Prêmios em competições de robótica
+- Capacitação de 50+ mil professores durante pandemia
+
+**4. IPTI (Agosto 2017 - Novembro 2018)**
+- Desenvolvedor PHP
+- Manutenção e evolução de plataforma educacional
+- Scrum e boas práticas desde o início
+- Front-end responsivo
+
+### 📊 Projetos & Realizações:
+- **12+ Projetos** com atuação significativa
+- Desenvolveu **tudo neste site** (Porto Shop) - arquitetura, backend, frontend, banco de dados
+- Experiência com **MySQL, SQL Server, React, Laravel, ASP.NET**
+- Trabalhou em **setor financeiro** com sistemas críticos
+- Criou **multi-tenant systems** e **B2B solutions**
+- Experiência com **e-commerce completo**
+
+### 💡 O Que Jhefferson Fez Neste Site:
+**Tudo!** Porto Shop foi desenvolvido completamente por Jhefferson:
+- ✅ Arquitetura full-stack (Laravel 12 + React)
+- ✅ Banco de dados MySQL com otimizações
+- ✅ APIs RESTful seguras (JWT)
+- ✅ Frontend responsivo com Bootstrap 5 e TailwindCSS
+- ✅ Sistema de permissões (RBAC)
+- ✅ Dashboard com analytics
+- ✅ Controle de estoque
+- ✅ Gerenciamento de produtos, categorias, usuários
+- ✅ Integração com Docker
+- ✅ Testes com PHPUnit
+- ✅ Deploy e CI/CD
+
+### 📬 Contatos:
+- **Email**: jhefferson.tec@gmail.com
+- **Telefone**: +55 (79) 99641-6903
+- **WhatsApp**: [Disponível para conversa]
+- **GitHub**: https://github.com/jheffersondev-eng
+- **LinkedIn**: https://www.linkedin.com/in/jhefferson-silva-3013031b1/
+
+### 🎁 Currículo:
+Se deseja o currículo completo, pode **baixar aqui**: [/download-curriculum](/download-curriculum)
+
+### 🚀 Interesse em Jhefferson:
+Se você está interessado em trabalhar com Jhefferson, conhecer mais sobre seus projetos, ou deseja conversar sobre oportunidades, **entre em contato diretamente** via WhatsApp, email ou LinkedIn. Ele está sempre aberto a novas oportunidades!
+DEVINFO;
+    }
+
+    /**
      * Obtém o prompt do sistema que define o comportamento do chatbot
      */
     public static function getSystemPrompt(): string
@@ -24,6 +170,19 @@ Porto Shop é uma plataforma completa de gerenciamento de e-commerce com:
 - ✅ Controle de Estoque com alertas
 - ✅ Sistema de Perfis com permissões
 - ✅ Interface responsiva com Bootstrap 5 e TailwindCSS
+
+## 👨‍💻 IMPORTANTE - Sobre o Desenvolvedor:
+Este site foi **completamente desenvolvido por Jhefferson Matheus**, um desenvolvedor full-stack com 5+ anos de experiência (desde 2017).
+
+**Se perguntarem:**
+- ❓ "Que tecnologias você usou?" → Responda que Jhefferson usou PHP/Laravel, React, MySQL, Docker, AWS, etc
+- ❓ "Você sabe MySQL?" → Sim, este site inteiro foi desenvolvido com MySQL (94% de proficiência)
+- ❓ "Como foi feito?" → Tudo aqui foi desenvolvido do zero por Jhefferson seguindo SOLID, Clean Architecture, etc
+- ❓ "Você tem currículo?" → Sim, pode baixar em: /download-curriculum
+- ❓ "Você está disponível?" → Sim! Jhefferson está aberto a novas oportunidades. Pode contatar:
+  - WhatsApp: +55 (79) 99641-6903
+  - Email: jhefferson.tec@gmail.com
+  - LinkedIn: https://www.linkedin.com/in/jhefferson-silva-3013031b1/
 
 ## 🔑 IMPORTANTE - Fluxo de Dependências:
 ⚠️ **ANTES DE CRIAR PRODUTOS**: Categoria e Unidade devem existir
@@ -565,6 +724,7 @@ DOC;
     public static function buildContextualPrompt(string $userMessage): string
     {
         $systemPrompt = self::getSystemPrompt();
+        $developerInfo = self::getDeveloperInfo();
         $modules = self::getSystemModules();
         $faq = self::getFAQ();
         $api = self::getAPIDocumentation();
@@ -583,6 +743,8 @@ DOC;
         return <<<CONTEXT
 $systemPrompt
 
+$developerInfo
+
 $modulesInfo
 
 $faqInfo
@@ -599,8 +761,12 @@ $api
 3. Para USUÁRIOS: mencione que precisa de Perfil
 4. Para CATEGORIAS/UNIDADES/PERFIS: explique que são o "alicerce" antes de criar usuários/produtos
 5. Se pergunta é sobre API: forneça detalhes completos de endpoint, body, validações
-6. Seja sempre PRÁTICO: exemplo específico > explicação genérica
-7. Indique o CAMINHO EXATO: "Vá para Menu > Submenu > Ação"
+6. Se pergunta é sobre Jhefferson/desenvolvedor: use as informações da seção "Sobre o Desenvolvedor"
+7. Se pedir currículo: indique o link /download-curriculum
+8. Se perguntar sobre disponibilidade/oportunidades: mencione contatos (WhatsApp, Email, LinkedIn)
+9. Se pergunta é técnica sobre tecnologias: responda com base nas habilidades de Jhefferson
+10. Seja sempre PRÁTICO: exemplo específico > explicação genérica
+11. Indique o CAMINHO EXATO: "Vá para Menu > Submenu > Ação"
 
 Responda sendo específico, prático e sempre lembrando as dependências!
 CONTEXT;
