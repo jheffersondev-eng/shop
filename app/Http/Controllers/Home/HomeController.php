@@ -42,7 +42,8 @@ class HomeController
     }
 
     public function sendMail(AboutRequest $request): RedirectResponse
-    { 
+    {
+        throw new \Exception("Serviço pausado temporariamente, estamos revisando o sistema de envio de e-mails para evitar spam.");
         $dto = $request->getDto();
         $this->aboutService->sendMail($dto);
         return redirect()->back()->with('success', 'E-mail enviado com sucesso! Você receberá uma resposta em breve.');
