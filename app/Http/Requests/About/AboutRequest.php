@@ -3,9 +3,12 @@
 namespace App\Http\Requests\About;
 
 use App\Http\Dto\About\SendEmailDto;
+use App\Traits\ReCaptcha;
 
 class AboutRequest
 {
+    use ReCaptcha;
+    
     public function authorize(): bool
     {
         return true;
