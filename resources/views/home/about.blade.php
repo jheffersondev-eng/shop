@@ -860,8 +860,5 @@ Tenho experiência em ambientes ágeis, integração com MySQL e SQL Server, uso
         window.RECAPTCHA_SITE_KEY = "{{ config('recaptcha.site_key') }}";
     </script>
     <script src="{{ asset('assets/js/captcha/captcha.js') }}"></script>
-    <script>
-        
-    </script>
 </body>
 </html>

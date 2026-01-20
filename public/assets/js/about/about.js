@@ -345,8 +345,13 @@ backToTopBtn.addEventListener('click', () => {
 });
 
 document.addEventListener('DOMContentLoaded', function () {
+    var errorDiv = document.getElementById('captcha-server-error');
+    var successDiv = document.getElementById('success-message');
     var contactSection = document.getElementById('contact');
-    if (contactSection) {
+    if ((errorDiv || successDiv) && contactSection) {
         contactSection.scrollIntoView({ behavior: 'smooth' });
+        if (window.history && window.history.replaceState) {
+            window.history.replaceState({}, document.title, window.location.pathname + window.location.search);
+        }
     }
 });
