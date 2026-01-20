@@ -807,23 +807,38 @@ Tenho experiência em ambientes ágeis, integração com MySQL e SQL Server, uso
                 <form method="POST" action="{{ route('about.sendMail') }}" class="contact-form" id="contactForm">
                     @csrf
 					@method('POST')
+                    <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response">
+                    <div id="captcha-error" style="display:none;" class="alert alert-danger mb-3"></div>
+                    @if ($errors->has('captcha'))
+                        <div class="alert alert-danger mb-3" id="captcha-server-error">
+                            {{ $errors->first('captcha') }}
+                        </div>
+                    @endif
+                    @if (session('success'))
+                        <div class="alert alert-success mb-3" id="success-message">
+                            {{ session('success') }}
+                        </div>
+                    @endif
                     <div class="form-group">
-                        <input type="text" class="form-control" id="name" name="name" placeholder="Seu Nome" required>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Seu Nome" required value="{{ old('name') }}">
                         <div class="form-line"></div>
                     </div>
                     <div class="form-group">
-                        <input type="email" class="form-control" id="email" name="email" placeholder="Seu Email" required>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Seu Email" required value="{{ old('email') }}">
                         <div class="form-line"></div>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="subject" name="subject" placeholder="Assunto" required>
+                        <input type="text" class="form-control" id="subject" name="subject" placeholder="Assunto" required value="{{ old('subject') }}">
                         <div class="form-line"></div>
                     </div>
                     <div class="form-group">
-                        <textarea class="form-control" id="message" name="message" rows="5" placeholder="Sua Mensagem" required></textarea>
+                        <textarea class="form-control" id="message" name="message" rows="5" placeholder="Sua Mensagem" required>{{ old('message') }}</textarea>
                         <div class="form-line"></div>
                     </div>
-                    <button type="submit" class="btn btn-primary btn-lg btn-submit">
+                    <div class="form-group mb-3">
+                        <div id="captcha-status" style="font-size:0.95em;color:#888;"></div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-lg btn-submit" id="submitBtn">
                         <span>Enviar Mensagem</span>
                         <i class="bi bi-send"></i>
                     </button>
@@ -832,42 +847,18 @@ Tenho experiência em ambientes ágeis, integração com MySQL e SQL Server, uso
         </div>
     </section>
     <!-- Back to Top Button -->
-    <button id="backToTop" class="back-to-top" aria-label="Voltar ao topo">
+    <button id="backToTop" style="margin-bottom: 58px" class="back-to-top" aria-label="Voltar ao topo">
         <i class="bi bi-chevron-up"></i>
     </button>
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="{{ asset('assets/js/about.js') }}"></script>
+    <script src="{{ asset('assets/js/about/about.js') }}"></script>
+    <!-- Google reCAPTCHA v3 -->
+    <script src="https://www.google.com/recaptcha/api.js?render={{ config('recaptcha.site_key') }}"></script>
     <script>
-        // Back to Top Button Logic
-        const backToTopBtn = document.getElementById('backToTop');
-        const aboutSection = document.getElementById('about');
-
-        // Intersection Observer para mostrar botão quando chegar na seção "Minha História"
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    backToTopBtn.classList.add('show');
-                } else if (entry.boundingClientRect.top > 0) {
-                    backToTopBtn.classList.remove('show');
-                }
-            });
-        }, {
-            threshold: 0.1
-        });
-
-        if (aboutSection) {
-            observer.observe(aboutSection);
-        }
-
-        // Scroll suave para o topo
-        backToTopBtn.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
+        window.RECAPTCHA_SITE_KEY = "{{ config('recaptcha.site_key') }}";
     </script>
+    <script src="{{ asset('assets/js/captcha/captcha.js') }}"></script>
 </body>
 </html>

@@ -42,7 +42,11 @@ class HomeController
     }
 
     public function sendMail(AboutRequest $request): RedirectResponse
-    { 
+    {
+        if ($redirect = $request->verifyReCaptcha()) {
+            return $redirect;
+        }
+        
         $dto = $request->getDto();
         $this->aboutService->sendMail($dto);
         return redirect()->back()->with('success', 'E-mail enviado com sucesso! Você receberá uma resposta em breve.');

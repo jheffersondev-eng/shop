@@ -26,3 +26,5 @@ bootstrap/cache/routes-v7.php
 Homestead.json
 Homestead.yaml
 Thumbs.db
+/storage/debugbar
+/storage/framework/views
