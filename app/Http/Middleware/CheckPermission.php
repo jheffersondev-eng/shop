@@ -44,6 +44,10 @@ class CheckPermission
         // Constrói a permissão no formato "ControllerName@method"
         $controllerName = class_basename($controller);
         $method = $route->getActionMethod();
+
+        $method = $method == 'create' ? 'store' : $method;
+        $method = $method == 'edit' ? 'update' : $method;
+        
         $requiredPermission = strtolower("{$controllerName}@{$method}");
 
         // Verifica se o usuário tem permissão
