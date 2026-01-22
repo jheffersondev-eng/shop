@@ -26,7 +26,7 @@ class UnitRepository extends BaseRepository implements IUnitRepository
 
     public function getUnits(): LengthAwarePaginator
     {
-        return $this->model->where('user_id_created', '=', $this->userLoggedId)
+        return $this->model->where('owner_id', '=', $this->ownerId)
             ->paginate(self::PAGINATION_SIZE);
     }
 
@@ -94,7 +94,9 @@ class UnitRepository extends BaseRepository implements IUnitRepository
 
     public function getUnitById(int $id): Unit
     {
-        $unit = $this->model->find($id);
+        $unit = $this->model->where('id', $id)
+            ->where('owner_id', '=', $this->ownerId)
+            ->first();
 
         if (!$unit) {
             throw new Exception("Unidade não encontrada.");
@@ -118,11 +120,14 @@ class UnitRepository extends BaseRepository implements IUnitRepository
 
     public function update(UnitDto $unitDto, int $id)
     {
-        $unit = $this->model->find($id);
+        $unit = $this->model->where('id', $id)
+            ->where('owner_id', '=', $this->ownerId)
+            ->first();
 
         if (!$unit) {
             throw new Exception("Unidade não encontrada.");
         }
+        
         $data = [
             'name' => $unitDto->name,
             'abbreviation' => $unitDto->abbreviation,

@@ -5,12 +5,17 @@ namespace App\Repositories\Product;
 use App\Http\Dto\Product\FilterDto;
 use App\Http\Dto\Product\ProductDto;
 use App\Models\Product;
+use App\Models\ProductImage;
 use App\Repositories\BaseRepository;
 use Exception;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
+use Throwable;
 
 class ProductRepository extends BaseRepository implements IProductRepository
 {
@@ -126,7 +131,7 @@ class ProductRepository extends BaseRepository implements IProductRepository
         return $query;
     }
 
-    public function create(ProductDto $productDto)
+    public function create(ProductDto $productDto): Product
     {
         $data = [
             'name' => $productDto->name,
@@ -143,10 +148,53 @@ class ProductRepository extends BaseRepository implements IProductRepository
             'owner_id' => $this->ownerId,
         ];
         
-        return $this->model->create($data);
+        $product = $this->model->create($data);
+
+        if (!empty($productDto->images)) {
+            $this->storeProductImages($product->id, $productDto->images);
+        }
+
+        return $product;
     }
 
-    public function update(ProductDto $productDto, int $id)
+    private function storeProductImages(int $productId, array $images): void
+    {
+        foreach ($images as $image) {
+            if ($image instanceof UploadedFile) {
+                $imagePath = $image->store('products', 'public');
+                ProductImage::create([
+                    'product_id' => $productId,
+                    'image' => $imagePath,
+                ]);
+            }
+        }
+    }
+
+    private function removeDeletedImages(string $removedImagesJson): void
+    {
+        try {
+            $removedImages = json_decode($removedImagesJson, true) ?? [];
+            
+            foreach ($removedImages as $imageId) {
+                $productImage = ProductImage::find($imageId);
+                if ($productImage) {
+                    $this->deleteOldImage($productImage->image);
+                    $productImage->delete();
+                }
+            }
+        } catch (Throwable $e) {
+            Log::warning('Erro ao remover imagens deletadas: '.$e->getMessage());
+        }
+    }
+
+    private function deleteOldImage(string|null $image): void
+    {
+        if ($image && Storage::disk('public')->exists($image)) {
+            Storage::disk('public')->delete($image);
+        }
+    }
+
+    public function update(ProductDto $productDto, int $id): bool
     {
         $product = $this->model->find($id);
 
@@ -154,7 +202,15 @@ class ProductRepository extends BaseRepository implements IProductRepository
             throw new Exception("Produto não encontrado.");
         }
 
-        $data = [
+        if ($productDto->removedImages) {
+            $this->removeDeletedImages($product->removedImages);
+        }
+
+        if (!empty($productDto->images)) {
+            $this->storeProductImages($id, $productDto->images);
+        }
+
+        $data = [   
             'name' => $productDto->name,
             'description' => $productDto->description,
             'category_id' => $productDto->categoryId,
@@ -171,13 +227,18 @@ class ProductRepository extends BaseRepository implements IProductRepository
         return $product->update($data);
     }
 
-    public function delete(int $id)
+    public function delete(int $id): bool
     {
         $product = $this->model->find($id);
 
         if (!$product) {
             throw new Exception("Produto não encontrado.");
         }
+
+        $product->images->each(function ($image) {
+            $this->deleteOldImage($image->image);
+            $image->delete();
+        });
 
         $product->user_id_deleted = $this->userLoggedId;
         $product->deleted_at = now();

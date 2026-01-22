@@ -26,7 +26,7 @@ class CategoryRepository extends BaseRepository implements ICategoryRepository
 
     public function getCategories(): LengthAwarePaginator
     {
-        return $this->model->where('user_id_created', '=', $this->userLoggedId)
+        return $this->model->where('owner_id', '=', $this->ownerId)
             ->paginate(self::PAGINATION_SIZE);
     }
 
@@ -83,7 +83,9 @@ class CategoryRepository extends BaseRepository implements ICategoryRepository
 
     public function getCategoryById(int $id): Category
     {
-        $category = $this->model->find($id);
+        $category = $this->model->where('id', $id)
+            ->where('owner_id', '=', $this->ownerId)
+            ->first();
 
         if (!$category) {
             throw new Exception("Categoria não encontrada.");
@@ -106,7 +108,9 @@ class CategoryRepository extends BaseRepository implements ICategoryRepository
 
     public function update(CategoryDto $categoryDto, int $id)
     {
-        $category = $this->model->find($id);
+        $category = $this->model->where('id', $id)
+            ->where('owner_id', '=', $this->ownerId)
+            ->first();
 
         if (!$category) {
             throw new Exception("Categoria não encontrada.");
@@ -123,7 +127,9 @@ class CategoryRepository extends BaseRepository implements ICategoryRepository
 
     public function delete(int $id)
     {
-        $category = $this->model->find($id);
+        $category = $this->model->where('id', $id)
+            ->where('owner_id', '=', $this->ownerId)
+            ->first();
 
         if (!$category) {
             throw new Exception("Categoria não encontrada.");
