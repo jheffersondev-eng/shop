@@ -110,10 +110,14 @@ class UserService implements IUserService
 
             SendMail::send($user->email, $user, $verificationCode);
 
+            $route = $userDto->ownerId ? 
+                route('user.index') : 
+                route('register.verify-email-view', ['user_id' => $user->id, 'email' => $user->email]);
+
             return ServiceResult::ok(
                 data: $user,
                 message: 'Usuário criado com sucesso',
-                route: route('register.verify-email-view', ['user_id' => $user->id, 'email' => $user->email])
+                route: $route
             );
 
         } catch (Throwable $e) {

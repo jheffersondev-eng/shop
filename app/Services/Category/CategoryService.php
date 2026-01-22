@@ -14,12 +14,10 @@ use Throwable;
 
 class CategoryService implements ICategoryService
 {
-    protected ICategoryRepository $categoryRepository;
-
-    public function __construct(ICategoryRepository $categoryRepository) 
-    {
-        $this->categoryRepository = $categoryRepository;
-    }
+    public function __construct(
+        private ICategoryRepository $categoryRepository,
+        private CategoryAggregateMapper $categoryAggregateMapper) 
+    {}
 
     public function getCategories(): LengthAwarePaginator
     {
@@ -37,7 +35,7 @@ class CategoryService implements ICategoryService
     {
         try {
             $categories = $this->categoryRepository->getCategoriesByFilter($filterDto);
-            $categoriesAggregate = CategoryAggregateMapper::map($categories);
+            $categoriesAggregate = $this->categoryAggregateMapper->map($categories);
             
             return $categoriesAggregate;
         } catch (Throwable $e) {

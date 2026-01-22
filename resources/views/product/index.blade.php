@@ -33,7 +33,6 @@
                                 <th >#</th>
                                 <th scope="col">Imagem</th>
                                 <th scope="col">Nome</th>
-                                <th scope="col">Descrição</th>
                                 <th scope="col">Categoria</th>
                                 <th scope="col">Quantidade</th>
                                 <th scope="col">Valor</th>
@@ -44,8 +43,8 @@
                         <tbody id="users-table-body">
                             @forelse($products ?? [] as $product)
                                 <tr class="user-row">
-                                    <th scope="row">{{ $product->id }}</th>
-                                    <td>
+                                    <th width="3%" scope="row">{{ $product->id }}</th>
+                                    <td width="5%">
                                         @if(count($product->images) > 0)
                                             <img src="{{ asset('storage/' . $product->images[0]) }}" 
                                                 alt="{{ $product->name }}" class="img-thumbnail" 
@@ -55,20 +54,14 @@
                                         @endif
                                     </td>
                                     <td>{{ ucfirst(strtolower($product->name)) }}</td>
-                                    @php
-                                        $description = strlen($product->description) > 113 ? 
-                                        substr($product->description, 0, 113) . '...' : 
-                                        $product->description;
-                                    @endphp
-                                    <td width="30%">{{ ucfirst(strtolower($description)) }}</td>
                                     <td width="20%">{{ ucfirst(strtolower($product->category->name)) }}</td>
-                                    <td width="5%">
+                                    <td width="10%">
                                         {{ NumberHelper::simple($product->stockQuantity) }} 
                                         {{ $product->unit->abbreviation }}
                                     </td>
                                     <td width="10%">{{ NumberHelper::currency($product->price) }}</td>
                                     <td>{{ $product->createdAt->format('d/m/Y') }}</td>
-                                    <td class="text-end">    
+                                    <td width="10%" class="text-end">    
                                         {!! 
                                             ButtonInformationHelper::make()
                                                 ->setCreatedBy(ucwords(strtolower($product->userCreatedName)))
@@ -85,6 +78,7 @@
                                                 ->setButtonClass('btn btn-outline-warning btn-sm')
                                                 ->setBody('product.product-modal')
                                                 ->setData(['product' => $product])
+                                                ->setPermission('productcontroller@show')
                                                 ->render()
                                         !!} 
                                         {!!
