@@ -2,6 +2,7 @@
 
 namespace App\Helpers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 /**
@@ -27,6 +28,8 @@ class ModalHelper
 	protected ?string $icon = null;
 	protected ?string $buttonClass = null;
 	protected ?string $buttonLabel = null;
+	protected ?string $permission = null;
+	protected bool $hasPermission = true;
 
 	public function __construct()
 	{
@@ -148,6 +151,20 @@ class ModalHelper
 	}
 
 	/**
+	 * Define a permissão necessária para abrir a modal
+	 * Formato: "ControllerName@method"
+	 */
+	public function setPermission(string $permission): self
+	{
+		$this->permission = $permission;
+
+		$this->hasPermission = Auth::check() 
+			? Auth::user()->can(strtolower($permission))
+			: false;
+		return $this;
+	}
+
+	/**
 	 * Gera o array de opções que será passado para a view
 	 */
 	public function toArray(): array
@@ -164,6 +181,8 @@ class ModalHelper
 			'icon' => $this->icon,
 			'buttonClass' => $this->buttonClass ?? 'btn btn-primary',
 			'buttonLabel' => $this->buttonLabel ?? '',
+			'permission' => $this->permission,
+			'hasPermission' => $this->hasPermission,
 		];
 	}
 

@@ -78,6 +78,7 @@
                                                 ->setButtonClass('btn btn-outline-warning btn-sm')
                                                 ->setBody('product.product-modal')
                                                 ->setData(['product' => $product])
+                                                ->setPermission('productcontroller@show')
                                                 ->render()
                                         !!} 
                                         {!!

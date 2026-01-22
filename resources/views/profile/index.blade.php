@@ -68,6 +68,7 @@
                                         ->setIcon('bi bi-eye')
                                         ->setButtonClass('btn btn-outline-warning btn-sm')
                                         ->setBody('profile.permission-modal')
+                                        ->setPermission('profilecontroller@show')
                                         ->setData([
                                             'permissions' => $permissions,
                                             'description' => $profile->description,
