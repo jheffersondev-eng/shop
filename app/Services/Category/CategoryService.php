@@ -65,12 +65,11 @@ class CategoryService implements ICategoryService
 
             return ServiceResult::ok(
                 data: $category,
-                message: 'Usuário criado com sucesso'
+                message: 'Categoria criada com sucesso'
             );
-
         } catch (Throwable $e) {
-            Log::error('Erro ao criar usuário: '.$e->getMessage());
-            return ServiceResult::fail('Ocorreu um erro ao criar usuário');
+            Log::error('Erro ao criar categoria: '.$e->getMessage());
+            return ServiceResult::fail('Ocorreu um erro ao criar categoria');
         }
     }
     

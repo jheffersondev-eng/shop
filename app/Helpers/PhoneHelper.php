@@ -4,11 +4,6 @@ namespace App\Helpers;
 
 class PhoneHelper
 {
-    /**
-     * Keep only digits from phone string.
-     * @param string|null $value
-     * @return string
-     */
     public static function normalize(?string $value): string
     {
         if ($value === null) {
@@ -27,19 +22,6 @@ class PhoneHelper
      * - 1198888777    -> (11) 98888-7777
      * - 988887777     -> 98888-7777
      * - 88887777      -> 8888-7777
-     * If length doesn't match expected patterns, returns digits only.
-     *
-     * @param string|null $value
-     * @return string
-     */
-    /**
-     * Format phone number smartly for Brazilian phones.
-     * If $includeCountry is true and no country code is present, 
-     * the formatted string will be prefixed with +55.
-     *
-     * @param string|null $value
-     * @param bool $includeCountry
-     * @return string
      */
     public static function format(?string $value, bool $includeCountry = false): string
     {
@@ -100,8 +82,6 @@ class PhoneHelper
 
     /**
      * Format local (no DDD) number of 8 or 9 digits: 9xxxx-xxxx or xxxx-xxxx
-     * @param string $digits
-     * @return string
      */
     protected static function formatLocalNumber(string $digits): string
     {
@@ -125,8 +105,6 @@ class PhoneHelper
 
     /**
      * Extract components: country (optional), ddd (optional), number (remaining digits)
-     * @param string|null $value
-     * @return array{country?:string, ddd?:string, number:string}
      */
     public static function extractComponents(?string $value): array
     {
@@ -153,11 +131,6 @@ class PhoneHelper
         return $result;
     }
 
-    /**
-     * Detect if phone number is mobile (starts with 9 when including DDD) or is 9-digit local
-     * @param string|null $value
-     * @return bool
-     */
     public static function isMobile(?string $value): bool
     {
         $components = self::extractComponents($value);

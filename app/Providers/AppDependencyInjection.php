@@ -10,6 +10,8 @@ use App\Repositories\Profile\IProfileRepository;
 use App\Repositories\Profile\ProfileRepository;
 use App\Repositories\Category\ICategoryRepository;
 use App\Repositories\Category\CategoryRepository;
+use App\Repositories\Company\CompanyRepository;
+use App\Repositories\Company\ICompanyRepository;
 use App\Repositories\Product\IProductRepository;
 use App\Repositories\ProductImage\ProductImageRepository;
 use App\Repositories\Product\ProductRepository;
@@ -36,6 +38,8 @@ use App\Services\UnitService\UnitService;
 use App\Services\User\UserService;
 use App\Services\Chatbot\IChatbotService;
 use App\Services\Chatbot\ChatbotService;
+use App\Services\Company\CompanyService;
+use App\Services\Company\ICompanyService;
 use Illuminate\Contracts\Foundation\Application;
 
 class AppDependencyInjection
@@ -50,6 +54,7 @@ class AppDependencyInjection
         $app->bind(IUnitRepository::class, UnitRepository::class);
         $app->bind(IProductRepository::class, ProductRepository::class);
         $app->bind(IProductImageRepository::class, ProductImageRepository::class);
+        $app->bind(ICompanyRepository::class, CompanyRepository::class);
 
         //register bindings services
         $app->bind(ILoginService::class, LoginService::class);
@@ -62,5 +67,6 @@ class AppDependencyInjection
         $app->bind(IDashboardService::class, DashboardService::class);
         $app->bind(IAboutService::class, AboutService::class);
         $app->bind(IChatbotService::class, ChatbotService::class);
+        $app->bind(ICompanyService::class, CompanyService::class);
     }
 }

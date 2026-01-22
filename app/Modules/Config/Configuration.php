@@ -15,6 +15,8 @@ use App\Modules\Product\ProductModule;
 use App\Modules\User\UserModule;
 use App\Modules\Profile\ProfileModule;
 use App\Modules\Category\CategoryModule;
+use App\Modules\Company\CompanyModule;
+use App\Modules\Config\Headers\CompanyHeader;
 use App\Modules\Profile\UserProfileModule;
 use App\Modules\Unit\UnitModule;
 use Illuminate\Support\Collection;
@@ -32,6 +34,7 @@ class Configuration
             new CategoryModule(),
             new UnitModule(),
             new UserProfileModule(),
+            new CompanyModule(),
         ];
     }
 
@@ -49,13 +52,14 @@ class Configuration
     {
         $menu = new Collection();
         $menu->add(new DashboardHeader());
+        $menu->add(new CompanyHeader());
         $menu->add(new ProductHeader());
         $menu->add(new UserHeader());
         $menu->add(new ProfileHeader());
         $menu->add(new CategoryHeader());
         $menu->add(new UnitHeader());
         $menu->add(new ConfigurationHeader());
-        
+
         return $menu;
     }
 
