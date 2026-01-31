@@ -1430,7 +1430,7 @@ _method=PUT</code></pre>
 
                                         <h6 class="mt-3">Resposta (exemplo)</h6>
                                         <div class="code-wrap"><button class="btn-copy"
-                                                data-copy='{"success":true,"data":{"id":5,"ownerId":1,"name":"lynn champlin","description":"Pa'\''anga","permission":"profilecontroller@store,categorycontroller@update,profilecontroller@index,productcontroller@update,userprofilecontroller@update","userIdCreated":1,"userIdUpdated":1,"userIdDeleted":null,"createdAt":"2026-01-13T19:35:35.000000Z","updatedAt":"2026-01-14T15:52:31.000000Z","deletedAt":null},"message":"Perfil
+                                                data-copy='{"success":true,"data":{"id":5,"ownerId":1,"name":"lynn champlin","description":"Paanga","permission":"profilecontroller@store,categorycontroller@update,profilecontroller@index,productcontroller@update,userprofilecontroller@update","userIdCreated":1,"userIdUpdated":1,"userIdDeleted":null,"createdAt":"2026-01-13T19:35:35.000000Z","updatedAt":"2026-01-14T15:52:31.000000Z","deletedAt":null},"message":"Perfil
                                                 atualizado com sucesso."}'><i class="bi bi-clipboard"></i></button>
                                             <pre class="code-block"><code>{
     "success": true,
@@ -1438,14 +1438,14 @@ _method=PUT</code></pre>
         "id": 5,
         "ownerId": 1,
         "name": "lynn champlin",
-        "description": "Pa'anga",
+        "description": "Paanga",
         "permission": "profilecontroller@store,categorycontroller@update,profilecontroller@index,productcontroller@update,userprofilecontroller@update",
         "userIdCreated": 1,
         "userIdUpdated": 1,
         "userIdDeleted": null,
         "createdAt": "2026-01-13T19:35:35.000000Z",
         "updatedAt": "2026-01-14T15:52:31.000000Z",
-        "deletedAt": null
+        "deletedAt": "2026-01-14T15:52:31.000000Z"
     },
     "message": "Perfil atualizado com sucesso."
 }</code></pre>
@@ -1485,6 +1485,315 @@ _method=PUT</code></pre>
                                 </div>
                             </div>
                         </div>
+                        <!-- Empresas -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button"
+                                    data-bs-target="#collapseEmpresas" aria-expanded="false"
+                                    aria-controls="collapseEmpresas">
+                                    <i class="bi bi-people me-2 text-primary"></i>
+                                    <strong>Empresas</strong>
+                                    <span class="badge bg-secondary ms-auto me-2">4 rotas</span>
+                                </button>
+                            </h2>
+                            <div id="collapseEmpresas" class="accordion-collapse collapse">
+                                <div class="accordion-body">
+                                    <section class="route">
+                                        <h5>👤 Listar Empresas com Filtro <small class="text-muted">GET
+                                                /api/company/get-companies-by-filter</small></h5>
+                                        <p>Query parameters: <code>id, fantasyName, page, page_size</code></p>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <h6>Exemplo de URL</h6>
+                                                <div class="code-wrap"><button class="btn-copy"
+                                                        data-copy='http://localhost:8001/api/company/get-companies-by-filter?id=null&fantasyName=null&page=1&page_size=10'><i
+                                                            class="bi bi-clipboard"></i></button>
+                                                    <pre class="code-block"><code>http://localhost:8001/api/company/get-companies-by-filter?id=null&fantasyName=null&page=1&page_size=10</code></pre>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h6>Exemplo em Bash</h6>
+                                                <div class="code-wrap"><button class="btn-copy"
+                                                        data-copy='curl --location "http://localhost:8001/api/company/get-companies-by-filter?id=null&fantasyName=null&page=1&page_size=10" -H "X-API-KEY: {sua-api-key}" -H "Authorization: Bearer {seu-token}"'><i
+                                                            class="bi bi-clipboard"></i></button>
+                                                    <pre class="code-block"><code>curl --location "http://localhost:8001/api/company/get-companies-by-filter?id=null&fantasyName=null&page=1&page_size=10" \
+    -H "X-API-KEY: {sua-api-key}" \
+    -H "Authorization: Bearer {seu-token}"</code></pre>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <h6 class="mt-3">Resposta (exemplo)</h6>
+                                        <div class="code-wrap"><button class="btn-copy"
+                                            data-copy='{"success": true, "data": {"id": "019c15dd-4c0f-707e-8322-dd45e7f52411", "ownerId": 6, "fantasyName": "Gregory Paucek", "description": "vel", "legalName": "Ruth Lindgren III", "document": "23141882339", "email": "Holden9@gmail.com", "image": "companies/2eJXPDvbgP3wt8j3POrFN2nR74A3wNMwhYOrudcf.png", "primaryColor": "#547f17", "secondaryColor": "#464f7d", "domain": "shaniya.net", "zipCode": "969", "state": "TN", "city": "Lincoln", "neighborhood": "Clemens Causeway", "street": "Marks Trail", "number": "657", "complement": "Enim voluptatem quibusdam minima ut et sint et.\nNobis nesciunt molestiae totam ut amet doloremque placeat.\nLaborum ut vel natus dolorem.", "isActive": true, "userIdCreated": 6, "userIdUpdated": null, "userIdDeleted": null}, "message": "Empresa criada com sucesso."}'><i
+                                            class="bi bi-clipboard"></i></button>
+                                            <pre class="code-block"><code>{
+    "success": true,
+    "data": [
+        {
+            "id": "019c15d6-db91-73f4-b410-2ff477ec8745",
+            "owner": {
+                "id": 1,
+                "name": "MS. ARNOLD HARTMANN"
+            },
+            "fantasyName": "Shawna Abernathy",
+            "description": "Praesentium deleniti quos laudantium ea ab corrupti magni voluptatem.",
+            "legalName": "Laura Durgan",
+            "document": "23141882339",
+            "email": "Nils31@hotmail.com",
+            "phone": "7274644227",
+            "image": "companies/yJr3xAVd105mJ5Z6Yo546lPsVnRg718VmYmaaKZv.png",
+            "primaryColor": "#405109",
+            "secondaryColor": "#3f6e3b",
+            "domain": "jamie.info",
+            "zipCode": "848",
+            "state": "LY",
+            "city": "Powlowskiberg",
+            "neighborhood": "Jedidiah Cliffs",
+            "street": "Aracely Centers",
+            "number": "768",
+            "complement": "Reiciendis quis assumenda omnis dolor temporibus ex dolorem omnis.\nId nihil qui amet aperiam atque tempore.\nIure qui placeat voluptas pariatur.",
+            "isActive": true,
+            "userCreated": {
+                "id": 1,
+                "name": "MS. ARNOLD HARTMANN"
+            },
+            "userUpdated": null,
+            "userDeleted": null,
+            "createdAt": "2026-01-31T17:55:28.000000Z",
+            "updatedAt": "2026-01-31T17:55:28.000000Z",
+            "deletedAt": null
+        }
+    ],
+    "message": "Empresas filtradas com sucesso."
+}</code></pre>
+                                        </div>
+                                    </section>
+
+                                    <hr class="my-3">
+
+                                    <section class="route">
+                                        <h5>➕ Criar Company <small class="text-muted">POST /api/company/create</small></h5>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <h6>Payload (form-data)</h6>
+                                                <div class="code-wrap"><button class="btn-copy"
+                                                    data-copy='fantasy_name="Nichole Wehner DDS"\ndescription="Alias quibusdam quia quaerat. Ad ipsa voluptatem sed quis quae aperiam. Voluptas quo quasi. Maiores possimus exercitationem quia repellendus nesciunt nulla. Sed eum dolorum qui magnam ut."\nlegal_name="Max Nikolaus"\ndocument="23141882339"\nemail="Fidel_Kohler77@gmail.com"\nphone="283-701-9012"\nimage=@"/caminho/da/imagem.png"\nprimary_color="#2d271a"\nsecondary_color="#32574f"\ndomain="kelley.biz"\nzip_code="133"\nstate="EE"\ncity="Armandoton"\nneighborhood="Velva Prairie"\nstreet="Jeanette Flats"\nnumber="280"\ncomplement="nisi asperiores"\nis_active="true"'><i
+                                                        class="bi bi-clipboard"></i></button>
+                                                    <pre class="code-block"><code>fantasy_name="Nichole Wehner DDS",
+description="Sed eum dolorum qui magnam ut.",
+legal_name="Max Nikolaus",
+document="23141882339",
+email="Fidel_Kohler77@gmail.com",
+phone="283-701-9012",
+image=@"/caminho/da/imagem.png",
+primary_color="#2d271a",
+secondary_color="#32574f",
+domain="kelley.biz",
+zip_code="133",
+state="EE",
+city="Armandoton",
+neighborhood="Velva Prairie",
+street="Jeanette Flats",
+number="280",
+complement="nisi asperiores",
+is_active="true"</code></pre>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h6>Exemplo em Bash</h6>
+                                                <div class="code-wrap"><button class="btn-copy"
+                                                        data-copy='curl --location "http://localhost:8001/api/company/create" --header "X-API-KEY: shop_api_123" --header "Authorization: Bearer 6|GXYEjjoXJ8siyDwtI3yKbW9XHRnOfGdnX4puUZlm1e9a7a00" --form "fantasy_name="Lonnie Robel" --form "description="Corporis et quia minus similique."" --form "legal_name="Herbert Funk"" --form "document="23141882339"" --form "email="Emilio41@gmail.com"" --form "phone="840-713-2964"" --form "image=@"postman-cloud:///1f0eae9a-5776-4430-b07f-b649a6156af6"" --form "primary_color="\#696858"" --form "secondary_color="\#133f04"" --form "domain="al.org"" --form "zip_code="754"" --form "state="TD"" --form "city="Parma"" --form "neighborhood="Lebsack Locks"" --form "street="Luz View"" --form "number="31"" --form "complement="Est atque magnam quibusdam et impedit nesciunt."" --form "is_active="true""'><i
+                                                            class="bi bi-clipboard"></i></button>
+                                                    <pre class="code-block"><code>curl --location 'http://localhost:8001/api/company/create' \
+--header 'X-API-KEY: shop_api_123' \
+--header 'Authorization: Bearer 6|GXYEjjoXJ8siyDwtI3yKbW9XHRnOfGdnX4puUZlm1e9a7a00' \
+--form 'fantasy_name="Lynette Schuppe"' \
+--form 'description="Corrupti aut ad est facilis qui est consequatur sapiente."' \
+--form 'legal_name="Glenn Kshlerin"' \
+--form 'document="23141882339"' \
+--form 'email="Norma_Kuhn64@gmail.com"' \
+--form 'phone="414-766-3196"' \
+--form 'image=@"postman-cloud:///1f0eae9a-5776-4430-b07f-b649a6156af6"' \
+--form 'primary_color="\#5b2e76"' \
+--form 'secondary_color="\#7b5471"' \
+--form 'domain="dorris.info"' \
+--form 'zip_code="777"' \
+--form 'state="NO"' \
+--form 'city="Port Riverstad"' \
+--form 'neighborhood="Ernser Radial"' \
+--form 'street="Greenfelder Circle"' \
+--form 'number="998"' \
+--form 'complement="Non nobis earum sapiente ut tempora. Blanditiis consequuntur repellat dolorum. Qui illum magni. Nobis amet nemo cupiditate sapiente ad."' \
+--form 'is_active="true"'</code></pre>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <h6 class="mt-3">Resposta (exemplo)</h6>
+                                        <div class="code-wrap"><button class="btn-copy"
+                                                data-copy='{"success":true,"data":{"id":9,"ownerId":1,"name":"MR. KELLY DICKENS","description":"Vatu","permission":"unitcontroller@store,productcontroller@index,userprofilecontroller@update,productcontroller@update,categorycontroller@update","userIdCreated":1,"userIdUpdated":null,"userIdDeleted":null,"createdAt":"2026-01-14T15:52:09.000000Z","updatedAt":"2026-01-14T15:52:09.000000Z","deletedAt":null},"message":"Perfil criado com sucesso."}'><i
+                                                    class="bi bi-clipboard"></i></button>
+                                            <pre class="code-block"><code>{
+    "success": true,
+    "data": {
+        "id": "019c15dd-4c0f-707e-8322-dd45e7f52411",
+        "ownerId": 6,
+        "fantasyName": "Gregory Paucek",
+        "description": "vel",
+        "legalName": "Ruth Lindgren III",
+        "document": "23141882339",
+        "email": "Holden9@gmail.com",
+        "image": "companies/2eJXPDvbgP3wt8j3POrFN2nR74A3wNMwhYOrudcf.png",
+        "primaryColor": "#547f17",
+        "secondaryColor": "#464f7d",
+        "domain": "shaniya.net",
+        "zipCode": "969",
+        "state": "TN",
+        "city": "Lincoln",
+        "neighborhood": "Clemens Causeway",
+        "street": "Marks Trail",
+        "number": "657",
+        "complement": "Enim voluptatem quibusdam minima ut et sint et.\nNobis nesciunt molestiae totam ut amet doloremque placeat.\nLaborum ut vel natus dolorem.",
+        "isActive": true,
+        "userIdCreated": 6,
+        "userIdUpdated": null,
+        "userIdDeleted": null
+    },
+    "message": "Empresa criada com sucesso."
+}</code></pre>
+                                        </div>
+                                    </section>
+
+                                    <hr class="my-3">
+
+                                    <section class="route">
+                                        <h5>📝 Atualizar Empresa <small class="text-muted">PUT /api/company/{id}</small>
+                                        </h5>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <h6>Payload (form-data)</h6>
+                                                <div class="code-wrap"><button class="btn-copy"
+                                                        data-copy='fantasy_name="Nichole Wehner DDS"\ndescription="Alias quibusdam quia quaerat. Ad ipsa voluptatem sed quis quae aperiam. Voluptas quo quasi. Maiores possimus exercitationem quia repellendus nesciunt nulla. Sed eum dolorum qui magnam ut."\nlegal_name="Max Nikolaus"\ndocument="23141882339"\nemail="Fidel_Kohler77@gmail.com"\nphone="283-701-9012"\nimage=@"/caminho/da/imagem.png"\nprimary_color="#2d271a"\nsecondary_color="#32574f"\ndomain="kelley.biz"\nzip_code="133"\nstate="EE"\ncity="Armandoton"\nneighborhood="Velva Prairie"\nstreet="Jeanette Flats"\nnumber="280"\ncomplement="nisi asperiores"\nis_active="true"'><i
+                                                            class="bi bi-clipboard"></i></button>
+                                                    <pre class="code-block"><code>fantasy_name="Nichole Wehner DDS",
+description="Sed eum dolorum qui magnam ut.",
+legal_name="Max Nikolaus",
+document="23141882339",
+email="Fidel_Kohler77@gmail.com",
+phone="283-701-9012",
+image=@"/caminho/da/imagem.png",
+primary_color="#2d271a",
+secondary_color="#32574f",
+domain="kelley.biz",
+zip_code="133",
+state="EE",
+city="Armandoton",
+neighborhood="Velva Prairie",
+street="Jeanette Flats",
+number="280",
+complement="nisi asperiores",
+is_active="true"</code></pre>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h6>Exemplo em Bash</h6>
+                                                <div class="code-wrap"><button class="btn-copy"
+                                                        data-copy='curl --location "http://localhost:8001/api/company/019c15dd-4c0f-707e-8322-dd45e7f52411" --header "X-API-KEY: {sua-api-key}" --header "Authorization: Bearer {seu-token}" --form "name=Ricky Corwin" --form "description=Kroon" --form "permissions=[\"usercontroller@update\",\"usercontroller@index\"]" --form "_method=PUT"'><i
+                                                            class="bi bi-clipboard"></i></button>
+                                                    <pre class="code-block"><code>curl --location 'http://localhost:8001/api/company/019c157f-162f-7064-956c-261e3613ad80' \
+--header 'X-API-KEY: shop_api_123' \
+--header 'Authorization: Bearer 6|GXYEjjoXJ8siyDwtI3yKbW9XHRnOfGdnX4puUZlm1e9a7a00' \
+--form 'fantasy_name="Margarita Waelchi"' \
+--form 'description="Sint id sunt corporis suscipit officiis veritatis. Vitae id maxime quidem similique exercitationem velit sapiente laboriosam."' \
+--form 'legal_name="Roland Schroeder"' \
+--form 'document="23141882339"' \
+--form 'email="Jesse_Zemlak3@yahoo.com"' \
+--form 'phone="345-522-8749"' \
+--form 'image=@"postman-cloud:///1f0eae9a-5776-4430-b07f-b649a6156af6"' \
+--form 'primary_color="\#69173b"' \
+--form 'secondary_color="\#78414b"' \
+--form 'domain="graham.info"' \
+--form 'zip_code="757"' \
+--form 'state="IO"' \
+--form 'city="Morgan Hill"' \
+--form 'neighborhood="Volkman Ports"' \
+--form 'street="Crist Points"' \
+--form 'number="756"' \
+--form 'complement="Quaerat et qui et et neque cum. Labore et et expedita. At qui pariatur dolores ut ipsam ratione qui dolor voluptatum. Et sed enim et."' \
+--form 'is_active="true"' \
+--form '_method="PUT"'</code></pre>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <h6 class="mt-3">Resposta (exemplo)</h6>
+                                        <div class="code-wrap"><button class="btn-copy"
+                                                data-copy='{"success": true,"data": {"id": "019c15dd-4c0f-707e-8322-dd45e7f52411","ownerId": 6,"fantasyName": "Kevin Kohler","description": "Dicta beatae aperiam aliquam commodi voluptates molestiae et id rerum.\nFugit dolorem illum fugiat velit velit voluptatem neque ea.\nNisi quod assumenda culpa quam voluptate tempore quia et.\nOccaecati qui facere quibusdam.\nQuam sunt laboriosam nihil.","legalName": "Rhonda Rohan MD","document": "23141882339","email": "Torey.Beer@hotmail.com","image": "companies/9aNun5exznmI6Kt0R0sDHwis5McMg73oN5KDOtMH.png","primaryColor": "#382a28","secondaryColor": "#62650c","domain": "giovanny.org","zipCode": "949","state": "MM","city": "Littelville","neighborhood": "Samara Prairie","street": "Cullen Points","number": "883","complement": "Magnam enim reprehenderit inventore earum.","isActive": true,"userIdCreated": 6,"userIdUpdated": 6,"userIdDeleted": null},"message": "Empresa atualizada com sucesso."}'><i class="bi bi-clipboard"></i></button>
+                                            <pre class="code-block"><code>{
+    "success": true,
+    "data": {
+        "id": "019c15dd-4c0f-707e-8322-dd45e7f52411",
+        "ownerId": 6,
+        "fantasyName": "Kevin Kohler",
+        "description": "Dicta beatae aperiam aliquam commodi voluptates molestiae et id rerum.\nFugit dolorem illum fugiat velit velit voluptatem neque ea.\nNisi quod assumenda culpa quam voluptate tempore quia et.\nOccaecati qui facere quibusdam.\nQuam sunt laboriosam nihil.",
+        "legalName": "Rhonda Rohan MD",
+        "document": "23141882339",
+        "email": "Torey.Beer@hotmail.com",
+        "image": "companies/9aNun5exznmI6Kt0R0sDHwis5McMg73oN5KDOtMH.png",
+        "primaryColor": "#382a28",
+        "secondaryColor": "#62650c",
+        "domain": "giovanny.org",
+        "zipCode": "949",
+        "state": "MM",
+        "city": "Littelville",
+        "neighborhood": "Samara Prairie",
+        "street": "Cullen Points",
+        "number": "883",
+        "complement": "Magnam enim reprehenderit inventore earum.",
+        "isActive": true,
+        "userIdCreated": 6,
+        "userIdUpdated": 6,
+        "userIdDeleted": null
+    },
+    "message": "Empresa atualizada com sucesso."
+}</code></pre>
+                                        </div>
+                                    </section>
+
+                                    <hr class="my-3">
+
+                                    <section class="route">
+                                        <h5>🗑️ Deletar Empresa <small class="text-muted">DELETE /api/company/{id}</small>
+                                        </h5>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <h6>Exemplo em Bash</h6>
+                                                <div class="code-wrap"><button class="btn-copy"
+                                                        data-copy='curl --location --request DELETE "http://localhost:8001/api/company/019c15dd-4c0f-707e-8322-dd45e7f52411" --header "X-API-KEY: shop_api_123" --header "Authorization: Bearer 6|GXYEjjoXJ8siyDwtI3yKbW9XHRnOfGdnX4puUZlm1e9a7a00"'><i
+                                                            class="bi bi-clipboard"></i></button>
+                                                    <pre class="code-block"><code>curl --location --request DELETE 'http://localhost:8001/api/company/019c15dd-4c0f-707e-8322-dd45e7f52411' \
+--header 'X-API-KEY: shop_api_123' \
+--header 'Authorization: Bearer 6|GXYEjjoXJ8siyDwtI3yKbW9XHRnOfGdnX4puUZlm1e9a7a00'"</code></pre>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h6>Resposta (exemplo)</h6>
+                                                <div class="code-wrap"><button class="btn-copy"
+                                                        data-copy='{"success": true,"data": null,"message": "Empresa excluída com sucesso."}'><i
+                                                            class="bi bi-clipboard"></i></button>
+                                                    <pre class="code-block"><code>{
+    "success": true,
+    "data": null,
+    "message": "Empresa excluída com sucesso."
+}</code></pre>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div>
+                            </div>
+                        </div>    
                     </div>
                 </article>
             </section>
