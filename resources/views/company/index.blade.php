@@ -247,7 +247,7 @@
                                 <i class="bi bi-calendar-event text-info me-2 fs-5"></i>
                                 <span class="text-muted small">Fundação</span>
                             </div>
-                            <div class="fw-bold fs-5">{{ Carbon::parse($company->foundation_date)->format('d/m/Y') }}
+                            <div class="fw-bold fs-5">{{ Carbon::parse($company->created_at)->format('d/m/Y') }}
                             </div>
                         </div>
                     </div>
