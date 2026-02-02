@@ -142,7 +142,7 @@
                         {{ $company->description }}</div>
                     <div class="d-flex flex-column align-items-center gap-2 mb-3">
                         <span class="badge status-badge px-4 py-2"
-                            style="background:{{ $company->is_active ? $company->primary_color ?? '#22c55e' : '#e11d48' }}; color:#fff; border-radius:12px; font-size:1rem;">
+                            style="background:#4caf50; color:#fff; border-radius:12px; font-size:1rem;">
                             <i class="bi {{ $company->is_active ? 'bi-check-circle' : 'bi-x-circle' }} me-1"></i>
                             {{ $company->is_active ? 'Ativa' : 'Inativa' }}
                         </span>
