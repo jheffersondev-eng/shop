@@ -14,6 +14,8 @@ class CompanyDto extends BaseDto
 		public string $email,
 		public string $phone,
 		public UploadedFile|null $image,
+		public UploadedFile|null $imageBanner,
+		public string $slogan,
 		public string $primaryColor,
 		public string $secondaryColor,
 		public string $neighborhood,
