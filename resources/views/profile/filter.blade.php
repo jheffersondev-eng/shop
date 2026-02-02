@@ -7,37 +7,49 @@
     <div class="row g-3 mb-4">
         <div class="col-md-2">
             <label for="filterId" class="form-label">ID</label>
-            <input type="text" 
-                class="form-control" 
-                id="filterId" 
-                name="id" 
-                value="{{ Request::get('id') }}" 
-                placeholder="ID do perfil" />
+            <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-123"></i></span>
+                <input type="text" 
+                    class="form-control" 
+                    id="filterId" 
+                    name="id" 
+                    value="{{ Request::get('id') }}" 
+                    placeholder="ID do perfil" />
+            </div>
         </div>
         <div class="col-md-2">
             <label for="filterName" class="form-label">Nome</label>
-            <input type="text" 
-                class="form-control" 
-                id="filterName" 
-                name="name" 
-                value="{{ Request::get('name') }}" 
-                placeholder="Nome do perfil" />
+            <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-123"></i></span>
+                <input type="text" 
+                    class="form-control" 
+                    id="filterName" 
+                    name="name" 
+                    value="{{ Request::get('name') }}" 
+                    placeholder="Nome do perfil" />
+            </div>
         </div>
         <div class="col-md-2">
             <label for="filterDateDe" class="form-label">Criado a partir</label>
-            <input type="date" 
-                class="form-control" 
-                id="filterDateDe" 
-                name="date_de" 
-                value="{{ Request::get('date_de') }}" />
+            <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-calendar"></i></span>
+                <input type="date" 
+                    class="form-control" 
+                    id="filterDateDe" 
+                    name="date_de" 
+                    value="{{ Request::get('date_de') }}" />
+            </div>
         </div>
         <div class="col-md-2">
             <label for="filterDateAte" class="form-label">Criado até</label>
-            <input type="date" 
-                class="form-control" 
-                id="filterDateAte" 
-                name="date_ate" 
-                value="{{ Request::get('date_ate') }}" />
+            <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-calendar"></i></span>
+                <input type="date" 
+                    class="form-control" 
+                    id="filterDateAte" 
+                    name="date_ate" 
+                    value="{{ Request::get('date_ate') }}" />
+            </div>
         </div>
         <!-- col-md-1 offset-md-2 d-flex align-items-end -->
         <div class="col-md-1 offset-md-2 d-flex align-items-end">
