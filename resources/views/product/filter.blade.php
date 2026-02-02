@@ -7,67 +7,88 @@
     <div class="row g-3 mb-4">
         <div class="col-md-2">
             <label for="filterId" class="form-label">ID</label>
-            <input type="text" 
-                class="form-control" 
-                id="filterId" 
-                name="id" 
-                value="{{ Request::get('id') }}" 
-                placeholder="ID do produto" />
+            <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-123"></i></span>
+                <input type="text" 
+                    class="form-control" 
+                    id="filterId" 
+                    name="id" 
+                    value="{{ Request::get('id') }}" 
+                    placeholder="ID do produto" />
+            </div>
         </div>
         <div class="col-md-4">
             <label for="filterName" class="form-label">Nome</label>
-            <input type="text" 
-                class="form-control" 
-                id="filterName" 
-                name="name" 
-                value="{{ Request::get('name') }}" 
-                placeholder="Nome do produto" />
+            <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-fonts"></i></span>
+                <input type="text" 
+                    class="form-control" 
+                    id="filterName" 
+                    name="name" 
+                    value="{{ Request::get('name') }}" 
+                    placeholder="Nome do produto" />
+            </div>
         </div>
         <div class="col-md-2">
             <label for="filterCategory" class="form-label">Categoria</label>
-            {!! 
-                SelectHelper::make('category_id')
-                    ->setOptions($categories)
-                    ->setSelected(Request::get('category_id'))
-                    ->setClass('form-control')
-                    ->render();
-            !!}            
+            <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-tags"></i></span>
+                {!! 
+                    SelectHelper::make('category_id')
+                        ->setOptions($categories)
+                        ->setSelected(Request::get('category_id'))
+                        ->setClass('form-control')
+                        ->render();
+                !!}  
+            </div>          
         </div>
         <div class="col-md-2">
             <label for="filterCategory" class="form-label">Unidade</label>
-            {!! 
-                SelectHelper::make('unit_id')
+            <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-tags"></i></span>
+                {!! 
+                    SelectHelper::make('unit_id')
                     ->setOptions($units)
                     ->setSelected(Request::get('unit_id'))
                     ->setClass('form-control')
                     ->render();
-            !!}
+                !!}
+            </div>
         </div>
         <div class="col-md-2">
             <label for="filterName" class="form-label">Ativo</label>
-            {!! 
-                SelectHelper::make('is_active')
-                    ->setOptions($isActive)
-                    ->setSelected(Request::get('is_active') === null ? '' : Request::get('is_active'))
-                    ->setClass('form-control')
-                    ->render();
-            !!}
+            <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-toggle-on"></i></span>
+                {!! 
+                    SelectHelper::make('is_active')
+                        ->setOptions($isActive)
+                        ->setSelected(Request::get('is_active') === null ? '' : Request::get('is_active'))
+                        ->setClass('form-control')
+                        ->render();
+                !!}
+            </div>
         </div>
-                <div class="col-md-2">
+        <div class="col-md-2">
             <label for="filterDateDe" class="form-label">Criado a partir</label>
-            <input type="date" 
-                class="form-control" 
-                id="filterDateDe" 
-                name="date_de" 
-                value="{{ Request::get('date_de') }}" />
+            <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-calendar"></i></span>
+                <input type="date" 
+                    class="form-control" 
+                    id="filterDateDe" 
+                    name="date_de" 
+                    value="{{ Request::get('date_de') }}" />
+            </div>
         </div>
         <div class="col-md-2">
             <label for="filterDateAte" class="form-label">Criado até</label>
-            <input type="date" 
-                class="form-control" 
-                id="filterDateAte" 
-                name="date_ate" 
-                value="{{ Request::get('date_ate') }}" />
+            <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-calendar"></i></span>
+                <input type="date" 
+                    class="form-control" 
+                    id="filterDateAte" 
+                    name="date_ate" 
+                    value="{{ Request::get('date_ate') }}" />
+            </div>
         </div>
         <!-- col-md-1 offset-md-2 d-flex align-items-end -->
         <div class="col-md-1 offset-md-6 d-flex align-items-end">
