@@ -23,6 +23,8 @@ class Company extends Model
         'primary_color',
         'secondary_color',
         'domain',
+        'image_banner',
+        'slogan',
         'zip_code',
         'state',
         'neighborhood',

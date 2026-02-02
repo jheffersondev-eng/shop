@@ -59,11 +59,18 @@ class CompanyRepository extends BaseRepository implements ICompanyRepository
     {
         $company = $this->getCompany();
         $imagePath = $company->image;
+        $imageBannerPath = $company->image_banner;
 
         if($companyDto->image)
         {
             Storage::disk('public')->delete($company->image);
             $imagePath = $companyDto->image->store('company', 'public');
+        }
+
+        if($companyDto->imageBanner)
+        {
+            //Storage::disk('public')->delete($company->image_banner);
+            $imageBannerPath = $companyDto->imageBanner->store('company', 'public');
         }
 
         return $company->update([
@@ -74,6 +81,8 @@ class CompanyRepository extends BaseRepository implements ICompanyRepository
             'email' => $companyDto->email,
             'phone' => $companyDto->phone,
             'image' => $imagePath,
+            'image_banner' => $imageBannerPath,
+            'slogan' => $companyDto->slogan,
             'primary_color' => $companyDto->primaryColor,
             'secondary_color' => $companyDto->secondaryColor,
             'domain' => $companyDto->domain,

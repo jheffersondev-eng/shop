@@ -25,6 +25,8 @@ class CompanyRequest extends BaseRequest
             'email' => 'required|email|max:100',
             'phone' => 'required|string|max:15',
             'image' => 'required|file|mimes:jpg,jpeg,png,gif|max:2048',
+            'image_banner' => 'required|file|mimes:jpg,jpeg,png,gif|max:2048',
+            'slogan' => 'required|string|max:40',
             'primary_color' => 'required|string|max:7',
             'secondary_color' => 'required|string|max:7',
             'domain' => 'required|string|max:100',
@@ -71,9 +73,11 @@ class CompanyRequest extends BaseRequest
             'street.required' => 'A rua é obrigatória.',
             'number.required' => 'O número é obrigatório.',
             'image.required' => 'A imagem é obrigatória.',
+            'image_banner.required' => 'A imagem banner é obrigatória.',
             'primary_color.required' => 'A cor primária é obrigatória.',
             'secondary_color.required' => 'A cor secundária é obrigatória.',
             'complement.required' => 'Deve ter no maximo 255 caracteres.',
+            'slogan.required' => 'O slogan é obrigatório.',
         ];
     }
 
@@ -86,6 +90,8 @@ class CompanyRequest extends BaseRequest
             email: $this->input('email'),
             phone: $this->input('phone'),
             image: $this->file('image'),
+            imageBanner: $this->file('image_banner'),
+            slogan: $this->input('slogan'),
             primaryColor: $this->input('primary_color'),
             secondaryColor: $this->input('secondary_color'),
             neighborhood: $this->input('neighborhood'),
