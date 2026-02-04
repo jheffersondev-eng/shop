@@ -203,7 +203,7 @@ class ProductRepository extends BaseRepository implements IProductRepository
         }
 
         if ($productDto->removedImages) {
-            $this->removeDeletedImages($product->removedImages);
+            $this->removeDeletedImages($productDto->removedImages);
         }
 
         if (!empty($productDto->images)) {

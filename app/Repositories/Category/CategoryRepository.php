@@ -63,19 +63,19 @@ class CategoryRepository extends BaseRepository implements ICategoryRepository
         $query->whereNull('c.deleted_at');
 
         if ($filterDto->id) {
-            $query->where('id', $filterDto->id);
+            $query->where('c.id', $filterDto->id);
         }
 
         if ($filterDto->name) {
-            $query->where('name', 'like', '%'.$filterDto->name.'%');
+            $query->where('c.name', 'like', '%'.$filterDto->name.'%');
         }
 
         if ($filterDto->dateDe) {
-            $query->whereDate('created_at', '>=', $filterDto->dateDe);
+            $query->whereDate('c.created_at', '>=', $filterDto->dateDe);
         }
 
         if ($filterDto->dateAte) {
-            $query->whereDate('created_at', '<=', $filterDto->dateAte);
+            $query->whereDate('c.created_at', '<=', $filterDto->dateAte);
         }
 
         return $query;
